@@ -31,10 +31,27 @@ const handleGetProductStore = async (storeId) => {
   return getProduct;
 };
 
+const handleCreatePost = async (payload) => {
+  const URl = `http://localhost:3001/routerAPI/createPost`;
+  const createPost = await axios.post(URl, payload);
+  return createPost;
+};
+
+const handleDeletePost = async (postId) => {
+  const post = postId.postId;
+  console.log(
+    "🚀 ~ file: UserAPI.js ~ line 42 ~ handleDeletePost ~ post",
+    post
+  );
+  const URL = `http://localhost:3001/routerAPI/deletePost/${post}`;
+  const deletePost = await axios.delete(URL);
+};
 export {
   handleRegisterUser,
   handleLoginUser,
   handleGetAllPost,
   handleGetStore,
   handleGetProductStore,
+  handleCreatePost,
+  handleDeletePost,
 };
