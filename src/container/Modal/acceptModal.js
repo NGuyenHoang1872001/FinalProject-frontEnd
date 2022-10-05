@@ -1,9 +1,23 @@
 import { handleDeletePost } from "../../API/UserAPI";
+import { handleGetAllPost } from "../../API/UserAPI";
+import { useEffect, useState } from "react";
 const AcceptModal = (postId) => {
   const deletePost = async (req, res) => {
     try {
       const response = await handleDeletePost(postId);
     } catch (error) {}
+  };
+  const [post, setPost] = useState([]);
+  const getAllPost = async () => {
+    try {
+      const postData = await handleGetAllPost();
+      setPost(postData);
+    } catch (error) {
+      console.log(
+        "🚀 ~ file: postContainer.js ~ line 25 ~ getAllPost ~ error",
+        error
+      );
+    }
   };
   return (
     <div>

@@ -1,8 +1,9 @@
 import PostContainer from "../../container/postContainer";
 import Navbar from "../../container/navbarContainer";
 import SideBar from "../../container/sidebarContainer";
-import { Navigate, useLocation } from "react-router-dom";
+import { Navigate, useLocation, Outlet } from "react-router-dom";
 import { useSelector } from "react-redux";
+
 const HomePage = () => {
   const location = useLocation();
   const dataLogin = useSelector((state) => state.auth);
@@ -16,7 +17,7 @@ const HomePage = () => {
           <SideBar></SideBar>
         </div>
         <div className="">
-          <PostContainer></PostContainer>
+          <Outlet />
         </div>
       </div>
     </div>

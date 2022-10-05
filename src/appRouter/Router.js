@@ -4,15 +4,20 @@ import SignUp from "../component/SignUpPage/SignUpPage";
 import NotFound from "../component/NotFoundPage/NotFound";
 import HomePage from "../component/HomePage/HomePage";
 import StorePage from "../container/storeContainer";
-
+import CreatePost from "../container/Create/createPost";
+import PostContainer from "../container/postContainer";
 const AppRouter = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<HomePage />}></Route>
+        <Route path="/" element={<HomePage />}>
+          <Route index element={<PostContainer />}></Route>
+          <Route path="/viewStore" element={<StorePage />}></Route>
+          <Route path="/createPost" element={<CreatePost />}></Route>
+        </Route>
         <Route path="/login" element={<Login />}></Route>
         <Route path="/signUp" element={<SignUp />}></Route>
-        <Route path="/viewStore" element={<StorePage />}></Route>
+
         <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>

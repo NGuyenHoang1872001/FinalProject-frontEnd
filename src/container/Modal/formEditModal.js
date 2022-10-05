@@ -38,16 +38,16 @@ const FormEdit = ({ postId, payload }) => {
           <form onSubmit={handleSubmit()}>
             <div className="flex flex-col gap-4">
               <input
-                className="border rounder-xl w-80 p-2"
-                value={payload.cover}
+                className="input input-bordered w-full max-w-xs"
+                placeholder={payload.cover}
               ></input>
               <input
-                className="border rounder-xl w-80 p-2"
-                value={payload.title}
+                className="input input-bordered w-full max-w-xs"
+                placeholder={payload.title}
               ></input>
               <input
-                className="border rounder-xl w-80 p-2"
-                value={payload.store}
+                className="input input-bordered w-full max-w-xs"
+                placeholder={payload.store}
               ></input>
             </div>
           </form>

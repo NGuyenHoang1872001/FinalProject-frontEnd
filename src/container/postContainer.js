@@ -23,7 +23,7 @@ const PostContainer = () => {
       setPost(postData);
     } catch (error) {
       console.log(
-        "🚀 ~ file: HomePage.js ~ line 11 ~ handleGetAllPost ~ error",
+        "🚀 ~ file: postContainer.js ~ line 25 ~ getAllPost ~ error",
         error
       );
     }
@@ -43,17 +43,6 @@ const PostContainer = () => {
         error
       );
     }
-  };
-
-  const createPost = async (req, res) => {
-    try {
-      const author = authLogin;
-      const title = document.querySelector("#TitleInput").value;
-      const store = document.querySelector("#StoreInput").value;
-      const payload = { author, title, store };
-      const response = await handleCreatePost(payload);
-      getAllPost();
-    } catch (error) {}
   };
 
   const deletePost = async (postId) => {
@@ -81,23 +70,6 @@ const PostContainer = () => {
 
   return (
     <div className="flex flex-col p-[20px] items-center">
-      <div>
-        <div>
-          <textarea
-            id="TitleInput"
-            className="textarea textarea-accent  w-[80vw] "
-            placeholder="What do you think"
-          ></textarea>
-          <textarea
-            id="StoreInput"
-            className="textarea textarea-accent  w-[80vw] "
-            placeholder="Store"
-          ></textarea>
-        </div>
-        <div>
-          <button onClick={() => createPost()}>Create Post</button>
-        </div>
-      </div>
       <div>
         {post.data &&
           post.data.map((rows) => (
