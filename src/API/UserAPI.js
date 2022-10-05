@@ -37,13 +37,14 @@ const handleCreatePost = async (payload) => {
   return createPost;
 };
 
-const handleDeletePost = async (postId) => {
-  const post = postId.postId;
+const handleDeletePost = async (post) => {
+  const postId = post;
   console.log(
-    "🚀 ~ file: UserAPI.js ~ line 42 ~ handleDeletePost ~ post",
-    post
+    "🚀 ~ file: UserAPI.js ~ line 42 ~ handleDeletePost ~ postId",
+    postId
   );
-  const URL = `http://localhost:3001/routerAPI/deletePost/${post}`;
+
+  const URL = `http://localhost:3001/routerAPI/deletePost/${postId}`;
   const deletePost = await axios.delete(URL);
 };
 
@@ -57,6 +58,11 @@ const handleGetOnePost = async (postId) => {
   const getOnePost = await axios.get(URL);
   return getOnePost.data;
 };
+
+const handleUpdatePost = async (payload, postId) => {
+  const URL = `http://localhost:3001/routerAPI/updatePost/${postId}`;
+  const updatePost = await axios.put(URL, payload);
+};
 export {
   handleRegisterUser,
   handleLoginUser,
@@ -66,4 +72,5 @@ export {
   handleCreatePost,
   handleDeletePost,
   handleGetOnePost,
+  handleUpdatePost,
 };

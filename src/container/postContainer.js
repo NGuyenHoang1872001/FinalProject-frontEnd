@@ -2,12 +2,13 @@ import {
   handleGetAllPost,
   handleCreatePost,
   handleGetOnePost,
+  handleDeletePost,
 } from "../API/UserAPI";
 
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-import AcceptModal from "./Modal/acceptModal";
+
 import FormEdit from "./Modal/formEditModal";
 
 const PostContainer = () => {
@@ -45,21 +46,36 @@ const PostContainer = () => {
     }
   };
 
-  const deletePost = async (postId) => {
+  const getPostId = async (postId) => {
     try {
       setPostId(postId);
-    } catch (error) {}
+    } catch (error) {
+      console.log(
+        "🚀 ~ file: postContainer.js ~ line 55 ~ deletePost ~ error",
+        error
+      );
+    }
+  };
+  const deletePost = async () => {
+    const post = postId;
+    console.log(
+      "🚀 ~ file: postContainer.js ~ line 61 ~ deletePost ~ post",
+      post
+    );
+    const response = await handleDeletePost(post);
+    getAllPost();
   };
 
   const editPost = async (postId) => {
     try {
-      setPostId(postId);
+      const post = postId;
       const payload = await handleGetOnePost(postId);
       console.log(
-        "🚀 ~ file: postContainer.js ~ line 69 ~ editPost ~ payload",
+        "🚀 ~ file: postContainer.js ~ line 58 ~ editPost ~ payload",
         payload
       );
-      setPostData(payload);
+
+      navigate("/updatePost", { state: { payload: payload, postId: postId } });
     } catch (error) {
       console.log(
         "🚀 ~ file: postContainer.js ~ line 76 ~ editPost ~ error",
@@ -68,8 +84,17 @@ const PostContainer = () => {
     }
   };
 
+  const createPost = () => {
+    navigate("/createPost");
+  };
+
   return (
     <div className="flex flex-col p-[20px] items-center">
+      <div>
+        <button className="btn btn-success" onClick={() => createPost()}>
+          Create Post
+        </button>
+      </div>
       <div>
         {post.data &&
           post.data.map((rows) => (
@@ -114,7 +139,7 @@ const PostContainer = () => {
                     <label
                       htmlFor="my-modal-3"
                       className=""
-                      onClick={() => deletePost(rows._id)}
+                      onClick={() => getPostId(rows._id)}
                     >
                       delete
                     </label>
@@ -147,8 +172,33 @@ const PostContainer = () => {
             </div>
           ))}
       </div>
-      <AcceptModal postId={postId}></AcceptModal>
-      <FormEdit postId={postId} payload={postData}></FormEdit>
+      <div>
+        <input type="checkbox" id="my-modal-3" className="modal-toggle" />
+        <div className="modal">
+          <div className="modal-box relative">
+            <label
+              htmlFor="my-modal-3"
+              className="btn btn-sm btn-circle absolute right-2 top-2"
+            >
+              ✕
+            </label>
+            <h3 className="text-lg font-bold">Are you sure ?</h3>
+            <div className="flex row justify-center gap-3">
+              <label
+                htmlFor="my-modal-3"
+                className="border-2 width 30px"
+                onClick={() => deletePost()}
+              >
+                Yes
+              </label>
+              <label htmlFor="my-modal-3" className="border-2 width 30px">
+                {" "}
+                No
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

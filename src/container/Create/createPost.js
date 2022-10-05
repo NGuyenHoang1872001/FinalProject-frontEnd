@@ -29,7 +29,7 @@ const CreatePost = () => {
       const title = data.title;
       const cover = data.cover;
       const store = data.store;
-      const payload = { author, title, store };
+      const payload = { author, title, cover, store };
       const response = await handleCreatePost(payload);
       navigate("/");
     } catch (error) {}
