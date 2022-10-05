@@ -1,15 +1,21 @@
-import { handleGetAllPost, handleCreatePost } from "../API/UserAPI";
+import {
+  handleGetAllPost,
+  handleCreatePost,
+  handleGetOnePost,
+} from "../API/UserAPI";
 
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import AcceptModal from "./Modal/acceptModal";
+import FormEdit from "./Modal/formEditModal";
 
 const PostContainer = () => {
   const authLogin = useSelector((state) => state.auth.id);
   const navigate = useNavigate();
   const [post, setPost] = useState([]);
   const [postId, setPostId] = useState([]);
+  const [postData, setPostData] = useState([]);
 
   const getAllPost = async () => {
     try {
@@ -45,10 +51,6 @@ const PostContainer = () => {
       const title = document.querySelector("#TitleInput").value;
       const store = document.querySelector("#StoreInput").value;
       const payload = { author, title, store };
-      console.log(
-        "🚀 ~ file: postContainer.js ~ line 45 ~ createPost ~ payload",
-        payload
-      );
       const response = await handleCreatePost(payload);
       getAllPost();
     } catch (error) {}
@@ -59,6 +61,24 @@ const PostContainer = () => {
       setPostId(postId);
     } catch (error) {}
   };
+
+  const editPost = async (postId) => {
+    try {
+      setPostId(postId);
+      const payload = await handleGetOnePost(postId);
+      console.log(
+        "🚀 ~ file: postContainer.js ~ line 69 ~ editPost ~ payload",
+        payload
+      );
+      setPostData(payload);
+    } catch (error) {
+      console.log(
+        "🚀 ~ file: postContainer.js ~ line 76 ~ editPost ~ error",
+        error
+      );
+    }
+  };
+
   return (
     <div className="flex flex-col p-[20px] items-center">
       <div>
@@ -128,7 +148,12 @@ const PostContainer = () => {
                     </label>
                   </li>
                   <li>
-                    <button>edit</button>
+                    <label
+                      htmlFor="my-modal-4"
+                      onClick={() => editPost(rows._id)}
+                    >
+                      edit
+                    </label>
                   </li>
                 </ul>
               </div>
@@ -151,6 +176,7 @@ const PostContainer = () => {
           ))}
       </div>
       <AcceptModal postId={postId}></AcceptModal>
+      <FormEdit postId={postId} payload={postData}></FormEdit>
     </div>
   );
 };

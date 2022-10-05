@@ -46,6 +46,17 @@ const handleDeletePost = async (postId) => {
   const URL = `http://localhost:3001/routerAPI/deletePost/${post}`;
   const deletePost = await axios.delete(URL);
 };
+
+const handleGetOnePost = async (postId) => {
+  const getPostId = postId;
+  console.log(
+    "🚀 ~ file: UserAPI.js ~ line 52 ~ handleGetOnePost ~ getPostId",
+    getPostId
+  );
+  const URL = `http://localhost:3001/routerAPI/getOnePost/${getPostId}`;
+  const getOnePost = await axios.get(URL);
+  return getOnePost.data;
+};
 export {
   handleRegisterUser,
   handleLoginUser,
@@ -54,4 +65,5 @@ export {
   handleGetProductStore,
   handleCreatePost,
   handleDeletePost,
+  handleGetOnePost,
 };
