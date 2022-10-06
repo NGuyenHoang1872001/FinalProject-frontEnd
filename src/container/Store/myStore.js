@@ -6,7 +6,7 @@ const MyStore = () => {
   const authLogin = useSelector((state) => state.auth.id);
   const [store, setStore] = useState([]);
   const navigate = useNavigate();
-  console.log("🚀 ~ file: myStore.js ~ line 7 ~ MyStore ~ store", store);
+
   useEffect(() => {
     getAllStore();
   }, []);
@@ -25,6 +25,12 @@ const MyStore = () => {
   };
   const createStore = () => {
     navigate("/createStore");
+  };
+
+  const updateStore = (storeId, cover, title) => {
+    const payload = { storeId, cover, title };
+
+    navigate("/updateStore", { state: { payload: payload } });
   };
   return (
     <div>
@@ -81,8 +87,9 @@ const MyStore = () => {
                           </li>
                           <li>
                             <label
-                              htmlFor="my-modal-4"
-                              //   onClick={() => editPost(rows._id)}
+                              onClick={() =>
+                                updateStore(store._id, store.cover, store.title)
+                              }
                             >
                               edit
                             </label>

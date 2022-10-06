@@ -83,6 +83,25 @@ const handleCreateStore = async (payload) => {
     );
   }
 };
+const handleUpdateStore = async (payload, storeId) => {
+  console.log(
+    "🚀 ~ file: UserAPI.js ~ line 87 ~ handleUpdateStore ~ payload",
+    payload
+  );
+  console.log(
+    "🚀 ~ file: UserAPI.js ~ line 87 ~ handleUpdateStore ~ storeId",
+    storeId
+  );
+  try {
+    const URL = `http://localhost:3001/routerAPI/updateStore/${storeId}`;
+    const response = axios.put(URL, payload);
+  } catch (error) {
+    console.log(
+      "🚀 ~ file: UserAPI.js ~ line 99 ~ handleUpdateStore ~ error",
+      error
+    );
+  }
+};
 export {
   handleRegisterUser,
   handleLoginUser,
@@ -95,4 +114,5 @@ export {
   handleUpdatePost,
   handleGetOwnerStore,
   handleCreateStore,
+  handleUpdateStore,
 };
