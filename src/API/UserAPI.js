@@ -63,6 +63,26 @@ const handleUpdatePost = async (payload, postId) => {
   const URL = `http://localhost:3001/routerAPI/updatePost/${postId}`;
   const updatePost = await axios.put(URL, payload);
 };
+
+const handleGetOwnerStore = async (ownerId) => {
+  try {
+    const URL = `http://localhost:3001/routerAPI/getOwnerStore/${ownerId}`;
+    const getOwnerStore = await axios.get(URL);
+    return getOwnerStore;
+  } catch (error) {}
+};
+
+const handleCreateStore = async (payload) => {
+  try {
+    const URL = `http://localhost:3001/routerAPI/createStore`;
+    const response = await axios.post(URL, payload);
+  } catch (error) {
+    console.log(
+      "🚀 ~ file: UserAPI.js ~ line 80 ~ handleCreateStore ~ error",
+      error
+    );
+  }
+};
 export {
   handleRegisterUser,
   handleLoginUser,
@@ -73,4 +93,6 @@ export {
   handleDeletePost,
   handleGetOnePost,
   handleUpdatePost,
+  handleGetOwnerStore,
+  handleCreateStore,
 };

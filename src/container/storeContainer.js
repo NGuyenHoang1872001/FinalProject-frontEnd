@@ -48,6 +48,7 @@ const StoreContainer = () => {
           </div>
         )}
       </div>
+      <div></div>
 
       <div className="flex flex-row ">
         {productDetail.data &&

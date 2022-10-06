@@ -7,6 +7,8 @@ import StorePage from "../container/storeContainer";
 import CreatePost from "../container/Create/createPost";
 import PostContainer from "../container/postContainer";
 import UpdatePostPage from "../container/Update/UpdatePost";
+import MyStore from "../container/Store/myStore";
+import CreateStore from "../container/Create/createStore";
 const AppRouter = () => {
   return (
     <BrowserRouter>
@@ -16,6 +18,8 @@ const AppRouter = () => {
           <Route path="/viewStore" element={<StorePage />}></Route>
           <Route path="/createPost" element={<CreatePost />}></Route>
           <Route path="/updatePost" element={<UpdatePostPage />}></Route>
+          <Route path="/viewOwnerStore" element={<MyStore />}></Route>
+          <Route path="/createStore" element={<CreateStore />}></Route>
         </Route>
         <Route path="/login" element={<Login />}></Route>
         <Route path="/signUp" element={<SignUp />}></Route>
