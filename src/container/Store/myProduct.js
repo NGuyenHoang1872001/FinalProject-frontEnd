@@ -1,22 +1,16 @@
 import { useEffect, useState } from "react";
-import { handleGetStore, handleGetProductStore } from "../API/UserAPI";
+import { handleGetStore, handleGetProductStore } from "../../API/UserAPI";
 import { useLocation, Navigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-const StoreContainer = () => {
+const MyProduct = () => {
   const authLogin = useSelector((state) => state.auth.id);
 
-  const location = useLocation();
   const { state } = useLocation();
+  const location = useLocation();
+
   const { store_Id } = state;
-  console.log(
-    "🚀 ~ file: storeContainer.js ~ line 11 ~ StoreContainer ~ store_Id",
-    store_Id
-  );
+
   const { authorId } = state;
-  console.log(
-    "🚀 ~ file: storeContainer.js ~ line 13 ~ StoreContainer ~ authorId ",
-    authorId
-  );
 
   const [storeDetail, setStoreDetail] = useState([]);
 
@@ -45,16 +39,15 @@ const StoreContainer = () => {
     getProductStore();
     getDetailStore();
   }, []);
-  return authLogin != authorId ? (
+  return authLogin == authorId ? (
     <div>
-      <div>Hello StoreContainer</div>
       <div>
         {storeDetail.data && (
           <div>
-            <p>{storeDetail.data._id}</p>
-            <p>{storeDetail.data.title}</p>
-            <p>{storeDetail.data.cover}</p>
-            <p>{storeDetail.data.ownerId}</p>
+            <p>ID Shop: {storeDetail.data._id}</p>
+            <p>{storeDetail.data.name}</p>
+            <p>{storeDetail.data.email}</p>
+            <p>{storeDetail.data.phoneNumber}</p>
           </div>
         )}
       </div>
@@ -73,8 +66,8 @@ const StoreContainer = () => {
       </div>
     </div>
   ) : (
-    <Navigate to="/viewStore" replace state={{ from: location }} />
+    <Navigate to="/viewMyStore" replace state={{ from: location }} />
   );
 };
 
-export default StoreContainer;
+export default MyProduct;

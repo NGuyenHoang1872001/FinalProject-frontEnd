@@ -1,10 +1,15 @@
-import { handleGetOwnerStore } from "../../API/UserAPI";
+import { handleGetOwnerStore, handleDeleteStore } from "../../API/UserAPI";
 import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+
 const MyStore = () => {
   const authLogin = useSelector((state) => state.auth.id);
   const [store, setStore] = useState([]);
+  console.log("🚀 ~ file: myStore.js ~ line 9 ~ MyStore ~ store", store);
+  const [storeId, setStoreId] = useState([]);
+  console.log("🚀 ~ file: myStore.js ~ line 9 ~ MyStore ~ storeId", storeId);
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -27,10 +32,46 @@ const MyStore = () => {
     navigate("/createStore");
   };
 
-  const updateStore = (storeId, cover, title) => {
-    const payload = { storeId, cover, title };
+  const updateStore = (storeId, name, email, phoneNumber) => {
+    const payload = { storeId, name, email, phoneNumber };
 
     navigate("/updateStore", { state: { payload: payload } });
+  };
+  const getStore = async (store_Id, authorId) => {
+    try {
+      const store = store_Id;
+
+      console.log("🚀 ~ file: myStore.js ~ line 39 ~ getStore ~ store", store);
+
+      const author = authorId;
+      console.log(
+        "🚀 ~ file: myStore.js ~ line 42 ~ getStore ~ author",
+        author
+      );
+
+      navigate("/viewMyProduct", {
+        state: { store_Id: store, authorId: author },
+      });
+    } catch (error) {
+      console.log("🚀 ~ file: myStore.js ~ line 55 ~ getStore ~ error", error);
+    }
+  };
+  const getStoreId = async (storeId) => {
+    try {
+      setStoreId(storeId);
+    } catch (error) {
+      console.log(
+        "🚀 ~ file: postContainer.js ~ line 55 ~ deletePost ~ error",
+        error
+      );
+    }
+  };
+
+  const deleteStore = async () => {
+    const store = storeId;
+
+    const response = await handleDeleteStore(store);
+    getAllStore();
   };
   return (
     <div>
@@ -80,7 +121,7 @@ const MyStore = () => {
                             <label
                               htmlFor="my-modal-3"
                               className=""
-                              //   onClick={() => getPostId(rows._id)}
+                              onClick={() => getStoreId(store._id)}
                             >
                               delete
                             </label>
@@ -88,7 +129,12 @@ const MyStore = () => {
                           <li>
                             <label
                               onClick={() =>
-                                updateStore(store._id, store.cover, store.title)
+                                updateStore(
+                                  store._id,
+                                  store.name,
+                                  store.email,
+                                  store.phoneNumber
+                                )
                               }
                             >
                               edit
@@ -98,14 +144,47 @@ const MyStore = () => {
                       </div>
                     </div>
 
-                    <p key={store._id}>Cover: {store._id}</p>
-                    <p>Title: {store.title}</p>
-                    <p>Cover: {store.cover}</p>
+                    <p key={store._id}>ID: {store._id}</p>
+                    <p>Name: {store.name}</p>
+                    <p>Email: {store.email}</p>
+                    <p>PhoneNumber: {store.phoneNumber}</p>
                   </div>
-                  <button className="border m-[20px] rounded">Show</button>
+                  <button
+                    className="border m-[20px] rounded"
+                    onClick={() => getStore(store._id, store.ownerId)}
+                  >
+                    Show
+                  </button>
                 </div>
               </div>
             ))}
+        </div>
+      </div>
+      <div>
+        <input type="checkbox" id="my-modal-3" className="modal-toggle" />
+        <div className="modal">
+          <div className="modal-box relative">
+            <label
+              htmlFor="my-modal-3"
+              className="btn btn-sm btn-circle absolute right-2 top-2"
+            >
+              ✕
+            </label>
+            <h3 className="text-lg font-bold">Are you sure ?</h3>
+            <div className="flex row justify-center gap-3">
+              <label
+                htmlFor="my-modal-3"
+                className="border-2 width 30px"
+                onClick={() => deleteStore()}
+              >
+                Yes
+              </label>
+              <label htmlFor="my-modal-3" className="border-2 width 30px">
+                {" "}
+                No
+              </label>
+            </div>
+          </div>
         </div>
       </div>
     </div>

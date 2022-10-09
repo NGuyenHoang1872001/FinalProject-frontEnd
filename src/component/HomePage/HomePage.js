@@ -7,6 +7,7 @@ import { useSelector } from "react-redux";
 const HomePage = () => {
   const location = useLocation();
   const dataLogin = useSelector((state) => state.auth);
+
   return Object.keys(dataLogin).length !== 0 ? (
     <div className="flex flex-col">
       <div className="">

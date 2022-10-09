@@ -102,6 +102,13 @@ const handleUpdateStore = async (payload, storeId) => {
     );
   }
 };
+
+const handleDeleteStore = async (storeId) => {
+  try {
+    const URL = `http://localhost:3001/routerAPI/deleteStore/${storeId}`;
+    const response = await axios.delete(URL);
+  } catch (error) {}
+};
 export {
   handleRegisterUser,
   handleLoginUser,
@@ -115,4 +122,5 @@ export {
   handleGetOwnerStore,
   handleCreateStore,
   handleUpdateStore,
+  handleDeleteStore,
 };

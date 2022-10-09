@@ -7,8 +7,9 @@ import { handleUpdateStore } from "../../API/UserAPI";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 const schemaValidation = yup.object().shape({
-  title: yup.string().required(),
-  cover: yup.string().required(),
+  name: yup.string().required(),
+  email: yup.string().required().email(),
+  phoneNumber: yup.number().required(),
 });
 
 const UpdateStorePage = () => {
@@ -23,14 +24,14 @@ const UpdateStorePage = () => {
   } = useForm({
     resolver: yupResolver(schemaValidation),
   });
-  const store = payload.storeId;
+
   const updateStore = async (data) => {
     try {
-      const storeId = store;
+      const store = payload.storeId;
 
-      const payload = data;
+      const updateData = data;
 
-      const response = await handleUpdateStore(payload, storeId);
+      const response = await handleUpdateStore(updateData, store);
       navigate("/viewOwnerStore");
     } catch (error) {
       console.log(
@@ -44,24 +45,35 @@ const UpdateStorePage = () => {
     <div>
       <form onSubmit={handleSubmit(updateStore)}>
         <div>
-          <p>title</p>
+          <p>Name</p>
           <textarea
             id="TitleInput"
             className="textarea textarea-accent  w-[80vw] "
-            defaultValue={payload.title}
-            {...register("title")}
+            defaultValue={payload.name}
+            {...register("name")}
           ></textarea>
-          <p>cover</p>
+          <span className="text-xs text-red">{errors?.name?.message}</span>
+          <p>Email</p>
           <textarea
-            id="CoverInput"
+            id="email"
             className="textarea textarea-accent  w-[80vw] "
-            defaultValue={payload.cover}
-            {...register("cover")}
+            defaultValue={payload.email}
+            {...register("email")}
           ></textarea>
+          <span className="text-xs text-red">{errors?.email?.message}</span>
+          <p>PhoneNumber</p>
+          <textarea
+            id="phoneNumber"
+            className="textarea textarea-accent  w-[80vw] "
+            defaultValue={payload.phoneNumber}
+            {...register("phoneNumber")}
+          ></textarea>
+          <span className="text-xs text-red">
+            {errors?.phoneNumber?.message}
+          </span>
         </div>
-        <div>
-          <button>Update Store</button>
-        </div>
+
+        <button>updateStore</button>
       </form>
     </div>
   );

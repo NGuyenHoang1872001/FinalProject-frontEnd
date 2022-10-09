@@ -8,8 +8,9 @@ import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 const schemaValidation = yup.object().shape({
-  title: yup.string().required(),
-  cover: yup.string().required(),
+  name: yup.string().required(),
+  email: yup.string().required().email(),
+  phoneNumber: yup.number().required(),
 });
 
 const CreateStore = () => {
@@ -25,13 +26,15 @@ const CreateStore = () => {
   const createStore = async (data) => {
     try {
       const ownerId = authLogin;
-      const title = data.title;
-      const cover = data.cover;
-      const payload = { ownerId, title, cover };
+      const name = data.name;
+      const email = data.email;
+      const phoneNumber = data.phoneNumber;
+      const payload = { name, email, phoneNumber, ownerId };
       console.log(
-        "🚀 ~ file: createStore.js ~ line 31 ~ createStore ~ payload",
+        "🚀 ~ file: createStore.js ~ line 33 ~ createStore ~ payload",
         payload
       );
+
       const response = await handleCreateStore(payload);
       navigate("/viewOwnerStore");
     } catch (error) {}
@@ -41,16 +44,22 @@ const CreateStore = () => {
       <form onSubmit={handleSubmit(createStore)}>
         <div>
           <textarea
-            id="TitleInput"
+            id="NameInput"
             className="textarea textarea-accent  w-[80vw] "
-            placeholder="Title"
-            {...register("title")}
+            placeholder="Name"
+            {...register("name")}
           ></textarea>
           <textarea
-            id="CoverInput"
+            id="EmailInput"
             className="textarea textarea-accent  w-[80vw] "
-            placeholder="Cover"
-            {...register("cover")}
+            placeholder="Email"
+            {...register("email")}
+          ></textarea>
+          <textarea
+            id="PhoneNumberInput"
+            className="textarea textarea-accent  w-[80vw] "
+            placeholder="PhoneNumber"
+            {...register("phoneNumber")}
           ></textarea>
         </div>
         <div>

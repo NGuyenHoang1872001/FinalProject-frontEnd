@@ -15,6 +15,9 @@ const PostContainer = () => {
   const [post, setPost] = useState([]);
   const [postId, setPostId] = useState([]);
   const [postData, setPostData] = useState([]);
+  const [storeId, setStoreId] = useState([]);
+
+  const [authorID, setAuthorId] = useState([]);
 
   const getAllPost = async () => {
     try {
@@ -32,10 +35,15 @@ const PostContainer = () => {
     getAllPost();
   }, []);
 
-  const getStore = async (store_Id) => {
+  const getStore = async (store_Id, authorId) => {
     try {
-      const storeId = store_Id;
-      navigate("/viewStore", { state: { store_Id: storeId } });
+      const store = store_Id;
+
+      const author = authorId;
+
+      navigate("/viewStore", {
+        state: { store_Id: store, authorId: author },
+      });
     } catch (error) {
       console.log(
         "🚀 ~ file: postContainer.js ~ line 33 ~ getStore ~ error",
@@ -162,7 +170,7 @@ const PostContainer = () => {
                 </button>
                 <button
                   className="border rounded w-[30vw] m-[2px]"
-                  onClick={() => getStore(rows.store)}
+                  onClick={() => getStore(rows.store, rows.author)}
                 >
                   Store
                 </button>
