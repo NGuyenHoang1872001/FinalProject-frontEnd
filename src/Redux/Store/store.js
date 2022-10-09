@@ -19,8 +19,8 @@ const persistConfig = {
   storage,
 };
 const persistConfigStoreID = {
-  key: "root",
-  version: 1,
+  key: "root2",
+  version: 2,
   storage,
 };
 const persistedReducer = persistReducer(persistConfig, loggedInData);

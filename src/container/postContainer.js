@@ -7,17 +7,15 @@ import {
 
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { setStoreIdProduct } from "../Redux/features/storeIdProduct";
 
 const PostContainer = () => {
+  const dispatch = useDispatch();
   const authLogin = useSelector((state) => state.auth.id);
   const navigate = useNavigate();
   const [post, setPost] = useState([]);
   const [postId, setPostId] = useState([]);
-  const [postData, setPostData] = useState([]);
-  const [storeId, setStoreId] = useState([]);
-
-  const [authorID, setAuthorId] = useState([]);
 
   const getAllPost = async () => {
     try {
@@ -35,15 +33,13 @@ const PostContainer = () => {
     getAllPost();
   }, []);
 
-  const getStore = async (store_Id, authorId) => {
+  const getStore = async (store_Id) => {
     try {
-      const store = store_Id;
+      const store = { store_Id };
 
-      const author = authorId;
+      dispatch(setStoreIdProduct(store));
 
-      navigate("/viewStore", {
-        state: { store_Id: store, authorId: author },
-      });
+      navigate("/viewStore");
     } catch (error) {
       console.log(
         "🚀 ~ file: postContainer.js ~ line 33 ~ getStore ~ error",
@@ -170,7 +166,7 @@ const PostContainer = () => {
                 </button>
                 <button
                   className="border rounded w-[30vw] m-[2px]"
-                  onClick={() => getStore(rows.store, rows.author)}
+                  onClick={() => getStore(rows.store)}
                 >
                   Store
                 </button>

@@ -7,10 +7,7 @@ import { setStoreIdProduct } from "../../Redux/features/storeIdProduct";
 const MyStore = () => {
   const dispatch = useDispatch();
   const authLogin = useSelector((state) => state.auth.id);
-  console.log(
-    "🚀 ~ file: myStore.js ~ line 10 ~ MyStore ~ authLogin",
-    authLogin
-  );
+
   const [store, setStore] = useState([]);
   console.log("🚀 ~ file: myStore.js ~ line 9 ~ MyStore ~ store", store);
   const [storeId, setStoreId] = useState([]);
@@ -46,7 +43,7 @@ const MyStore = () => {
   const getStore = async (store_Id) => {
     try {
       const store = { store_Id };
-      console.log("🚀 ~ file: myStore.js ~ line 45 ~ getStore ~ store", store);
+
       dispatch(setStoreIdProduct(store));
       navigate("/viewMyProduct", {
         state: { store_Id: store },
@@ -55,6 +52,7 @@ const MyStore = () => {
       console.log("🚀 ~ file: myStore.js ~ line 55 ~ getStore ~ error", error);
     }
   };
+
   const getStoreId = async (storeId) => {
     try {
       setStoreId(storeId);

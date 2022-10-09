@@ -3,12 +3,11 @@ import { handleGetStore, handleGetProductStore } from "../API/UserAPI";
 import { useLocation, Navigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 const StoreContainer = () => {
-  const authLogin = useSelector((state) => state.auth.id);
-
-  const location = useLocation();
-  const { state } = useLocation();
-  const { store_Id } = state;
-  const { authorId } = state;
+  const storeOfProduct = useSelector((state) => state.storeIdProduct.store_Id);
+  console.log(
+    "🚀 ~ file: storeContainer.js ~ line 7 ~ StoreContainer ~ storeOfProduct",
+    storeOfProduct
+  );
 
   const [storeDetail, setStoreDetail] = useState([]);
 
@@ -16,14 +15,14 @@ const StoreContainer = () => {
 
   const getDetailStore = async () => {
     try {
-      const getStore = await handleGetStore(store_Id);
+      const getStore = await handleGetStore(storeOfProduct);
       setStoreDetail(getStore);
     } catch (error) {}
   };
 
   const getProductStore = async () => {
     try {
-      const getProduct = await handleGetProductStore(store_Id);
+      const getProduct = await handleGetProductStore(storeOfProduct);
 
       setProductDetail(getProduct);
     } catch (error) {
@@ -37,16 +36,16 @@ const StoreContainer = () => {
     getProductStore();
     getDetailStore();
   }, []);
-  return authLogin != authorId ? (
+  return (
     <div>
       <div>Hello StoreContainer</div>
       <div>
         {storeDetail.data && (
           <div>
-            <p>{storeDetail.data._id}</p>
-            <p>{storeDetail.data.title}</p>
-            <p>{storeDetail.data.cover}</p>
-            <p>{storeDetail.data.ownerId}</p>
+            <p>ID Shop: {storeDetail.data._id}</p>
+            <p>{storeDetail.data.name}</p>
+            <p>{storeDetail.data.email}</p>
+            <p>{storeDetail.data.phoneNumber}</p>
           </div>
         )}
       </div>
@@ -64,8 +63,6 @@ const StoreContainer = () => {
           ))}
       </div>
     </div>
-  ) : (
-    <Navigate to="/viewStore" replace state={{ from: location }} />
   );
 };
 

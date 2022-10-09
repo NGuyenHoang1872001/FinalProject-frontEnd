@@ -121,6 +121,24 @@ const handleCreateProduct = async (payload) => {
     );
   }
 };
+
+const handleUpdateProduct = async (payload, productId) => {
+  try {
+    const URL = `http://localhost:3001/routerAPI/updateProduct/${productId}`;
+    const response = await axios.put(URL, payload);
+  } catch (error) {
+    console.log(
+      "🚀 ~ file: UserAPI.js ~ line 130 ~ handleUpdateProduct ~ error",
+      error
+    );
+  }
+};
+const handleDeleteProduct = async (productId) => {
+  try {
+    const URL = `http://localhost:3001/routerAPI/deleteProduct/${productId}`;
+    const response = await axios.delete(URL);
+  } catch (error) {}
+};
 export {
   handleRegisterUser,
   handleLoginUser,
@@ -136,4 +154,6 @@ export {
   handleUpdateStore,
   handleDeleteStore,
   handleCreateProduct,
+  handleUpdateProduct,
+  handleDeleteProduct,
 };
