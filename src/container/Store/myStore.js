@@ -1,10 +1,16 @@
 import { handleGetOwnerStore, handleDeleteStore } from "../../API/UserAPI";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { setStoreIdProduct } from "../../Redux/features/storeIdProduct";
 
 const MyStore = () => {
+  const dispatch = useDispatch();
   const authLogin = useSelector((state) => state.auth.id);
+  console.log(
+    "🚀 ~ file: myStore.js ~ line 10 ~ MyStore ~ authLogin",
+    authLogin
+  );
   const [store, setStore] = useState([]);
   console.log("🚀 ~ file: myStore.js ~ line 9 ~ MyStore ~ store", store);
   const [storeId, setStoreId] = useState([]);
@@ -37,20 +43,13 @@ const MyStore = () => {
 
     navigate("/updateStore", { state: { payload: payload } });
   };
-  const getStore = async (store_Id, authorId) => {
+  const getStore = async (store_Id) => {
     try {
-      const store = store_Id;
-
-      console.log("🚀 ~ file: myStore.js ~ line 39 ~ getStore ~ store", store);
-
-      const author = authorId;
-      console.log(
-        "🚀 ~ file: myStore.js ~ line 42 ~ getStore ~ author",
-        author
-      );
-
+      const store = { store_Id };
+      console.log("🚀 ~ file: myStore.js ~ line 45 ~ getStore ~ store", store);
+      dispatch(setStoreIdProduct(store));
       navigate("/viewMyProduct", {
-        state: { store_Id: store, authorId: author },
+        state: { store_Id: store },
       });
     } catch (error) {
       console.log("🚀 ~ file: myStore.js ~ line 55 ~ getStore ~ error", error);

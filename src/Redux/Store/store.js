@@ -1,5 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 import loggedInData from "../features/auth";
+import storeIdProduct from "../features/storeIdProduct";
 import {
   persistStore,
   persistReducer,
@@ -17,11 +18,18 @@ const persistConfig = {
   version: 1,
   storage,
 };
+const persistConfigStoreID = {
+  key: "root",
+  version: 1,
+  storage,
+};
 const persistedReducer = persistReducer(persistConfig, loggedInData);
+const storeIdOfProduct = persistReducer(persistConfigStoreID, storeIdProduct);
 
 const store = configureStore({
   reducer: {
     auth: persistedReducer,
+    storeIdProduct: storeIdOfProduct,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
@@ -30,5 +38,6 @@ const store = configureStore({
       },
     }),
 });
+
 export const persistor = persistStore(store);
 export default store;

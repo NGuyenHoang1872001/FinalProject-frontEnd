@@ -8,15 +8,7 @@ const StoreContainer = () => {
   const location = useLocation();
   const { state } = useLocation();
   const { store_Id } = state;
-  console.log(
-    "🚀 ~ file: storeContainer.js ~ line 11 ~ StoreContainer ~ store_Id",
-    store_Id
-  );
   const { authorId } = state;
-  console.log(
-    "🚀 ~ file: storeContainer.js ~ line 13 ~ StoreContainer ~ authorId ",
-    authorId
-  );
 
   const [storeDetail, setStoreDetail] = useState([]);
 

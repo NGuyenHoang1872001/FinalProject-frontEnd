@@ -2,15 +2,17 @@ import { useEffect, useState } from "react";
 import { handleGetStore, handleGetProductStore } from "../../API/UserAPI";
 import { useLocation, Navigate } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+
 const MyProduct = () => {
+  const navigate = useNavigate();
   const authLogin = useSelector((state) => state.auth.id);
-
-  const { state } = useLocation();
-  const location = useLocation();
-
-  const { store_Id } = state;
-
-  const { authorId } = state;
+  const storeOfProduct = useSelector((state) => state.storeIdProduct.store_id);
+  console.log(
+    "🚀 ~ file: myProduct.js ~ line 11 ~ MyProduct ~ storeOfProduct",
+    storeOfProduct
+  );
+  const [store, setStoreId] = useState([]);
 
   const [storeDetail, setStoreDetail] = useState([]);
 
@@ -18,14 +20,14 @@ const MyProduct = () => {
 
   const getDetailStore = async () => {
     try {
-      const getStore = await handleGetStore(store_Id);
+      const getStore = await handleGetStore(storeOfProduct);
       setStoreDetail(getStore);
     } catch (error) {}
   };
 
   const getProductStore = async () => {
     try {
-      const getProduct = await handleGetProductStore(store_Id);
+      const getProduct = await handleGetProductStore(storeOfProduct);
 
       setProductDetail(getProduct);
     } catch (error) {
@@ -35,11 +37,15 @@ const MyProduct = () => {
       );
     }
   };
+
+  const createProduct = (storeId) => {
+    navigate("/createProduct", { state: { storeID: storeId } });
+  };
   useEffect(() => {
     getProductStore();
     getDetailStore();
   }, []);
-  return authLogin == authorId ? (
+  return (
     <div>
       <div>
         {storeDetail.data && (
@@ -51,13 +57,22 @@ const MyProduct = () => {
           </div>
         )}
       </div>
-      <div></div>
+      <div>
+        <button
+          className="btn btn-outline btn-success"
+          onClick={() => createProduct(storeDetail.data._id)}
+        >
+          create Product
+        </button>
+      </div>
 
       <div className="flex flex-row ">
         {productDetail.data &&
           productDetail.data.map((products) => (
             <div className="border m-[20px] rounded w-[20vw] p-4">
-              <p key={products._id}>{products.title}</p>
+              <p key={products._id}>{products.name}</p>
+              <p>{products.cover}</p>
+              <p>{products.description}</p>
 
               <p>{products.price}</p>
               <button className="border m-[20px] rounded">Buy</button>
@@ -65,8 +80,6 @@ const MyProduct = () => {
           ))}
       </div>
     </div>
-  ) : (
-    <Navigate to="/viewMyStore" replace state={{ from: location }} />
   );
 };
 

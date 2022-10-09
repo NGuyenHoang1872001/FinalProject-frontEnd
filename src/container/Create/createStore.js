@@ -4,7 +4,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import InputForm from "../../component/input/input";
 import { handleCreateStore } from "../../API/UserAPI";
 import { useSelector } from "react-redux";
-
+import { useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 const schemaValidation = yup.object().shape({

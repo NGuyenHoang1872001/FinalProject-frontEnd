@@ -109,6 +109,18 @@ const handleDeleteStore = async (storeId) => {
     const response = await axios.delete(URL);
   } catch (error) {}
 };
+
+const handleCreateProduct = async (payload) => {
+  try {
+    const URL = `http://localhost:3001/routerAPI/createProduct`;
+    const response = await axios.post(URL, payload);
+  } catch (error) {
+    console.log(
+      "🚀 ~ file: UserAPI.js ~ line 118 ~ handleCreateProduct ~ error",
+      error
+    );
+  }
+};
 export {
   handleRegisterUser,
   handleLoginUser,
@@ -123,4 +135,5 @@ export {
   handleCreateStore,
   handleUpdateStore,
   handleDeleteStore,
+  handleCreateProduct,
 };
