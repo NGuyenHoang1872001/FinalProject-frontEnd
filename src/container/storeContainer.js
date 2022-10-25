@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { handleGetStore, handleGetProductStore } from "../API/UserAPI";
-import { useLocation, Navigate } from "react-router-dom";
+import { useLocation, Navigate, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 const StoreContainer = () => {
   const storeOfProduct = useSelector((state) => state.storeIdProduct.store_Id);
@@ -10,7 +10,7 @@ const StoreContainer = () => {
   );
 
   const [storeDetail, setStoreDetail] = useState([]);
-
+  const navigate = useNavigate();
   const [productDetail, setProductDetail] = useState([]);
 
   const getDetailStore = async () => {
@@ -31,6 +31,12 @@ const StoreContainer = () => {
         error
       );
     }
+  };
+
+  const getInfoCustomer = (quantity, price) => {
+    navigate("/info", {
+      state: { quantityProduct: quantity, priceProduct: price },
+    });
   };
   useEffect(() => {
     getProductStore();
@@ -55,10 +61,18 @@ const StoreContainer = () => {
         {productDetail.data &&
           productDetail.data.map((products) => (
             <div className="border m-[20px] rounded w-[20vw] p-4">
-              <p key={products._id}>{products.title}</p>
+              <p key={products._id}>Name: {products.name}</p>
+              <p>Quantity: {products.quantity}</p>
 
-              <p>{products.price}</p>
-              <button className="border m-[20px] rounded">Buy</button>
+              <p>Price: {products.price}</p>
+              <button
+                className="border m-[20px] rounded"
+                onClick={() =>
+                  getInfoCustomer(products.quantity, products.price)
+                }
+              >
+                Buy
+              </button>
             </div>
           ))}
       </div>

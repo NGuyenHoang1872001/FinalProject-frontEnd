@@ -21,8 +21,16 @@ const MyStore = () => {
   const getAllStore = async (req, res) => {
     try {
       const ownerId = authLogin;
+      console.log(
+        "🚀 ~ file: myStore.js ~ line 24 ~ getAllStore ~ ownerId",
+        ownerId
+      );
 
       const response = await handleGetOwnerStore(ownerId);
+      console.log(
+        "🚀 ~ file: myStore.js ~ line 30 ~ getAllStore ~ response",
+        response
+      );
       setStore(response);
     } catch (error) {
       console.log(

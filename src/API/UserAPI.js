@@ -68,6 +68,10 @@ const handleGetOwnerStore = async (ownerId) => {
   try {
     const URL = `http://localhost:3001/routerAPI/getOwnerStore/${ownerId}`;
     const getOwnerStore = await axios.get(URL);
+    console.log(
+      "🚀 ~ file: UserAPI.js ~ line 71 ~ handleGetOwnerStore ~ getOwnerStore",
+      getOwnerStore
+    );
     return getOwnerStore;
   } catch (error) {}
 };
@@ -114,6 +118,10 @@ const handleCreateProduct = async (payload) => {
   try {
     const URL = `http://localhost:3001/routerAPI/createProduct`;
     const response = await axios.post(URL, payload);
+    console.log(
+      "🚀 ~ file: UserAPI.js ~ line 121 ~ handleCreateProduct ~ payload",
+      payload
+    );
   } catch (error) {
     console.log(
       "🚀 ~ file: UserAPI.js ~ line 118 ~ handleCreateProduct ~ error",
@@ -139,6 +147,14 @@ const handleDeleteProduct = async (productId) => {
     const response = await axios.delete(URL);
   } catch (error) {}
 };
+
+const handleGetDetailUser = async (userId) => {
+  try {
+    const URl = `http://localhost:3001/routerAPI/getDetailUser/${userId}`;
+    const response = await axios.get(URl);
+    return response;
+  } catch (error) {}
+};
 export {
   handleRegisterUser,
   handleLoginUser,
@@ -156,4 +172,5 @@ export {
   handleCreateProduct,
   handleUpdateProduct,
   handleDeleteProduct,
+  handleGetDetailUser,
 };

@@ -11,6 +11,7 @@ const schemaValidation = yup.object().shape({
   name: yup.string().required(),
   cover: yup.string().required(),
   description: yup.string().required(),
+  quantity: yup.number().required(),
   price: yup.number().required(),
 });
 
@@ -18,9 +19,10 @@ const UpdateProduct = () => {
   const { state } = useLocation();
   const { payload } = state;
   console.log(
-    "🚀 ~ file: UpdateProduct.js ~ line 20 ~ CreateProduct ~ payload",
+    "🚀 ~ file: UpdateProduct.js ~ line 21 ~ UpdateProduct ~ payload",
     payload
   );
+
   const {
     register,
     handleSubmit,
@@ -32,21 +34,14 @@ const UpdateProduct = () => {
 
   const updateProduct = async (data) => {
     try {
-      console.log(
-        "🚀 ~ file: UpdateProduct.js ~ line 34 ~ updateProduct ~ data",
-        data
-      );
       const productId = payload.productId;
-      console.log(
-        "🚀 ~ file: UpdateProduct.js ~ line 40 ~ updateProduct ~ productId",
-        productId
-      );
 
       const name = data.name;
       const cover = data.cover;
       const description = data.description;
       const price = data.price;
-      const productData = { name, cover, description, price };
+      const quantity = data.quantity;
+      const productData = { name, cover, description, price, quantity };
       console.log(
         "🚀 ~ file: UpdateProduct.js ~ line 46 ~ updateProduct ~ payload",
         payload
@@ -88,6 +83,13 @@ const UpdateProduct = () => {
           <span className="text-xs text-red">
             {errors?.description?.message}
           </span>
+          <textarea
+            id="quantity"
+            className="textarea textarea-accent  w-[80vw] "
+            defaultValue={payload.quantity}
+            {...register("quantity")}
+          ></textarea>
+          <span className="text-xs text-red">{errors?.quantity?.message}</span>
           <textarea
             id="Price"
             className="textarea textarea-accent  w-[80vw] "

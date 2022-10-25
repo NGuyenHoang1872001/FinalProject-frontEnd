@@ -12,10 +12,6 @@ const MyProduct = () => {
   const navigate = useNavigate();
 
   const storeOfProduct = useSelector((state) => state.storeIdProduct.store_Id);
-  console.log(
-    "🚀 ~ file: myProduct.js ~ line 11 ~ MyProduct ~ storeOfProduct",
-    storeOfProduct
-  );
   const [productId, setProductId] = useState([]);
   const [storeDetail, setStoreDetail] = useState([]);
 
@@ -45,9 +41,16 @@ const MyProduct = () => {
     navigate("/createProduct", { state: { storeID: storeId } });
   };
 
-  const updateProduct = (productId, name, cover, description, price) => {
+  const updateProduct = (
+    productId,
+    name,
+    cover,
+    description,
+    price,
+    quantity
+  ) => {
     try {
-      const payload = { productId, name, cover, description, price };
+      const payload = { productId, name, cover, description, price, quantity };
       navigate("/updateProduct", { state: { payload: payload } });
     } catch (error) {}
   };
@@ -145,7 +148,8 @@ const MyProduct = () => {
                           products.name,
                           products.cover,
                           products.description,
-                          products.price
+                          products.price,
+                          products.quantity
                         )
                       }
                     >
@@ -154,11 +158,12 @@ const MyProduct = () => {
                   </li>
                 </ul>
               </div>
-              <p key={products._id}>{products.name}</p>
-              <p>{products.cover}</p>
-              <p>{products.description}</p>
+              <p key={products._id}> Name: {products.name}</p>
+              <p>cover: {products.cover}</p>
+              <p>description: {products.description}</p>
 
-              <p>{products.price}</p>
+              <p>Price: {products.price}</p>
+              <p>Quantity: {products.quantity}</p>
             </div>
           ))}
       </div>

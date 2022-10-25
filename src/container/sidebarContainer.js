@@ -17,7 +17,7 @@ const SideBar = () => {
             <a>Your Order</a>
           </li>
           <li className="hover-bordered">
-            <a>Account</a>
+            <Link to={"/viewAccount"}>Account</Link>
           </li>
         </ul>
       </div>

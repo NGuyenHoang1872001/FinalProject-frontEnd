@@ -11,6 +11,7 @@ const schemaValidation = yup.object().shape({
   name: yup.string().required(),
   cover: yup.string().required(),
   description: yup.string().required(),
+  quantity: yup.number().required(),
   price: yup.number().required(),
 });
 
@@ -24,6 +25,7 @@ const CreateProduct = () => {
   } = useForm({
     resolver: yupResolver(schemaValidation),
   });
+
   const navigate = useNavigate();
   const authLogin = useSelector((state) => state.auth.id);
   const createProduct = async (data) => {
@@ -34,20 +36,12 @@ const CreateProduct = () => {
       const cover = data.cover;
       const description = data.description;
       const price = data.price;
-      const payload = { storeId, name, cover, description, price };
+      const quantity = data.quantity;
+      const payload = { storeId, name, cover, description, price, quantity };
       console.log(
-        "🚀 ~ file: createProduct.js ~ line 38 ~ createProduct ~ payload",
+        "🚀 ~ file: createProduct.js ~ line 40 ~ createProduct ~ payload",
         payload
       );
-      console.log(
-        "🚀 ~ file: createProduct.js ~ line 37 ~ createProduct ~ payload",
-        payload
-      );
-      console.log(
-        "🚀 ~ file: createProduct.js ~ line 30 ~ createProduct ~ data",
-        data
-      );
-
       const response = await handleCreateProduct(payload);
       navigate("/viewMyProduct");
     } catch (error) {}
@@ -79,6 +73,7 @@ const CreateProduct = () => {
           <span className="text-xs text-red">
             {errors?.description?.message}
           </span>
+
           <textarea
             id="Price"
             className="textarea textarea-accent  w-[80vw] "
@@ -86,6 +81,13 @@ const CreateProduct = () => {
             {...register("price")}
           ></textarea>
           <span className="text-xs text-red">{errors?.price?.message}</span>
+          <textarea
+            id="quantity"
+            className="textarea textarea-accent  w-[80vw] "
+            placeholder="quantity"
+            {...register("quantity")}
+          ></textarea>
+          <span className="text-xs text-red">{errors?.quantity?.message}</span>
         </div>
         <div>
           <button>Create Product</button>

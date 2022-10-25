@@ -13,6 +13,9 @@ import UpdateStorePage from "../container/Update/UpdateStore";
 import MyProduct from "../container/Store/myProduct";
 import CreateProduct from "../container/Create/createProduct";
 import UpdateProduct from "../container/Update/UpdateProduct";
+import AccountDetail from "../container/Account/AccountDetail";
+import InfoCustomer from "../container/paypal/informationPayPal";
+import PayPal from "../component/Paypal";
 const AppRouter = () => {
   return (
     <BrowserRouter>
@@ -20,6 +23,7 @@ const AppRouter = () => {
         <Route path="/" element={<HomePage />}>
           <Route index element={<PostContainer />}></Route>
           <Route path="/viewStore" element={<StorePage />}></Route>
+          <Route path="/viewAccount" element={<AccountDetail />}></Route>
           <Route path="/viewMyProduct" element={<MyProduct />}></Route>
           <Route path="/createProduct" element={<CreateProduct />}></Route>
           <Route path="/updateProduct" element={<UpdateProduct />}></Route>
@@ -28,6 +32,8 @@ const AppRouter = () => {
           <Route path="/viewOwnerStore" element={<MyStore />}></Route>
           <Route path="/createStore" element={<CreateStore />}></Route>
           <Route path="/updateStore" element={<UpdateStorePage />}></Route>
+          <Route path="/info" element={<InfoCustomer />}></Route>
+          <Route path="/payPal" element={<PayPal />}></Route>
         </Route>
         <Route path="/login" element={<Login />}></Route>
         <Route path="/signUp" element={<SignUp />}></Route>
