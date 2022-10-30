@@ -103,7 +103,7 @@ const PostContainer = () => {
             <div className="border m-[20px] rounded w-[80vw] relative">
               <div className="p-[20px]">
                 <p key={rows._id}>{rows.title}</p>
-                <p key={rows._id}>{rows.cover}</p>
+                <img src={rows.cover} className="block m-[auto]"></img>
               </div>
 
               <div className="dropdown   dropdown-left dropdown-end absolute  top-0 right-0  ">
