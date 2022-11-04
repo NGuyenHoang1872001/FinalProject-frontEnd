@@ -1,9 +1,30 @@
 import { useLocation, Navigate, useNavigate } from "react-router-dom";
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { Controller, useForm } from "react-hook-form";
+import reactSelect from "react-select";
 import { useEffect, useState } from "react";
 import Paypal from "../../component/Paypal";
+
 import InputForm from "../../component/input/input";
+import { data } from "autoprefixer";
+import ReactSelect from "react-select";
 
 const InfoCustomer = () => {
+  const schemaValidation = yup.object().shape({
+    name: yup.string().required(),
+    address: yup.string().required(),
+    phoneNumber: yup.number().required(),
+  });
+  const {
+    control,
+    register,
+    handleSubmit,
+    field,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(schemaValidation),
+  });
   const { state } = useLocation();
   const { quantityProduct, priceProduct } = state;
   const navigate = useNavigate();
@@ -25,33 +46,77 @@ const InfoCustomer = () => {
       }
     } catch (error) {}
   };
-  const PayPal = () => {
-    navigate("/payPal", {
-      state: { count: count, priceProduct: priceProduct },
-    });
+
+  const handleCheckout = (data) => {
+    console.log(
+      "🚀 ~ file: informationPayPal.js ~ line 50 ~ handleCheckout ~ data",
+      data.paymentMethod.value
+    );
+    const name = data.name;
+    const address = data.address;
+    const phoneNumber = data.phoneNumber;
+    if (data.paymentMethod.value == "PayPal") {
+      navigate("/payPal", {
+        state: {
+          nameProduct: name,
+          addressProduct: address,
+          phoneNumberProduct: phoneNumber,
+          countProduct: count,
+          priceProductData: priceProduct,
+        },
+      });
+    } else navigate("/");
   };
 
   return (
     <div>
-      <InputForm title={"Name"} inputName={"Enter Name"}></InputForm>
-      <InputForm title={"Address"} inputName={"Enter Address"}></InputForm>
-      <InputForm
-        title={"PhoneNumber"}
-        inputName={"Enter Phone Number"}
-      ></InputForm>
-      <InputForm title={"Email"} inputName={"Enter Email"}></InputForm>
-      <p>quantity</p>
-      <div className="flex flex-row gap-1">
-        {" "}
-        <button onClick={() => reduced(count)}> - </button>
-        <p>{count}</p>
-        <button onClick={() => increase(count)}> + </button>
-      </div>
-      {checkout ? (
-        <Paypal quantity={count} price={priceProduct}></Paypal>
-      ) : (
-        <button onClick={() => PayPal()}>CheckOut</button>
-      )}
+      <form onSubmit={handleSubmit(handleCheckout)}>
+        <textarea
+          id="NameInput"
+          className="textarea textarea-accent  w-[80vw] "
+          placeholder="Name"
+          {...register("name")}
+        ></textarea>
+        <textarea
+          id="AddressInput"
+          className="textarea textarea-accent  w-[80vw] "
+          placeholder="Address"
+          {...register("address")}
+        ></textarea>
+        <textarea
+          id="PhoneNumberInput"
+          className="textarea textarea-accent  w-[80vw] "
+          placeholder="PhoneNumber"
+          {...register("phoneNumber")}
+        ></textarea>
+
+        <p>quantity</p>
+        <div className="flex flex-row gap-1">
+          {" "}
+          <button onClick={() => reduced(count)}> - </button>
+          <p>{count}</p>
+          <button onClick={() => increase(count)}> + </button>
+        </div>
+        <div>
+          <Controller
+            name="paymentMethod"
+            control={control}
+            render={({ field }) => (
+              <ReactSelect
+                isClearable
+                {...field}
+                options={[
+                  { value: "COD", label: "COD" },
+                  { value: "PayPal", label: "PayPal" },
+                ]}
+              />
+            )}
+          />
+        </div>
+        <div>
+          <button>CheckOut</button>
+        </div>
+      </form>
     </div>
   );
 };
