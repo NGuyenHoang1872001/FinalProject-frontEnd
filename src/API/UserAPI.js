@@ -188,6 +188,27 @@ const handleGetInvoiceByUser = async (userId) => {
     return getInvoiceByUser;
   } catch (error) {}
 };
+
+const handleCreateTransaction = async (payload) => {
+  try {
+    const URL = `http://localhost:3001/routerAPI/createTransaction`;
+    const createTransaction = await axios.post(URL, payload);
+    return createTransaction;
+  } catch (error) {
+    console.log(
+      "🚀 ~ file: UserAPI.js ~ line 198 ~ handleCreateTransaction ~ error",
+      error
+    );
+  }
+};
+
+const handleViewTransaction = async () => {
+  try {
+    const URL = `http://localhost:3001/routerAPI/viewTransaction`;
+    const viewTransaction = await axios.get(URL);
+    return viewTransaction;
+  } catch (error) {}
+};
 export {
   handleRegisterUser,
   handleLoginUser,
@@ -210,4 +231,6 @@ export {
   handleUpdateInvoice,
   handleGetInvoice,
   handleGetInvoiceByUser,
+  handleCreateTransaction,
+  handleViewTransaction,
 };

@@ -5,10 +5,12 @@ import { Controller, useForm } from "react-hook-form";
 import reactSelect from "react-select";
 import { useEffect, useState } from "react";
 import Paypal from "../../component/Paypal";
+import { useSelector, useDispatch } from "react-redux";
 
 import InputForm from "../../component/input/input";
 import { data } from "autoprefixer";
 import ReactSelect from "react-select";
+import { handleCreateInvoice } from "../../API/UserAPI";
 
 const InfoCustomer = () => {
   const schemaValidation = yup.object().shape({
@@ -25,6 +27,8 @@ const InfoCustomer = () => {
   } = useForm({
     resolver: yupResolver(schemaValidation),
   });
+  const authLogin = useSelector((state) => state.auth);
+  const stroreId = useSelector((state) => state.storeIdProduct.store_Id);
   const { state } = useLocation();
   const { quantityProduct, priceProduct } = state;
   const navigate = useNavigate();
@@ -47,25 +51,53 @@ const InfoCustomer = () => {
     } catch (error) {}
   };
 
-  const handleCheckout = (data) => {
+  const handleCheckout = async (data) => {
     console.log(
       "🚀 ~ file: informationPayPal.js ~ line 50 ~ handleCheckout ~ data",
       data.paymentMethod.value
     );
-    const name = data.name;
-    const address = data.address;
-    const phoneNumber = data.phoneNumber;
+    const nameInput = data.name;
+    const addressInput = data.address;
+    const phoneNumberInput = data.phoneNumber;
     if (data.paymentMethod.value == "PayPal") {
       navigate("/payPal", {
         state: {
-          nameProduct: name,
-          addressProduct: address,
-          phoneNumberProduct: phoneNumber,
+          nameProduct: nameInput,
+          addressProduct: addressInput,
+          phoneNumberProduct: phoneNumberInput,
           countProduct: count,
           priceProductData: priceProduct,
         },
       });
-    } else navigate("/");
+    } else {
+      const name = nameInput;
+      const address = addressInput;
+      const phoneNumber = phoneNumberInput;
+      const email = authLogin.email;
+      const quantity = count;
+      const ammount = count * priceProduct;
+      const paymentMethod = "COD";
+      const storeId = stroreId;
+      const userId = authLogin.id;
+      const payload = {
+        name,
+        address,
+        phoneNumber,
+        email,
+        quantity,
+        ammount,
+        paymentMethod,
+        storeId,
+        userId,
+      };
+      console.log(
+        "🚀 ~ file: informationPayPal.js ~ line 83 ~ handleCheckout ~ payload",
+        payload
+      );
+
+      const response = await handleCreateInvoice(payload);
+      navigate("/");
+    }
   };
 
   return (

@@ -3,7 +3,7 @@ import { Action } from "history";
 import { useEffect, useRef } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { handleCreateInvoice } from "../API/UserAPI";
+import { handleCreateInvoice, handleCreateTransaction } from "../API/UserAPI";
 
 const PayPal = () => {
   const authLogin = useSelector((state) => state.auth);
@@ -21,10 +21,8 @@ const PayPal = () => {
   const navigate = useNavigate();
 
   const paypal = useRef();
-  console.log("🚀 ~ file: Paypal.js ~ line 16 ~ PayPal ~ paypal", paypal);
   const total = countProduct * priceProductData;
-  console.log("🚀 ~ file: Paypal.js ~ line 18 ~ PayPal ~ total", total);
-  const createInvoice = async () => {
+  const createInvoice = async (id) => {
     try {
       const name = nameProduct;
       const address = addressProduct;
@@ -35,6 +33,7 @@ const PayPal = () => {
       const paymentMethod = "PAYPAL";
       const storeId = stroreId;
       const userId = authLogin.id;
+      const transactionId = id;
       const payload = {
         name,
         address,
@@ -45,18 +44,31 @@ const PayPal = () => {
         paymentMethod,
         storeId,
         userId,
+        transactionId,
       };
+
       const response = await handleCreateInvoice(payload);
-      console.log(
-        "🚀 ~ file: Paypal.js ~ line 37 ~ createInvoice ~ payload",
-        payload
-      );
     } catch (error) {
       console.log(
         "🚀 ~ file: Paypal.js ~ line 53 ~ createInvoice ~ error",
         error
       );
     }
+  };
+
+  const createTransition = async (Id) => {
+    try {
+      const ammount = total;
+      const status = "COMPLETE";
+      const transactionId = Id;
+      const payload = { ammount, status, transactionId };
+      console.log(
+        "🚀 ~ file: Paypal.js ~ line 66 ~ createTransition ~ payload2",
+        payload
+      );
+      const response = await handleCreateTransaction(payload);
+      return response;
+    } catch (error) {}
   };
 
   const handleCreatePayPal = () => {
@@ -78,8 +90,13 @@ const PayPal = () => {
         },
         onApprove: async (data, actions) => {
           const order = await actions.order.capture();
-          console.log("Successfull order" + order);
-          const response = await createInvoice();
+          const transictionId = data.orderID;
+          const createTransaction = await createTransition(transictionId);
+
+          const transaction = createTransaction.data._id;
+
+          const response = await createInvoice(transaction);
+
           navigate("/");
         },
         onError: (err) => {
