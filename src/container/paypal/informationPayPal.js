@@ -12,6 +12,7 @@ import { data } from "autoprefixer";
 import ReactSelect from "react-select";
 import { handleCreateInvoice } from "../../API/UserAPI";
 import sendEmail from "../../service/sendEmailService";
+import { handleUpdateProduct } from "../../API/UserAPI";
 
 const InfoCustomer = () => {
   const schemaValidation = yup.object().shape({
@@ -31,7 +32,7 @@ const InfoCustomer = () => {
   const authLogin = useSelector((state) => state.auth);
   const stroreId = useSelector((state) => state.storeIdProduct.store_Id);
   const { state } = useLocation();
-  const { quantityProduct, priceProduct, storeEmail } = state;
+  const { product, quantityPr, priceProduct, storeEmail } = state;
 
   const navigate = useNavigate();
 
@@ -40,7 +41,7 @@ const InfoCustomer = () => {
 
   const increase = (count) => {
     try {
-      if (count < quantityProduct) {
+      if (count < quantityPr) {
         setCount(Number(count) + 1);
       }
     } catch (error) {}
@@ -66,6 +67,7 @@ const InfoCustomer = () => {
             phoneNumberProduct: phoneNumberInput,
             countProduct: count,
             priceProductData: priceProduct,
+            productID: product,
           },
         });
       } else {
@@ -73,24 +75,28 @@ const InfoCustomer = () => {
         const address = addressInput;
         const phoneNumber = phoneNumberInput;
         const email = authLogin.email;
-        const quantity = count;
+        const quantityProduct = count;
         const ammount = count * priceProduct;
         const paymentMethod = "COD";
-        const storeId = stroreId;
+        const productId = product;
         const userId = authLogin.id;
         const payload = {
           name,
           address,
           phoneNumber,
           email,
-          quantity,
+          quantityProduct,
           ammount,
           paymentMethod,
-          storeId,
+          productId,
           userId,
         };
+        const newQuantity = quantityPr - quantityProduct;
 
         const response = await handleCreateInvoice(payload);
+        const updateProduct = await handleUpdateProduct(productId, {
+          quantity: newQuantity,
+        });
         const createNewEmail = await sendEmail({
           email_store: { storeEmail },
           email_customer: { email },

@@ -29,10 +29,11 @@ const StoreContainer = () => {
     }
   };
 
-  const getInfoCustomer = (quantity, price, storeEmail) => {
+  const getInfoCustomer = (productId, quantity, price, storeEmail) => {
     navigate("/info", {
       state: {
-        quantityProduct: quantity,
+        product: productId,
+        quantityPr: quantity,
         priceProduct: price,
         storeEmail: storeEmail,
       },
@@ -65,18 +66,23 @@ const StoreContainer = () => {
               <p>Quantity: {products.quantity}</p>
 
               <p>Price: {products.price}</p>
-              <button
-                className="border m-[20px] rounded"
-                onClick={() =>
-                  getInfoCustomer(
-                    products.quantity,
-                    products.price,
-                    storeDetail.data.email
-                  )
-                }
-              >
-                Buy
-              </button>
+              {products.quantity > 0 ? (
+                <button
+                  className="border m-[20px] rounded"
+                  onClick={() =>
+                    getInfoCustomer(
+                      products._id,
+                      products.quantity,
+                      products.price,
+                      storeDetail.data.email
+                    )
+                  }
+                >
+                  Buy
+                </button>
+              ) : (
+                <p>Sold Out</p>
+              )}
             </div>
           ))}
       </div>

@@ -130,8 +130,12 @@ const handleCreateProduct = async (payload) => {
   }
 };
 
-const handleUpdateProduct = async (payload, productId) => {
+const handleUpdateProduct = async (productId, payload) => {
   try {
+    console.log(
+      "🚀 ~ file: UserAPI.js ~ line 134 ~ handleUpdateProduct ~ payload",
+      payload
+    );
     const URL = `http://localhost:3001/routerAPI/updateProduct/${productId}`;
     const response = await axios.put(URL, payload);
   } catch (error) {
@@ -168,6 +172,10 @@ const handleCreateInvoice = async (payload) => {
 
 const handleUpdateInvoice = async (id, option) => {
   try {
+    console.log(
+      "🚀 ~ file: UserAPI.js ~ line 170 ~ handleUpdateInvoice ~ option",
+      option
+    );
     const URL = `http://localhost:3001/routerAPI/updateInvoice/${id}`;
     const updateInvoice = await axios.put(URL, option);
   } catch (error) {}

@@ -17,6 +17,7 @@ const PayPal = () => {
     phoneNumberProduct,
     countProduct,
     priceProductData,
+    productID,
   } = state;
   const paypal = useRef();
   const total = countProduct * priceProductData;
@@ -32,10 +33,10 @@ const PayPal = () => {
       const address = addressProduct;
       const phoneNumber = phoneNumberProduct;
       const email = authLogin.email;
-      const quantity = countProduct;
+      const quantityProduct = countProduct;
       const ammount = total;
       const paymentMethod = "PAYPAL";
-      const storeId = stroreId;
+      const productId = productID;
       const userId = authLogin.id;
       const transactionId = id;
       const payload = {
@@ -43,10 +44,10 @@ const PayPal = () => {
         address,
         phoneNumber,
         email,
-        quantity,
+        quantityProduct,
         ammount,
         paymentMethod,
-        storeId,
+        productId,
         userId,
         transactionId,
       };
