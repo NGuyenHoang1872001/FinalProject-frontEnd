@@ -11,6 +11,7 @@ import InputForm from "../../component/input/input";
 import { data } from "autoprefixer";
 import ReactSelect from "react-select";
 import { handleCreateInvoice } from "../../API/UserAPI";
+import sendEmail from "../../service/sendEmailService";
 
 const InfoCustomer = () => {
   const schemaValidation = yup.object().shape({
@@ -30,7 +31,8 @@ const InfoCustomer = () => {
   const authLogin = useSelector((state) => state.auth);
   const stroreId = useSelector((state) => state.storeIdProduct.store_Id);
   const { state } = useLocation();
-  const { quantityProduct, priceProduct } = state;
+  const { quantityProduct, priceProduct, storeEmail } = state;
+
   const navigate = useNavigate();
 
   const [count, setCount] = useState(0);
@@ -52,51 +54,56 @@ const InfoCustomer = () => {
   };
 
   const handleCheckout = async (data) => {
-    console.log(
-      "🚀 ~ file: informationPayPal.js ~ line 50 ~ handleCheckout ~ data",
-      data.paymentMethod.value
-    );
-    const nameInput = data.name;
-    const addressInput = data.address;
-    const phoneNumberInput = data.phoneNumber;
-    if (data.paymentMethod.value == "PayPal") {
-      navigate("/payPal", {
-        state: {
-          nameProduct: nameInput,
-          addressProduct: addressInput,
-          phoneNumberProduct: phoneNumberInput,
-          countProduct: count,
-          priceProductData: priceProduct,
-        },
-      });
-    } else {
-      const name = nameInput;
-      const address = addressInput;
-      const phoneNumber = phoneNumberInput;
-      const email = authLogin.email;
-      const quantity = count;
-      const ammount = count * priceProduct;
-      const paymentMethod = "COD";
-      const storeId = stroreId;
-      const userId = authLogin.id;
-      const payload = {
-        name,
-        address,
-        phoneNumber,
-        email,
-        quantity,
-        ammount,
-        paymentMethod,
-        storeId,
-        userId,
-      };
-      console.log(
-        "🚀 ~ file: informationPayPal.js ~ line 83 ~ handleCheckout ~ payload",
-        payload
-      );
+    try {
+      const nameInput = data.name;
+      const addressInput = data.address;
+      const phoneNumberInput = data.phoneNumber;
+      if (data.paymentMeth.value == "PayPal") {
+        navigate("/payPal", {
+          state: {
+            nameProduct: nameInput,
+            addressProduct: addressInput,
+            phoneNumberProduct: phoneNumberInput,
+            countProduct: count,
+            priceProductData: priceProduct,
+          },
+        });
+      } else {
+        const name = nameInput;
+        const address = addressInput;
+        const phoneNumber = phoneNumberInput;
+        const email = authLogin.email;
+        const quantity = count;
+        const ammount = count * priceProduct;
+        const paymentMethod = "COD";
+        const storeId = stroreId;
+        const userId = authLogin.id;
+        const payload = {
+          name,
+          address,
+          phoneNumber,
+          email,
+          quantity,
+          ammount,
+          paymentMethod,
+          storeId,
+          userId,
+        };
 
-      const response = await handleCreateInvoice(payload);
-      navigate("/");
+        const response = await handleCreateInvoice(payload);
+        const createNewEmail = await sendEmail({
+          email_store: { storeEmail },
+          email_customer: { email },
+          messageToCustomer: { paymentMethod, ammount },
+        });
+
+        navigate("/viewProcess");
+      }
+    } catch (error) {
+      console.log(
+        "🚀 ~ file: informationPayPal.js ~ line 109 ~ handleCheckout ~ error",
+        error
+      );
     }
   };
 
@@ -131,7 +138,7 @@ const InfoCustomer = () => {
         </div>
         <div>
           <Controller
-            name="paymentMethod"
+            name="paymentMeth"
             control={control}
             render={({ field }) => (
               <ReactSelect

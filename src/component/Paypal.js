@@ -4,12 +4,12 @@ import { useEffect, useRef } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { handleCreateInvoice, handleCreateTransaction } from "../API/UserAPI";
+import sendEmail from "../service/sendEmailService";
 
 const PayPal = () => {
   const authLogin = useSelector((state) => state.auth);
-  console.log("🚀 ~ file: Paypal.js ~ line 10 ~ PayPal ~ authLogin", authLogin);
+
   const stroreId = useSelector((state) => state.storeIdProduct.store_Id);
-  console.log("🚀 ~ file: Paypal.js ~ line 11 ~ PayPal ~ stroreId", stroreId);
   const { state } = useLocation();
   const {
     nameProduct,
@@ -18,10 +18,14 @@ const PayPal = () => {
     countProduct,
     priceProductData,
   } = state;
-  const navigate = useNavigate();
-
   const paypal = useRef();
   const total = countProduct * priceProductData;
+  const navigate = useNavigate();
+  const storeEmail = stroreId;
+  const email = authLogin.email;
+  const paymentMethod = "PayPal";
+  const ammount = total;
+
   const createInvoice = async (id) => {
     try {
       const name = nameProduct;
@@ -96,8 +100,13 @@ const PayPal = () => {
           const transaction = createTransaction.data._id;
 
           const response = await createInvoice(transaction);
+          const createNewEmail = await sendEmail({
+            email_store: { storeEmail },
+            email_customer: { email },
+            messageToCustomer: { paymentMethod, ammount },
+          });
 
-          navigate("/");
+          navigate("/viewProcess");
         },
         onError: (err) => {
           console.log(err);

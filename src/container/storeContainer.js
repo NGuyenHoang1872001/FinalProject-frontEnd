@@ -4,10 +4,6 @@ import { useLocation, Navigate, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 const StoreContainer = () => {
   const storeOfProduct = useSelector((state) => state.storeIdProduct.store_Id);
-  console.log(
-    "🚀 ~ file: storeContainer.js ~ line 7 ~ StoreContainer ~ storeOfProduct",
-    storeOfProduct
-  );
 
   const [storeDetail, setStoreDetail] = useState([]);
   const navigate = useNavigate();
@@ -33,9 +29,13 @@ const StoreContainer = () => {
     }
   };
 
-  const getInfoCustomer = (quantity, price) => {
+  const getInfoCustomer = (quantity, price, storeEmail) => {
     navigate("/info", {
-      state: { quantityProduct: quantity, priceProduct: price },
+      state: {
+        quantityProduct: quantity,
+        priceProduct: price,
+        storeEmail: storeEmail,
+      },
     });
   };
   useEffect(() => {
@@ -68,7 +68,11 @@ const StoreContainer = () => {
               <button
                 className="border m-[20px] rounded"
                 onClick={() =>
-                  getInfoCustomer(products.quantity, products.price)
+                  getInfoCustomer(
+                    products.quantity,
+                    products.price,
+                    storeDetail.data.email
+                  )
                 }
               >
                 Buy
