@@ -18,7 +18,7 @@ const Navbar = () => {
         />
       </div>
       <div>
-        <h4 className="font-extralight text-5xl mr-[160px]">FoodIntagram</h4>
+        <h4 className="font-extralight text-5xl mr-[160px]">ThaoLinhMaiDinh</h4>
       </div>
       <div className="dropdown dropdown-end">
         <label tabIndex={0}>

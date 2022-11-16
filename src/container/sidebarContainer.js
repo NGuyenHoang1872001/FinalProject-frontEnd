@@ -14,7 +14,7 @@ const SideBar = () => {
             <a>Fllowing </a>
           </li>
           <li className="hover-bordered">
-            <a>Your Order</a>
+            <Link to={"/myOrder"}>My Order</Link>
           </li>
           <li className="hover-bordered">
             <Link to={"/viewAccount"}>Account</Link>

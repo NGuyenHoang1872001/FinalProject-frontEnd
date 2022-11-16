@@ -65,6 +65,7 @@ const InfoCustomer = () => {
             nameProduct: nameInput,
             addressProduct: addressInput,
             phoneNumberProduct: phoneNumberInput,
+            totalQuantity: quantityPr,
             countProduct: count,
             priceProductData: priceProduct,
             productID: product,

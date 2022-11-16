@@ -5,6 +5,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { handleCreateInvoice, handleCreateTransaction } from "../API/UserAPI";
 import sendEmail from "../service/sendEmailService";
+import { handleUpdateProduct } from "../API/UserAPI";
 
 const PayPal = () => {
   const authLogin = useSelector((state) => state.auth);
@@ -15,6 +16,7 @@ const PayPal = () => {
     nameProduct,
     addressProduct,
     phoneNumberProduct,
+    totalQuantity,
     countProduct,
     priceProductData,
     productID,
@@ -51,8 +53,12 @@ const PayPal = () => {
         userId,
         transactionId,
       };
+      const newQuantity = totalQuantity - countProduct;
 
       const response = await handleCreateInvoice(payload);
+      const updateQuantity = await handleUpdateProduct(productID, {
+        quantity: newQuantity,
+      });
     } catch (error) {
       console.log(
         "🚀 ~ file: Paypal.js ~ line 53 ~ createInvoice ~ error",
