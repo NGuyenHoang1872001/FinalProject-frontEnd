@@ -11,6 +11,9 @@ const SideBar = () => {
             <Link to={"/viewOwnerStore"}>Store</Link>
           </li>
           <li className="hover-bordered">
+            <Link to={"/createPost"}>Create Post</Link>
+          </li>
+          <li className="hover-bordered">
             <a>Fllowing </a>
           </li>
           <li className="hover-bordered">

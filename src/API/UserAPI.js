@@ -59,6 +59,12 @@ const handleGetOnePost = async (postId) => {
   return getOnePost.data;
 };
 
+const handleGetPostByAuthor = async (authorId) => {
+  const URl = `http://localhost:3001/routerAPI/getPostByAuthor/${authorId}`;
+  const getPost = await axios.get(URl);
+  return getPost.data;
+};
+
 const handleUpdatePost = async (payload, postId) => {
   const URL = `http://localhost:3001/routerAPI/updatePost/${postId}`;
   const updatePost = await axios.put(URL, payload);
@@ -258,4 +264,5 @@ export {
   handleViewTransaction,
   handleGetComment,
   handleCreateComment,
+  handleGetPostByAuthor,
 };

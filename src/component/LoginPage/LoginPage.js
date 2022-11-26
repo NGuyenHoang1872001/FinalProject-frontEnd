@@ -48,48 +48,50 @@ const Login = () => {
     }
   };
   return (
-    <div className="flex flex-col items-center">
-      <div className="ml-[80%] p-8">
+    <div className="flex flex-col items-center bg-[#8CDE61] hover:bg-[#8CDE61] h-[100vh]">
+      <div className="ml-[80%] p-8 ">
         {"/singUp" && (
           <RouteLink to={"/signUp"}>
-            <button className=" border-4 rounded-md w-32 text-lg font-light">
+            <button className=" h-12 rounded-md w-32 text-lg font-bold bg-[#ffff]  text-[#8CDE61] shadow-2xl ">
               SignUp
             </button>{" "}
           </RouteLink>
         )}
       </div>
-      <form onSubmit={handleSubmit(handleLogin)}>
-        <div className=" border-4 rounded-md p-8 w-96 h-96 flex flex-col items-center gap-6  ">
-          <p className="text-3xl">Welcome Back</p>
-          <div>
-            <p className="text-sm">Email</p>
-            <input
-              className="border rounder-xl w-80 p-2 "
-              placeholder="EnterText"
-              {...register("email")}
-            ></input>
-            <span className="text-xs text-red">{errors?.email?.message}</span>
-          </div>
+      <div className="bg-[#ffff] hover:bg-[#ffff] rounded-2xl shadow-2xl">
+        <form onSubmit={handleSubmit(handleLogin)}>
+          <div className="  p-8 w-96 h-100 flex flex-col items-center gap-6  ">
+            <p className="text-3xl font-bold">Welcome Back</p>
+            <div className="mb-[8px]">
+              <p className="text-sm font-medium mb-3">Email</p>
+              <input
+                className="border rounder-2xl w-80 p-2 "
+                placeholder="Enter Email"
+                {...register("email")}
+              ></input>
+              <span className="text-xs text-red">{errors?.email?.message}</span>
+            </div>
 
-          <div>
-            <p className="text-sm">Password</p>
-            <input
-              className="border rounder-xl w-80 p-2 "
-              placeholder="EnterText"
-              {...register("password")}
-            ></input>
-            <span className="text-xs text-red">
-              {errors?.password?.message}
-            </span>
+            <div className="mb-[8px]">
+              <p className="text-sm font-medium mb-3">Password</p>
+              <input
+                className="border rounder-2xl w-80 p-2 "
+                placeholder="Enter Password"
+                {...register("password")}
+              ></input>
+              <span className="text-xs text-red">
+                {errors?.password?.message}
+              </span>
+            </div>
+            <button
+              className="mr-3 border-4 rounded-md w-32 text-lg font-medium"
+              type="submit"
+            >
+              Login
+            </button>
           </div>
-          <button
-            className="mr-3 border-4 rounded-md w-32 text-lg font-light"
-            type="submit"
-          >
-            Login
-          </button>
-        </div>
-      </form>
+        </form>
+      </div>
     </div>
   );
 };

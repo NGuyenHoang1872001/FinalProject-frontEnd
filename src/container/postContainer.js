@@ -20,6 +20,10 @@ const PostContainer = () => {
   const authLogin = useSelector((state) => state.auth.id);
   const navigate = useNavigate();
   const [post, setPost] = useState([]);
+  console.log(
+    "🚀 ~ file: postContainer.js ~ line 23 ~ PostContainer ~ post",
+    post
+  );
   const [postId, setPostId] = useState([]);
   console.log(
     "🚀 ~ file: postContainer.js ~ line 24 ~ PostContainer ~ postId",
@@ -94,28 +98,32 @@ const PostContainer = () => {
     }
   };
 
-  const createPost = () => {
-    navigate("/createPost");
-  };
-
   useEffect(() => {
     getAllPost();
     getPostId();
   }, []);
 
   return (
-    <div className="flex flex-col p-[20px] items-center">
-      <div>
-        <button className="btn btn-success" onClick={() => createPost()}>
-          Create Post
-        </button>
-      </div>
-      <div>
+    <div className="flex flex-col pl-[20px] pr-[20px] ">
+      <div className="mt-3">
         {post.data &&
           post.data.map((rows) => (
-            <div className="border m-[20px] rounded w-[80vw] relative">
+            <div className="border mb-[20px] rounded w-[80vw] relative">
               <div className="p-[20px]">
-                <p key={rows._id}>{rows.title}</p>
+                <div className="flex flex-row mb-[20px]">
+                  <div className="avatar">
+                    <div className="w-12  rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
+                      <img src="https://placeimg.com/192/192/people" />
+                    </div>
+                  </div>
+                  <p className="ml-[10px] font-medium">
+                    {rows.author.firstName} {rows.author.lastName}
+                  </p>
+                </div>
+
+                <p key={rows._id} className="ml-7">
+                  {rows.title}
+                </p>
                 <div className="mt-[20px] mb-8">
                   <img
                     src={rows.cover}
