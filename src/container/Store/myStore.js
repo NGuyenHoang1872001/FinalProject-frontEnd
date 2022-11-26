@@ -9,9 +9,8 @@ const MyStore = () => {
   const authLogin = useSelector((state) => state.auth.id);
 
   const [store, setStore] = useState([]);
-  console.log("🚀 ~ file: myStore.js ~ line 9 ~ MyStore ~ store", store);
+
   const [storeId, setStoreId] = useState([]);
-  console.log("🚀 ~ file: myStore.js ~ line 9 ~ MyStore ~ storeId", storeId);
 
   const navigate = useNavigate();
 

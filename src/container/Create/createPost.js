@@ -4,9 +4,13 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import InputForm from "../../component/input/input";
 import { handleCreatePost } from "../../API/UserAPI";
 import { useSelector } from "react-redux";
-
+import { storage } from "../../service/fireBase";
+import { ref, uploadBytes, listAll, getDownloadURL } from "firebase/storage";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { v4 } from "uuid";
+import handleGetDownloadToken from "../../API/Firebase";
+
 const schemaValidation = yup.object().shape({
   title: yup.string().required(),
   store: yup.string(),
@@ -22,26 +26,51 @@ const CreatePost = () => {
   });
   const navigate = useNavigate();
   const [picture, setPicture] = useState();
+  console.log(
+    "🚀 ~ file: createPost.js ~ line 28 ~ CreatePost ~ picture",
+    picture
+  );
 
   const authLogin = useSelector((state) => state.auth.id);
   const createPost = async (data) => {
     try {
+      const pictureName = picture.name;
+      const responseFirebase = await handleGetDownloadToken(pictureName);
+      const token = responseFirebase.downloadTokens;
       const author = authLogin;
       const title = data.title;
-      const cover = picture.preview;
+      const cover =
+        process.env.React_App_Header_Firebase +
+        pictureName +
+        process.env.React_App_Footer_firebase +
+        token;
       const store = data.store;
       const payload = { author, title, cover, store };
-      console.log(
-        "🚀 ~ file: createPost.js ~ line 35 ~ createPost ~ payload",
-        payload
-      );
+
       const response = await handleCreatePost(payload);
+
+      if (picture != null) {
+        const imageRef = ref(storage, `images/${(picture.name, author)}`);
+        uploadBytes(imageRef, picture).then(() => {
+          alert("create Post SuccessFull");
+        });
+      }
+
       navigate("/");
-    } catch (error) {}
+    } catch (error) {
+      console.log(
+        "🚀 ~ file: createPost.js ~ line 49 ~ createPost ~ error",
+        error
+      );
+    }
   };
   const handleGetURLPicture = (event) => {
     const file = event.target.files[0];
-    file.preview = URL.createObjectURL(file);
+    console.log(
+      "🚀 ~ file: createPost.js ~ line 61 ~ handleGetURLPicture ~ file",
+      file
+    );
+
     setPicture(file);
   };
   return (

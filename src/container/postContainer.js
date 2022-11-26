@@ -6,9 +6,14 @@ import {
 } from "../API/UserAPI";
 
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { setStoreIdProduct } from "../Redux/features/storeIdProduct";
+import Comment from "../component/Comment/comment";
+import { comment } from "postcss";
+import { nothing } from "immer";
+import { listAll, ref, getDownloadURL } from "firebase/storage";
+import { storage } from "../service/fireBase";
 
 const PostContainer = () => {
   const dispatch = useDispatch();
@@ -16,6 +21,13 @@ const PostContainer = () => {
   const navigate = useNavigate();
   const [post, setPost] = useState([]);
   const [postId, setPostId] = useState([]);
+  console.log(
+    "🚀 ~ file: postContainer.js ~ line 24 ~ PostContainer ~ postId",
+    postId
+  );
+  const [imageFirebase, setImageFirebase] = useState([]);
+
+  const imageListRef = ref(storage, "/images");
 
   const getAllPost = async () => {
     try {
@@ -28,10 +40,6 @@ const PostContainer = () => {
       );
     }
   };
-
-  useEffect(() => {
-    getAllPost();
-  }, []);
 
   const getStore = async (store_Id) => {
     try {
@@ -90,6 +98,11 @@ const PostContainer = () => {
     navigate("/createPost");
   };
 
+  useEffect(() => {
+    getAllPost();
+    getPostId();
+  }, []);
+
   return (
     <div className="flex flex-col p-[20px] items-center">
       <div>
@@ -103,7 +116,12 @@ const PostContainer = () => {
             <div className="border m-[20px] rounded w-[80vw] relative">
               <div className="p-[20px]">
                 <p key={rows._id}>{rows.title}</p>
-                <img src={rows.cover} className="block m-[auto]"></img>
+                <div className="mt-[20px] mb-8">
+                  <img
+                    src={rows.cover}
+                    className="block ml-auto mr-auto w-[60%] "
+                  ></img>
+                </div>
               </div>
 
               <div className="dropdown   dropdown-left dropdown-end absolute  top-0 right-0  ">
@@ -161,9 +179,17 @@ const PostContainer = () => {
                 <button className="border rounded w-[30vw] m-[2px]">
                   Like
                 </button>
-                <button className="border rounded w-[30vw] m-[2px]">
+
+                <label
+                  onClick={() => {
+                    getPostId(rows._id);
+                  }}
+                  className="border rounded w-[30vw] m-[2px]"
+                  for="my-modal-5"
+                  class="btn"
+                >
                   Comment
-                </button>
+                </label>
                 <button
                   className="border rounded w-[30vw] m-[2px]"
                   onClick={() => getStore(rows.store)}
@@ -174,6 +200,9 @@ const PostContainer = () => {
             </div>
           ))}
       </div>
+
+      <Comment postID={postId}></Comment>
+
       <div>
         <input type="checkbox" id="my-modal-3" className="modal-toggle" />
         <div className="modal">

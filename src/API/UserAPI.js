@@ -217,6 +217,21 @@ const handleViewTransaction = async () => {
     return viewTransaction;
   } catch (error) {}
 };
+
+const handleCreateComment = async (payload) => {
+  try {
+    const URL = `http://localhost:3001/routerAPI/createComment`;
+    const response = await axios.post(URL, payload);
+  } catch (error) {}
+};
+
+const handleGetComment = async (postId) => {
+  try {
+    const URL = `http://localhost:3001/routerAPI/getComment/${postId}`;
+    const response = await axios.get(URL);
+    return response.data;
+  } catch (error) {}
+};
 export {
   handleRegisterUser,
   handleLoginUser,
@@ -241,4 +256,6 @@ export {
   handleGetInvoiceByUser,
   handleCreateTransaction,
   handleViewTransaction,
+  handleGetComment,
+  handleCreateComment,
 };
