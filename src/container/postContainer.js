@@ -3,6 +3,8 @@ import {
   handleCreatePost,
   handleGetOnePost,
   handleDeletePost,
+  handleLike,
+  handleUnLike,
 } from "../API/UserAPI";
 
 import { useEffect, useState } from "react";
@@ -14,12 +16,14 @@ import { comment } from "postcss";
 import { nothing } from "immer";
 import { listAll, ref, getDownloadURL } from "firebase/storage";
 import { storage } from "../service/fireBase";
+import { async } from "@firebase/util";
 
 const PostContainer = () => {
   const dispatch = useDispatch();
   const authLogin = useSelector((state) => state.auth.id);
   const navigate = useNavigate();
   const [post, setPost] = useState([]);
+  const [value, setValue] = useState([]);
   console.log(
     "🚀 ~ file: postContainer.js ~ line 23 ~ PostContainer ~ post",
     post
@@ -30,7 +34,6 @@ const PostContainer = () => {
     postId
   );
   const [imageFirebase, setImageFirebase] = useState([]);
-
   const imageListRef = ref(storage, "/images");
 
   const getAllPost = async () => {
@@ -98,6 +101,29 @@ const PostContainer = () => {
     }
   };
 
+  const likePost = async (postId) => {
+    try {
+      const likeByAuthor = await handleLike(postId, authLogin);
+      getAllPost();
+    } catch (error) {
+      console.log(
+        "🚀 ~ file: postContainer.js ~ line 108 ~ likePost ~ error",
+        error
+      );
+    }
+  };
+  const unLikePost = async (postId) => {
+    try {
+      const unLikeByAuthor = await handleUnLike(postId, authLogin);
+      getAllPost();
+    } catch (error) {
+      console.log(
+        "🚀 ~ file: postContainer.js ~ line 108 ~ likePost ~ error",
+        error
+      );
+    }
+  };
+
   useEffect(() => {
     getAllPost();
     getPostId();
@@ -108,7 +134,7 @@ const PostContainer = () => {
       <div className="mt-3">
         {post.data &&
           post.data.map((rows) => (
-            <div className="border mb-[20px] rounded w-[80vw] relative">
+            <div className=" mb-[20px] rounded w-[80vw] relative shadow-xl border-2">
               <div className="p-[20px]">
                 <div className="flex flex-row mb-[20px]">
                   <div className="avatar">
@@ -183,23 +209,38 @@ const PostContainer = () => {
                 </ul>
               </div>
 
-              <div className="flex flex-row justify-around ">
-                <button className="border rounded w-[30vw] m-[2px]">
-                  Like
-                </button>
+              <div className="flex flex-row justify-around mb-4 p-2 ">
+                {rows.liked.includes(authLogin) ? (
+                  <div>
+                    <button
+                      className="border rounded-xl h-[50px] w-[30vw] m-[2px] bg-[#0f80f2] text-white"
+                      onClick={() => unLikePost(rows._id)}
+                    >
+                      Like
+                    </button>
+                  </div>
+                ) : (
+                  <div>
+                    <button
+                      className="border rounded-xl h-[50px] w-[30vw] m-[2px] bg-[#ffff] text-blue-600/100"
+                      onClick={() => likePost(rows._id)}
+                    >
+                      Like
+                    </button>
+                  </div>
+                )}
 
                 <label
                   onClick={() => {
                     getPostId(rows._id);
                   }}
-                  className="border rounded w-[30vw] m-[2px]"
+                  className="border rounded-xl h-[50px] w-[25vw] m-[2px] bg-[#ffff] text-blue-600/100 text-center p-[10px]"
                   for="my-modal-5"
-                  class="btn"
                 >
                   Comment
                 </label>
                 <button
-                  className="border rounded w-[30vw] m-[2px]"
+                  className="border rounded-xl h-[50px] w-[25vw] m-[2px] bg-[#ffff] text-blue-600/100"
                   onClick={() => getStore(rows.store)}
                 >
                   Store

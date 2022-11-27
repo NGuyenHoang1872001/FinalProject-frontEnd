@@ -238,6 +238,37 @@ const handleGetComment = async (postId) => {
     return response.data;
   } catch (error) {}
 };
+
+const handleLike = async (postId, liked) => {
+  try {
+    const payload = { liked };
+
+    const URL = `http://localhost:3001/routerAPI/getLikedUser/${postId}`;
+    const response = await axios.put(URL, payload);
+    return response;
+  } catch (error) {
+    console.log("🚀 ~ file: UserAPI.js ~ line 248 ~ handleLike ~ error", error);
+  }
+};
+const handleUnLike = async (postId, liked) => {
+  try {
+    console.log(
+      "🚀 ~ file: UserAPI.js ~ line 254 ~ handleUnLike ~ postId",
+      postId
+    );
+    const payload = { liked };
+
+    const URL = `http://localhost:3001/routerAPI/getUnLikedUser/${postId}`;
+    const response = await axios.put(URL, payload);
+
+    return response;
+  } catch (error) {
+    console.log(
+      "🚀 ~ file: UserAPI.js ~ line 257 ~ handleUnLike ~ error",
+      error
+    );
+  }
+};
 export {
   handleRegisterUser,
   handleLoginUser,
@@ -265,4 +296,6 @@ export {
   handleGetComment,
   handleCreateComment,
   handleGetPostByAuthor,
+  handleLike,
+  handleUnLike,
 };
