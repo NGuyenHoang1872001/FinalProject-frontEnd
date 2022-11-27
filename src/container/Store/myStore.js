@@ -78,15 +78,15 @@ const MyStore = () => {
     getAllStore();
   };
   return (
-    <div>
+    <div className="rounded-2xl border-2 mt-3 shadow-lg w-[80vw] h-[100vh] p-4  ">
       <button className="btn btn-success" onClick={() => createStore()}>
         Create Store
       </button>
       <div>
-        <div className="flex flex-row flex-wrap ">
+        <div className="flex flex-row flex-wrap justify-center ">
           {store.data &&
             store.data.map((store) => (
-              <div className="border m-[20px] rounded w-[30vw] p-4 relative">
+              <div className=" m-[20px] rounded-2xl border-2 mt-5 ml-3 shadow-md w-[30vw] p-4 relative ">
                 <div>
                   <div>
                     <div>
@@ -147,24 +147,30 @@ const MyStore = () => {
                         </ul>
                       </div>
                     </div>
-
-                    <p key={store._id}>ID: {store._id}</p>
-                    <p>Name: {store.name}</p>
-                    <p>Email: {store.email}</p>
-                    <p>PhoneNumber: {store.phoneNumber}</p>
                   </div>
-                  <button
-                    className="border m-[20px] rounded"
-                    onClick={() => getStore(store._id, store.ownerId)}
-                  >
-                    Show
-                  </button>
+                  <div>
+                    <div className="font-bold ">
+                      <p key={store._id}>ID: {store._id}</p>
+                      <p>Name: {store.name}</p>
+                      <p>Email: {store.email}</p>
+                      <p>PhoneNumber: {store.phoneNumber}</p>
+                    </div>
+                    <div className="text-center">
+                      <button
+                        className=" m-[20px] border-2 rounded-2xl w-24"
+                        onClick={() => getStore(store._id, store.ownerId)}
+                      >
+                        Show
+                      </button>
+                    </div>
+                  </div>
                 </div>
               </div>
             ))}
         </div>
       </div>
       <div>
+        {/* PopUpDelete */}
         <input type="checkbox" id="my-modal-3" className="modal-toggle" />
         <div className="modal">
           <div className="modal-box relative">
@@ -174,16 +180,21 @@ const MyStore = () => {
             >
               ✕
             </label>
-            <h3 className="text-lg font-bold">Are you sure ?</h3>
+            <h3 className="text-lg font-bold text-center mb-10">
+              Are you sure ?
+            </h3>
             <div className="flex row justify-center gap-3">
               <label
                 htmlFor="my-modal-3"
-                className="border-2 width 30px"
+                className=" border-2 rounded-2xl w-24 text-center"
                 onClick={() => deleteStore()}
               >
                 Yes
               </label>
-              <label htmlFor="my-modal-3" className="border-2 width 30px">
+              <label
+                htmlFor="my-modal-3"
+                className=" border-2 rounded-2xl w-24 text-center"
+              >
                 {" "}
                 No
               </label>

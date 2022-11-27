@@ -25,10 +25,6 @@ const CreatePost = () => {
   });
   const navigate = useNavigate();
   const [picture, setPicture] = useState();
-  console.log(
-    "🚀 ~ file: createPost.js ~ line 28 ~ CreatePost ~ picture",
-    picture
-  );
 
   const authLogin = useSelector((state) => state.auth.id);
   const createPost = async (data) => {

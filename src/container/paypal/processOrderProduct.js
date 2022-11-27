@@ -6,7 +6,7 @@ const ViewProcess = () => {
   };
   return (
     <div>
-      <div className="flex flex-col text-center w-[80vw]  h-[100vh] bg-gradient-to-r from-cyan-500 to-blue-500 ">
+      <div className=" flex flex-col text-center w-[80vw]  h-[100vh] bg-gradient-to-r from-cyan-500 to-blue-500 rounded-2xl border-2 mt-3 ">
         <div className="mt-[200px]">
           <div>
             <h1 className="text-[50px] font-[600] mb-[40px]">

@@ -1,4 +1,5 @@
 import axios, { Axios } from "axios";
+import { handleFollowing, handleUnFollowing } from "./UserAPIFollowing";
 
 const handleRegisterUser = async (data) => {
   const URL = "http://localhost:3001/routerAPI/register";
@@ -269,6 +270,30 @@ const handleUnLike = async (postId, liked) => {
     );
   }
 };
+
+const handleFollowingStore = async (id, following) => {
+  try {
+    const url = "http://localhost:3001/routerAPI/getStoreFollowing/";
+    const response = handleFollowing(id, following, url);
+  } catch (error) {
+    console.log(
+      "🚀 ~ file: UserAPI.js ~ line 279 ~ handleFollowingStore ~ error",
+      error
+    );
+  }
+};
+
+const handleUnFollowingStore = async (id, following) => {
+  try {
+    const url = "http://localhost:3001/routerAPI/getStoreUnFollowing/";
+    const response = handleFollowing(id, following, url);
+  } catch (error) {
+    console.log(
+      "🚀 ~ file: UserAPI.js ~ line 279 ~ handleFollowingStore ~ error",
+      error
+    );
+  }
+};
 export {
   handleRegisterUser,
   handleLoginUser,
@@ -298,4 +323,6 @@ export {
   handleGetPostByAuthor,
   handleLike,
   handleUnLike,
+  handleFollowingStore,
+  handleUnFollowingStore,
 };

@@ -18,7 +18,7 @@ const InfoCustomer = () => {
   const schemaValidation = yup.object().shape({
     name: yup.string().required(),
     address: yup.string().required(),
-    phoneNumber: yup.number().required(),
+    phoneNumber: yup.number().required().min(0),
   });
   const {
     control,
@@ -115,52 +115,81 @@ const InfoCustomer = () => {
   };
 
   return (
-    <div>
+    <div className="rounded-2xl border-2 p-10 w-[80vw] flex flex-col mt-3 ">
       <form onSubmit={handleSubmit(handleCheckout)}>
-        <textarea
-          id="NameInput"
-          className="textarea textarea-accent  w-[80vw] "
-          placeholder="Name"
-          {...register("name")}
-        ></textarea>
-        <textarea
-          id="AddressInput"
-          className="textarea textarea-accent  w-[80vw] "
-          placeholder="Address"
-          {...register("address")}
-        ></textarea>
-        <textarea
-          id="PhoneNumberInput"
-          className="textarea textarea-accent  w-[80vw] "
-          placeholder="PhoneNumber"
-          {...register("phoneNumber")}
-        ></textarea>
+        <div className=" flex flex-col  gap-8">
+          <div className="text-center">
+            <p className="text-3xl font-bold">Information Detail</p>
+          </div>
 
-        <p>quantity</p>
-        <div className="flex flex-row gap-1">
-          {" "}
-          <button onClick={() => reduced(count)}> - </button>
-          <p>{count}</p>
-          <button onClick={() => increase(count)}> + </button>
-        </div>
-        <div>
-          <Controller
-            name="paymentMeth"
-            control={control}
-            render={({ field }) => (
-              <ReactSelect
-                isClearable
-                {...field}
-                options={[
-                  { value: "COD", label: "COD" },
-                  { value: "PayPal", label: "PayPal" },
-                ]}
-              />
-            )}
-          />
-        </div>
-        <div>
-          <button>CheckOut</button>
+          <div className="flex flex-col">
+            <p className="text-sm font-medium mb-3">Name</p>
+            <textarea
+              id="NameInput"
+              className="textarea textarea-accent  w-[75vw] h-10 "
+              placeholder="Name"
+              {...register("name")}
+            ></textarea>
+            <span className="text-xs text-red mt-2">
+              {errors?.name?.message}
+            </span>
+          </div>
+          <div className="flex flex-col">
+            <p className="text-sm font-medium mb-3">Address</p>
+            <textarea
+              id="AddressInput"
+              className="textarea textarea-accent  w-[75vw] h-10"
+              placeholder="Address"
+              {...register("address")}
+            ></textarea>
+            <span className="text-xs text-red mt-2">
+              {errors?.address?.message}
+            </span>
+          </div>
+          <div className="flex flex-col">
+            <p className="text-sm font-medium mb-3">PhoneNumber</p>
+            <textarea
+              id="PhoneNumberInput"
+              className="textarea textarea-accent   w-[75vw] h-10 "
+              placeholder="PhoneNumber"
+              {...register("phoneNumber")}
+            ></textarea>
+            <span className="text-xs text-red mt-2">
+              {errors?.phoneNumber?.message}
+            </span>
+          </div>
+
+          <div>
+            <p>Method Payment</p>
+            <Controller
+              name="paymentMeth"
+              control={control}
+              render={({ field }) => (
+                <ReactSelect
+                  isClearable
+                  {...field}
+                  options={[
+                    { value: "COD", label: "COD" },
+                    { value: "PayPal", label: "PayPal" },
+                  ]}
+                />
+              )}
+            />
+          </div>
+          <div>
+            <p>Quantity</p>
+            <div className="flex flex-row gap-1 ">
+              {" "}
+              <button onClick={() => reduced(count)}> - </button>
+              <p>{count}</p>
+              <button onClick={() => increase(count)}> + </button>
+            </div>
+          </div>
+          <div className="text-center">
+            <button className="mr-3 border-4 rounded-md w-32 text-lg font-medium">
+              CheckOut
+            </button>
+          </div>
         </div>
       </form>
     </div>
