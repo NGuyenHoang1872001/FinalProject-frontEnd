@@ -3,15 +3,20 @@ import {
   handleGetStore,
   handleGetProductStore,
   handleDeleteProduct,
+  handleFollowingStore,
+  handleUnFollowingStore,
 } from "../../API/UserAPI";
 import { useLocation, Navigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import Avata from "../../component/Avata";
+import ShowPicture from "./showPicture";
 
 const MyProduct = () => {
   const navigate = useNavigate();
 
   const storeOfProduct = useSelector((state) => state.storeIdProduct.store_Id);
+  const authLogin = useSelector((state) => state.auth.id);
   const [productId, setProductId] = useState([]);
   const [storeDetail, setStoreDetail] = useState([]);
 
@@ -55,9 +60,9 @@ const MyProduct = () => {
     } catch (error) {}
   };
 
-  const getProduct = (productId) => {
+  const getProduct = (product) => {
     try {
-      setProductId(productId);
+      setProductId(product);
     } catch (error) {}
   };
   const deleteProduct = async () => {
@@ -71,35 +76,112 @@ const MyProduct = () => {
       );
     }
   };
+  const addFollowing = async () => {
+    try {
+      const addFollowing = await handleFollowingStore(
+        storeOfProduct,
+        authLogin
+      );
+      getDetailStore();
+    } catch (error) {
+      console.log(
+        "🚀 ~ file: storeContainer.js ~ line 58 ~ addFollowing ~ error",
+        error
+      );
+    }
+  };
+  const addUnFollowing = async () => {
+    try {
+      const addUnFollowing = await handleUnFollowingStore(
+        storeOfProduct,
+        authLogin
+      );
+      getDetailStore();
+    } catch (error) {
+      console.log(
+        "🚀 ~ file: storeContainer.js ~ line 58 ~ addFollowing ~ error",
+        error
+      );
+    }
+  };
+  const [cover, setCover] = useState([]);
+  const handleGetCover = async (cover, productId) => {
+    if (cover && productId) {
+      setCover(cover);
+      setProductId(productId);
+    }
+  };
   useEffect(() => {
     getProductStore();
     getDetailStore();
   }, []);
   return (
     <div>
-      <div>
+      <div className="rounded-2xl border-2 mt-3 shadow-lg">
         {storeDetail.data && (
-          <div>
-            <p>ID Shop: {storeDetail.data._id}</p>
-            <p>{storeDetail.data.name}</p>
-            <p>{storeDetail.data.email}</p>
-            <p>{storeDetail.data.phoneNumber}</p>
+          <div className=" flex flex-rows justify-between w-[80vw] p-6">
+            <div className=" flex flex-row">
+              <div className="mr-[8px]">
+                <Avata width="w-10 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2"></Avata>
+              </div>
+              <div>
+                <p className="font-bold text-5xl">{storeDetail.data.name}</p>
+              </div>
+            </div>
+            <div>
+              <div>
+                {storeDetail.data.following.includes(authLogin) ? (
+                  <div>
+                    <button
+                      className="border rounded-xl h-[30px] w-[20vw] m-[2px] bg-[#0f80f2] text-white"
+                      onClick={() => addUnFollowing()}
+                    >
+                      Following
+                    </button>
+                  </div>
+                ) : (
+                  <div>
+                    <button
+                      className="border rounded-xl h-[30px] w-[20vw] m-[2px] bg-[#ffff] text-blue-600/100"
+                      onClick={() => addFollowing()}
+                    >
+                      Following
+                    </button>
+                  </div>
+                )}
+              </div>
+              <div className="flex flex-col text-center font-medium">
+                {productDetail.data ? (
+                  <p>Quantity of Product: {productDetail.data.length}</p>
+                ) : (
+                  <div></div>
+                )}
+
+                <p>Following: {storeDetail.data.following.length}</p>
+              </div>
+            </div>
+            <div className="font-extralight">
+              <p>ID Shop: {storeDetail.data._id}</p>
+
+              <p>Email: {storeDetail.data.email}</p>
+              <p>PhoneNumber: 84+ {storeDetail.data.phoneNumber}</p>
+            </div>
           </div>
         )}
       </div>
       <div>
         <button
-          className="btn btn-outline btn-success"
+          className="btn btn-outline btn-success mt-8 shadow-md ml-2"
           onClick={() => createProduct(storeDetail.data._id)}
         >
           create Product
         </button>
       </div>
 
-      <div className="flex flex-row ">
+      <div className=" grid gap-4 grid-cols-3 grid-rows-3 ">
         {productDetail.data &&
           productDetail.data.map((products) => (
-            <div className="border m-[20px] rounded w-[20vw] p-4 relative">
+            <div className="w-[20vw] p-4 rounded-2xl border-2 mt-5 ml-3 shadow-md relative">
               <div className="dropdown   dropdown-left dropdown-end absolute top-0 right-0 h-16 w-16  ">
                 <label
                   tabIndex={0}
@@ -158,16 +240,24 @@ const MyProduct = () => {
                   </li>
                 </ul>
               </div>
-              <p key={products._id}> Name: {products.name}</p>
-              <p>cover: {products.cover}</p>
-              <p>description: {products.description}</p>
-
-              <p>Price: {products.price}</p>
-              <p>Quantity: {products.quantity}</p>
+              <div className="font-bold ">
+                <p key={products._id}> Name: {products.name}</p>
+                <p>Description: {products.description}</p>
+                <p>Price: {products.price}</p>
+                <p>Quantity: {products.quantity}</p>
+              </div>
+              <div className="ml-[100px] border-2 rounded-2xl w-24  text-center mt-4 ">
+                <label
+                  for="my-modal-5"
+                  onClick={() => handleGetCover(products.cover, products._id)}
+                >
+                  View
+                </label>
+              </div>
             </div>
           ))}
       </div>
-
+      <ShowPicture cover={cover} id={productId}></ShowPicture>
       {/* Modal */}
       <div>
         <input type="checkbox" id="my-modal-3" className="modal-toggle" />
@@ -179,16 +269,21 @@ const MyProduct = () => {
             >
               ✕
             </label>
-            <h3 className="text-lg font-bold">Are you sure ?</h3>
+            <h3 className="text-lg font-bold text-center mb-10">
+              Are you sure ?
+            </h3>
             <div className="flex row justify-center gap-3">
               <label
                 htmlFor="my-modal-3"
-                className="border-2 width 30px"
+                className="border-2 rounded-2xl w-24 text-center"
                 onClick={() => deleteProduct()}
               >
                 Yes
               </label>
-              <label htmlFor="my-modal-3" className="border-2 width 30px">
+              <label
+                htmlFor="my-modal-3"
+                className="border-2 rounded-2xl w-24 text-center"
+              >
                 {" "}
                 No
               </label>

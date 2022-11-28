@@ -66,7 +66,8 @@ const handleGetPostByAuthor = async (authorId) => {
   return getPost.data;
 };
 
-const handleUpdatePost = async (payload, postId) => {
+const handleUpdatePost = async (postId, payload) => {
+  console.log("hello", payload);
   const URL = `http://localhost:3001/routerAPI/updatePost/${postId}`;
   const updatePost = await axios.put(URL, payload);
 };
@@ -244,7 +245,7 @@ const handleLike = async (postId, liked) => {
   try {
     const payload = { liked };
 
-    const URL = `http://localhost:3001/routerAPI/getLikedUser/${postId}`;
+    const URL = `http://localhost:3001/routerAPI/getLikedPost/${postId}`;
     const response = await axios.put(URL, payload);
     return response;
   } catch (error) {
@@ -259,7 +260,7 @@ const handleUnLike = async (postId, liked) => {
     );
     const payload = { liked };
 
-    const URL = `http://localhost:3001/routerAPI/getUnLikedUser/${postId}`;
+    const URL = `http://localhost:3001/routerAPI/getUnLikedPost/${postId}`;
     const response = await axios.put(URL, payload);
 
     return response;
@@ -294,6 +295,56 @@ const handleUnFollowingStore = async (id, following) => {
     );
   }
 };
+const handleGetInvoiceByProduct = async (productId) => {
+  const URL = `http://localhost:3001/routerAPI/getInvoiceByProduct/${productId}`;
+  const response = await axios.get(URL);
+  return response.data;
+};
+const handleFollowingUser = async (id, following) => {
+  try {
+    const url = "http://localhost:3001/routerAPI/getUserFollowing/";
+    const response = handleFollowing(id, following, url);
+  } catch (error) {
+    console.log(
+      "🚀 ~ file: UserAPI.js ~ line 279 ~ handleFollowingStore ~ error",
+      error
+    );
+  }
+};
+
+const handleUnFollowingUser = async (id, following) => {
+  try {
+    const url = "http://localhost:3001/routerAPI/getUserUnFollowing/";
+    const response = handleFollowing(id, following, url);
+  } catch (error) {
+    console.log(
+      "🚀 ~ file: UserAPI.js ~ line 279 ~ handleFollowingStore ~ error",
+      error
+    );
+  }
+};
+
+const handleGetUserFollowing = async (id) => {
+  try {
+    console.log(
+      "🚀 ~ file: UserAPI.js ~ line 328 ~ handleGetUserFollowing ~ id",
+      id
+    );
+    const URL = `http://localhost:3001/routerAPI/getUserFollow/${id}`;
+    const response = await axios.get(URL);
+    console.log(
+      "🚀 ~ file: UserAPI.js ~ line 335 ~ handleGetUserFollowing ~ response",
+      response
+    );
+    return response.data;
+  } catch (error) {
+    console.log(
+      "🚀 ~ file: UserAPI.js ~ line 333 ~ handleGetUserFollowing ~ error",
+      error
+    );
+  }
+};
+
 export {
   handleRegisterUser,
   handleLoginUser,
@@ -325,4 +376,8 @@ export {
   handleUnLike,
   handleFollowingStore,
   handleUnFollowingStore,
+  handleGetInvoiceByProduct,
+  handleFollowingUser,
+  handleUnFollowingUser,
+  handleGetUserFollowing,
 };

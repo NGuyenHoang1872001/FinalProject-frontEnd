@@ -8,33 +8,19 @@ import {
 } from "../API/UserAPI";
 
 import { useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { setStoreIdProduct } from "../Redux/features/storeIdProduct";
 import Comment from "../component/Comment/comment";
-import { comment } from "postcss";
-import { nothing } from "immer";
-import { listAll, ref, getDownloadURL } from "firebase/storage";
-import { storage } from "../service/fireBase";
-import { async } from "@firebase/util";
+import PersonLikedPost from "../component/PersonLikedPost";
 
 const PostContainer = () => {
   const dispatch = useDispatch();
   const authLogin = useSelector((state) => state.auth.id);
   const navigate = useNavigate();
   const [post, setPost] = useState([]);
-  const [value, setValue] = useState([]);
-  console.log(
-    "🚀 ~ file: postContainer.js ~ line 23 ~ PostContainer ~ post",
-    post
-  );
+
   const [postId, setPostId] = useState([]);
-  console.log(
-    "🚀 ~ file: postContainer.js ~ line 24 ~ PostContainer ~ postId",
-    postId
-  );
-  const [imageFirebase, setImageFirebase] = useState([]);
-  const imageListRef = ref(storage, "/images");
 
   const getAllPost = async () => {
     try {
@@ -75,10 +61,6 @@ const PostContainer = () => {
   };
   const deletePost = async () => {
     const post = postId;
-    console.log(
-      "🚀 ~ file: postContainer.js ~ line 61 ~ deletePost ~ post",
-      post
-    );
     const response = await handleDeletePost(post);
     getAllPost();
   };
@@ -87,10 +69,6 @@ const PostContainer = () => {
     try {
       const post = postId;
       const payload = await handleGetOnePost(postId);
-      console.log(
-        "🚀 ~ file: postContainer.js ~ line 58 ~ editPost ~ payload",
-        payload
-      );
 
       navigate("/updatePost", { state: { payload: payload, postId: postId } });
     } catch (error) {
@@ -208,6 +186,9 @@ const PostContainer = () => {
                   </li>
                 </ul>
               </div>
+              <div>
+                <PersonLikedPost liked={rows.liked.length}></PersonLikedPost>
+              </div>
 
               <div className="flex flex-row justify-around mb-4 p-2 ">
                 {rows.liked.includes(authLogin) ? (
@@ -252,6 +233,8 @@ const PostContainer = () => {
 
       <Comment postID={postId}></Comment>
 
+      {/* Modal */}
+
       <div>
         <input type="checkbox" id="my-modal-3" className="modal-toggle" />
         <div className="modal">
@@ -262,16 +245,21 @@ const PostContainer = () => {
             >
               ✕
             </label>
-            <h3 className="text-lg font-bold">Are you sure ?</h3>
+            <h3 className="text-lg font-bold text-center mb-10">
+              Are you sure ?
+            </h3>
             <div className="flex row justify-center gap-3">
               <label
                 htmlFor="my-modal-3"
-                className="border-2 width 30px"
+                className="border-2 rounded-2xl w-24 text-center"
                 onClick={() => deletePost()}
               >
                 Yes
               </label>
-              <label htmlFor="my-modal-3" className="border-2 width 30px">
+              <label
+                htmlFor="my-modal-3"
+                className="border-2 rounded-2xl w-24 text-center"
+              >
                 {" "}
                 No
               </label>

@@ -93,7 +93,7 @@ const StoreContainer = () => {
           <div className=" flex flex-rows justify-between w-[80vw] p-6">
             <div className=" flex flex-row">
               <div className="mr-[8px]">
-                <Avata></Avata>
+                <Avata width="w-10 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2"></Avata>
               </div>
               <h1 className="font-bold text-5xl">{storeDetail.data.name}</h1>
             </div>
@@ -140,14 +140,14 @@ const StoreContainer = () => {
         )}
       </div>
       {/* */}
-      <div className="flex flex-row  ">
+      <div className="grid gap-4 grid-cols-3 grid-rows-3">
         {productDetail.data &&
           productDetail.data.map((products) => (
             <div className=" w-[20vw] p-4 rounded-2xl border-2 mt-5 ml-3 shadow-md">
               <div className="font-bold text-center">
                 <p key={products._id}>Name: {products.name}</p>
+                <p>Description: {products.description}</p>
                 <p>Quantity: {products.quantity}</p>
-
                 <p>Price: {products.price} $</p>
                 <div className="font-normal flex flex-row m-5 justify-between ">
                   <div className=" border-2 rounded-2xl w-24">

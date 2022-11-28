@@ -23,24 +23,34 @@ const MyOrderPage = () => {
   }, []);
   return (
     <div>
-      {orderData.data &&
-        orderData.data.map((data) => (
-          <div>
-            <p key={data._id}>name: {data.name}</p>
-            <p>address: {data.address}</p>
-            <p>phoneNumber: {data.phoneNumber}</p>
-            <p>email: {data.email}</p>
+      <p className="font-bold text-2xl">My Order History</p>
+      <div className="flex flex-row flex-wrap justify-center  ">
+        {" "}
+        {orderData.data &&
+          orderData.data.map((data) => (
+            <div className=" m-[20px] rounded-2xl border-2 mt-5 ml-3 shadow-md w-[30vw] p-4 relative">
+              <div className="text-center">
+                <p className="font-bold ">Information Detail</p>
+              </div>
+              <div className="font-light">
+                <p key={data._id}>Name: {data.name}</p>
+                <p>Address: {data.address}</p>
+                <p>PhoneNumber: {data.phoneNumber}</p>
+                <p>Email: {data.email}</p>
 
-            {data.productId &&
-              data.productId.map((dataProduct) => (
-                <p key={dataProduct._id}>nameProduct: {dataProduct.name}</p>
-              ))}
-            <p>quantity:{data.quantityProduct}</p>
-            <p>Ammount: {data.ammount} CAD</p>
-            <p>Payment Method: {data.paymentMethod}</p>
-            <p>Date: {data.createdAt}</p>
-          </div>
-        ))}
+                {data.productId &&
+                  data.productId.map((dataProduct) => (
+                    <p key={dataProduct._id}>nameProduct: {dataProduct.name}</p>
+                  ))}
+                <p>quantity:{data.quantityProduct}</p>
+                <p>Ammount: {data.ammount} CAD</p>
+                <p>Payment Method: {data.paymentMethod}</p>
+                <p>Date: {data.createdAt}</p>
+                <p>Status: {data.status}</p>
+              </div>
+            </div>
+          ))}
+      </div>
     </div>
   );
 };

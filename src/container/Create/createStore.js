@@ -49,7 +49,7 @@ const CreateStore = () => {
           <div className="text-center">
             <p className="text-3xl font-bold">Create Store</p>
           </div>
-          <div>
+          <div className="flex flex-col">
             <p className="text-sm font-medium mb-3">Store Name</p>
             <textarea
               id="NameInput"
@@ -63,7 +63,7 @@ const CreateStore = () => {
             </span>
           </div>
           <div className="flex flex-col">
-            <p className="text-sm font-medium mb-3">Emai</p>
+            <p className="text-sm font-medium mb-3">Email</p>
             <textarea
               id="EmailInput"
               className="textarea textarea-accent  w-[75vw] h-10"

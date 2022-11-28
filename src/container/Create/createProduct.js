@@ -13,8 +13,8 @@ import handleGetDownloadToken from "../../API/Firebase";
 const schemaValidation = yup.object().shape({
   name: yup.string().required(),
   description: yup.string().required(),
-  quantity: yup.number().required(),
-  price: yup.number().required(),
+  quantity: yup.number().required().min(1),
+  price: yup.number().required().min(0),
 });
 
 const CreateProduct = () => {
@@ -39,11 +39,13 @@ const CreateProduct = () => {
     try {
       if (picture != null) {
         const imageRef = ref(storage, `images/${picture.name}`);
-        uploadBytes(imageRef, picture).then(() => {
-          alert("create Post SuccessFull");
-        });
+        await uploadBytes(imageRef, picture);
       }
       const pictureName = picture.name;
+      console.log(
+        "🚀 ~ file: createProduct.js ~ line 47 ~ createProduct ~ pictureName",
+        pictureName
+      );
       const responseFirebase = await handleGetDownloadToken(pictureName);
       console.log(
         "🚀 ~ file: createProduct.js ~ line 43 ~ createProduct ~ responseFirebase",
@@ -90,46 +92,68 @@ const CreateProduct = () => {
     setPicture(file);
   };
   return (
-    <div>
+    <div className="rounded-2xl border-2 p-10 w-[80vw] flex flex-col mt-3 ">
       <form onSubmit={handleSubmit(createProduct)}>
-        <div>
-          <textarea
-            id="NameInput"
-            className="textarea textarea-accent  w-[80vw] "
-            placeholder="Name"
-            {...register("name")}
-          ></textarea>
-          <span className="text-xs text-red">{errors?.name?.message}</span>
-          <textarea
-            id="Description"
-            className="textarea textarea-accent  w-[80vw] "
-            placeholder="Description"
-            {...register("description")}
-          ></textarea>
-          <span className="text-xs text-red">
-            {errors?.description?.message}
-          </span>
-
-          <textarea
-            id="Price"
-            className="textarea textarea-accent  w-[80vw] "
-            placeholder="Price"
-            {...register("price")}
-          ></textarea>
-          <span className="text-xs text-red">{errors?.price?.message}</span>
-          <textarea
-            id="quantity"
-            className="textarea textarea-accent  w-[80vw] "
-            placeholder="quantity"
-            {...register("quantity")}
-          ></textarea>
-          <span className="text-xs text-red">{errors?.quantity?.message}</span>
-        </div>
-        <div>
-          <input type="file" onChange={handleGetURLPicture}></input>
-        </div>
-        <div>
-          <button>Create Product</button>
+        <div className="flex flex-col  gap-8">
+          <div className="text-center">
+            <p className="text-3xl font-bold">Create Product</p>
+          </div>
+          <div className="flex flex-col">
+            <p className="text-sm font-medium mb-3">Product Name</p>
+            <textarea
+              id="NameInput"
+              className="textarea textarea-accent  w-[75vw] h-10"
+              placeholder="Name"
+              {...register("name")}
+            ></textarea>
+            <span className="text-xs text-red mt-2">
+              {errors?.name?.message}
+            </span>
+          </div>
+          <div className="flex flex-col">
+            <p className="text-sm font-medium mb-3">Description</p>
+            <textarea
+              id="Description"
+              className="textarea textarea-accent  w-[75vw] h-10"
+              placeholder="Description"
+              {...register("description")}
+            ></textarea>
+            <span className="text-xs text-red mt-2">
+              {errors?.description?.message}
+            </span>
+          </div>
+          <div className="flex flex-col">
+            <p className="text-sm font-medium mb-3">Price</p>
+            <textarea
+              id="Price"
+              className="textarea textarea-accent  w-[75vw] h-10"
+              placeholder="Price"
+              {...register("price")}
+            ></textarea>
+            <span className="text-xs text-red mt-2">
+              {errors?.price?.message}
+            </span>
+          </div>
+          <div className="flex flex-col">
+            <p className="text-sm font-medium mb-3">PhoneNumber</p>
+            <textarea
+              id="quantity"
+              className="textarea textarea-accent   w-[75vw] h-10 "
+              placeholder="quantity"
+              {...register("quantity")}
+            ></textarea>
+            <span className="text-xs text-red mt-2">
+              {errors?.quantity?.message}
+            </span>
+          </div>
+          <div>
+            <input type="file" onChange={handleGetURLPicture}></input>
+          </div>
+          <div className="text-center">
+            <button className="mr-3 border-4 rounded-md w-32 text-lg font-medium">
+              Create
+            </button>
+          </div>
         </div>
       </form>
     </div>

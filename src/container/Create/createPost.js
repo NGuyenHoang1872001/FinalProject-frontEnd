@@ -31,9 +31,7 @@ const CreatePost = () => {
     try {
       if (picture != null) {
         const imageRef = ref(storage, `images/${picture.name}`);
-        uploadBytes(imageRef, picture).then(() => {
-          alert("create Post SuccessFull");
-        });
+        uploadBytes(imageRef, picture);
       }
       const pictureName = picture.name;
       const responseFirebase = await handleGetDownloadToken(pictureName);
