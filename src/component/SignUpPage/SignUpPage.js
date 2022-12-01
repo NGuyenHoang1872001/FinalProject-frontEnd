@@ -15,7 +15,7 @@ const schemaValidation = yup.object().shape({
   password: yup.string().required().min(4),
 });
 
-const SignIn = () => {
+const Register = () => {
   const navigate = useNavigate();
   const [error, setError] = useState("");
   const {
@@ -28,7 +28,8 @@ const SignIn = () => {
 
   const handleRegister = async (data) => {
     const { firstName, lastName, email, password } = data;
-    const payload = { firstName, lastName, email, password };
+    const role = "user";
+    const payload = { firstName, lastName, email, password, role };
 
     const response = await handleRegisterUser(payload);
     console.log(
@@ -88,6 +89,7 @@ const SignIn = () => {
             <div className="mb-[8px]">
               <p lassName="text-sm font-medium mb-3">Password</p>
               <input
+                type="password"
                 className="border rounder-xl w-80 p-2 mt-[10px]"
                 placeholder="Password"
                 {...register("password")}
@@ -112,4 +114,4 @@ const SignIn = () => {
   );
 };
 
-export default SignIn;
+export default Register;

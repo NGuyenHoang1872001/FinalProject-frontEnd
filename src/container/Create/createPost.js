@@ -66,29 +66,48 @@ const CreatePost = () => {
     setPicture(file);
   };
   return (
-    <div>
+    <div className="rounded-2xl border-2 p-10 w-[80vw] flex flex-col mt-3 ">
       <form onSubmit={handleSubmit(createPost)}>
-        <div>
-          <textarea
-            id="TitleInput"
-            className="textarea textarea-accent  w-[80vw] "
-            placeholder="Title"
-            {...register("title")}
-          ></textarea>
+        <div className="flex flex-col  gap-8">
+          <div className="text-center">
+            <p className="text-3xl font-bold">Create Post</p>
+          </div>
+          <div>
+            <p className="text-sm font-medium mb-3"> Title</p>
+            <textarea
+              id="TitleInput"
+              className="textarea textarea-accent  w-[75vw] h-10 "
+              placeholder="Title"
+              {...register("title")}
+            ></textarea>
+            <span className="text-xs text-red mt-2">
+              {" "}
+              {errors?.name?.message}
+            </span>
+          </div>
+          <div>
+            <p className="text-sm font-medium mb-3">StoreId</p>
+            <textarea
+              id="StoreInput"
+              className="textarea textarea-accent  w-[75vw] h-10 "
+              placeholder="Store"
+              {...register("store")}
+            ></textarea>
+            <span className="text-xs text-red mt-2">
+              {" "}
+              {errors?.name?.message}
+            </span>
+          </div>
 
-          <textarea
-            id="StoreInput"
-            className="textarea textarea-accent  w-[80vw] "
-            placeholder="Store"
-            {...register("store")}
-          ></textarea>
-        </div>
-        <div>
-          <input type="file" onChange={handleGetURLPicture}></input>
-        </div>
+          <div>
+            <input type="file" onChange={handleGetURLPicture}></input>
+          </div>
 
-        <div>
-          <button>Create Post</button>
+          <div className="text-center">
+            <button className="mr-3 border-4 rounded-md w-32 text-lg font-medium">
+              Create
+            </button>
+          </div>
         </div>
       </form>
     </div>

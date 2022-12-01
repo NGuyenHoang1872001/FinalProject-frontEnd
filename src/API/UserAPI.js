@@ -1,17 +1,38 @@
 import axios, { Axios } from "axios";
+import { comment } from "postcss";
 import { handleFollowing, handleUnFollowing } from "./UserAPIFollowing";
 
 const handleRegisterUser = async (data) => {
-  const URL = "http://localhost:3001/routerAPI/register";
-  const dataUser = data;
-  const createUser = await axios.post(URL, dataUser);
+  try {
+    console.log(
+      "🚀 ~ file: UserAPI.js ~ line 6 ~ handleRegisterUser ~ data",
+      data
+    );
+    const URL = "http://localhost:3001/routerAPI/register";
+    const dataUser = data;
+    const createUser = await axios.post(URL, dataUser);
+  } catch (error) {
+    console.log(
+      "🚀 ~ file: UserAPI.js ~ line 11 ~ handleRegisterUser ~ error",
+      error
+    );
+  }
 };
 
-const handleLoginUser = async (data) => {
-  const URL = "http://localhost:3001/routerAPI/login";
-  const dataUser = data;
-  const token = await axios.post(URL, dataUser);
-  return token;
+const handleLoginUser = async (payload) => {
+  console.log("🚀 ~ file: UserAPI.js:23 ~ handleLoginUser ~ payload", payload);
+  try {
+    const URL = "http://localhost:3001/routerAPI/login";
+
+    // console.log(
+    //   "🚀 ~ file: UserAPI.js:25 ~ handleLoginUser ~ dataUser",
+    //   dataUser
+    // );
+    const token = await axios.post(URL, payload);
+    return token;
+  } catch (error) {
+    console.log("🚀 ~ file: UserAPI.js:33 ~ handleLoginUser ~ error", error);
+  }
 };
 
 const handleGetAllPost = async () => {
@@ -61,6 +82,10 @@ const handleGetOnePost = async (postId) => {
 };
 
 const handleGetPostByAuthor = async (authorId) => {
+  console.log(
+    "🚀 ~ file: UserAPI.js ~ line 65 ~ handleGetPostByAuthor ~ authorId",
+    authorId
+  );
   const URl = `http://localhost:3001/routerAPI/getPostByAuthor/${authorId}`;
   const getPost = await axios.get(URl);
   return getPost.data;
@@ -303,6 +328,7 @@ const handleGetInvoiceByProduct = async (productId) => {
 const handleFollowingUser = async (id, following) => {
   try {
     const url = "http://localhost:3001/routerAPI/getUserFollowing/";
+
     const response = handleFollowing(id, following, url);
   } catch (error) {
     console.log(
@@ -315,6 +341,7 @@ const handleFollowingUser = async (id, following) => {
 const handleUnFollowingUser = async (id, following) => {
   try {
     const url = "http://localhost:3001/routerAPI/getUserUnFollowing/";
+
     const response = handleFollowing(id, following, url);
   } catch (error) {
     console.log(
@@ -326,10 +353,6 @@ const handleUnFollowingUser = async (id, following) => {
 
 const handleGetUserFollowing = async (id) => {
   try {
-    console.log(
-      "🚀 ~ file: UserAPI.js ~ line 328 ~ handleGetUserFollowing ~ id",
-      id
-    );
     const URL = `http://localhost:3001/routerAPI/getUserFollow/${id}`;
     const response = await axios.get(URL);
     console.log(
@@ -343,6 +366,33 @@ const handleGetUserFollowing = async (id) => {
       error
     );
   }
+};
+
+const handleReplyComment = async (payload) => {
+  try {
+    const URL = `http://localhost:3001/routerAPI/createReply`;
+    const response = await axios.post(URL, payload);
+  } catch (error) {}
+};
+const handleGetReplyByComment = async (commentId) => {
+  try {
+    const URL = `http://localhost:3001/routerAPI/getReply/${commentId}`;
+    const response = await axios.get(URL);
+    return response.data;
+  } catch (error) {
+    console.log(
+      "🚀 ~ file: UserAPI.js ~ line 361 ~ handleGetReplyByComment ~ error",
+      error
+    );
+  }
+};
+
+const handleSearchUser = async (query) => {
+  try {
+    const URI = `http://localhost:3001/routerAPI/searchUser?query=${query}&page=1&limit=5`;
+    const response = await axios.get(URI);
+    return response.data.docs;
+  } catch (error) {}
 };
 
 export {
@@ -380,4 +430,7 @@ export {
   handleFollowingUser,
   handleUnFollowingUser,
   handleGetUserFollowing,
+  handleReplyComment,
+  handleGetReplyByComment,
+  handleSearchUser,
 };

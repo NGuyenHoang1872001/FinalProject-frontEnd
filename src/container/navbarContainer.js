@@ -1,24 +1,64 @@
 import { useDispatch } from "react-redux";
 import { setLoggedInUser } from "../Redux/features/auth";
 import { useNavigate } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { handleSearchUser } from "../API/UserAPI";
+import { async } from "@firebase/util";
+import { AiOutlineSearch } from "react-icons/ai";
+const schemaValidation = yup.object().shape({
+  searchInput: yup.string(),
+});
+
 const Navbar = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(schemaValidation),
+  });
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const handleLogOut = () => {
     dispatch(setLoggedInUser(""));
     navigate("/login");
   };
+  const handleSearch = async (data) => {
+    try {
+      const query = data.searchInput;
+      const response = await handleSearchUser(query);
+
+      navigate("/searchPage", {
+        state: {
+          data: response,
+        },
+      });
+    } catch (error) {}
+  };
   return (
     <div className="flex flex-row justify-between p-4 border-2 m-3 items-center">
       <div>
-        <input
-          type="text"
-          placeholder="Type here"
-          className="input input-bordered input-secondary w-80 max-w-xs"
-        />
+        <form onSubmit={handleSubmit(handleSearch)}>
+          <div className="flex flex-row">
+            <textarea
+              id="TitleInput"
+              type="text"
+              className="input input-bordered input-secondary w-80 max-w-xs pt-3 "
+              placeholder="Type here"
+              {...register("searchInput")}
+            ></textarea>
+
+            <button className=" text-2xl  ">
+              {" "}
+              <AiOutlineSearch />
+            </button>
+          </div>
+        </form>
       </div>
       <div>
-        <h4 className="font-extralight text-5xl mr-[160px]">ThaoLinhMaiDinh</h4>
+        <h4 className="font-extralight text-5xl mr-[160px]">Easy Meal</h4>
       </div>
       <div className="dropdown dropdown-end">
         <label tabIndex={0}>

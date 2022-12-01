@@ -3,97 +3,53 @@ import {
   handleGetDetailUser,
   handleLike,
   handleUnLike,
-  handleGetOnePost,
-  handleDeletePost,
 } from "../../API/UserAPI";
 import { useEffect, useState } from "react";
 import {
   handleGetPostByAuthor,
   handleGetUserFollowing,
+  handleFollowingUser,
+  handleUnFollowingUser,
 } from "../../API/UserAPI";
-import Comment from "../../component/Comment/comment";
-import Avata from "../../component/Avata";
-import PersonLikedPost from "../../component/PersonLikedPost.js";
-import { useNavigate } from "react-router-dom";
 import { FaHeart } from "react-icons/fa";
 import { FaHeartBroken } from "react-icons/fa";
 import { FaFacebookMessenger } from "react-icons/fa";
-import { FaStore } from "react-icons/fa";
-import { setStoreIdProduct } from "../../Redux/features/storeIdProduct";
 
-const AccountDetail = () => {
-  const authLogin = useSelector((state) => state.auth.id);
-  const authRole = useSelector((state) => state.auth.role);
-  const navigate = useNavigate();
+import { FaStore } from "react-icons/fa";
+import { RiUserFollowLine } from "react-icons/fa";
+
+import { useLocation, useNavigate } from "react-router-dom";
+import Comment from "../../component/Comment/comment";
+import Avata from "../../component/Avata";
+import PersonLikedPost from "../../component/PersonLikedPost.js";
+import { setStoreIdProduct } from "../../Redux/features/storeIdProduct";
+const AccountDetailUser = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const authLogin = useSelector((state) => state.auth.id);
+  const { state } = useLocation();
+  const { userId } = state;
+
   const [detailUser, setDetailUSer] = useState();
+
   const [postAuthor, setPostAuthor] = useState();
 
   const [userFollowing, setUserFollowing] = useState();
 
   const getPostbyAuthor = async () => {
     try {
-      const response = await handleGetPostByAuthor(authLogin);
+      const response = await handleGetPostByAuthor(userId);
       setPostAuthor(response);
     } catch (error) {}
   };
   const handleGetFollowing = async () => {
     try {
-      const id = authLogin;
+      const id = userId;
       const response = await handleGetUserFollowing(id);
       setUserFollowing(response.length);
     } catch (error) {}
   };
 
-  const findDetailUser = async () => {
-    try {
-      const getDetailUser = await handleGetDetailUser(authLogin);
-
-      setDetailUSer(getDetailUser.data);
-    } catch (error) {}
-  };
-  const likePost = async (postId) => {
-    try {
-      const likeByAuthor = await handleLike(postId, authLogin);
-      getPostbyAuthor();
-    } catch (error) {
-      console.log(
-        "🚀 ~ file: postContainer.js ~ line 108 ~ likePost ~ error",
-        error
-      );
-    }
-  };
-  const unLikePost = async (postId) => {
-    try {
-      const unLikeByAuthor = await handleUnLike(postId, authLogin);
-      getPostbyAuthor();
-    } catch (error) {
-      console.log(
-        "🚀 ~ file: postContainer.js ~ line 108 ~ likePost ~ error",
-        error
-      );
-    }
-  };
-  const deletePost = async () => {
-    const post = postId;
-    const response = await handleDeletePost(post);
-
-    getPostbyAuthor();
-  };
-
-  const editPost = async (postId) => {
-    try {
-      const post = postId;
-      const payload = await handleGetOnePost(postId);
-
-      navigate("/updatePost", { state: { payload: payload, postId: postId } });
-    } catch (error) {
-      console.log(
-        "🚀 ~ file: postContainer.js ~ line 76 ~ editPost ~ error",
-        error
-      );
-    }
-  };
   const getStore = async (store_Id) => {
     try {
       const store = { store_Id };
@@ -108,7 +64,44 @@ const AccountDetail = () => {
       );
     }
   };
+  const findDetailUser = async () => {
+    try {
+      const getDetailUser = await handleGetDetailUser(userId);
 
+      setDetailUSer(getDetailUser.data);
+    } catch (error) {}
+  };
+  const [accountDetail, setAccountDetail] = useState();
+
+  const findDetailOwner = async () => {
+    try {
+      const getDetailUser = await handleGetDetailUser(authLogin);
+
+      setAccountDetail(getDetailUser.data);
+    } catch (error) {}
+  };
+  const likePost = async (postId) => {
+    try {
+      const like = await handleLike(postId, authLogin);
+      getPostbyAuthor();
+    } catch (error) {
+      console.log(
+        "🚀 ~ file: AccountDetailUser.js ~ line 50 ~ likePost ~ error",
+        error
+      );
+    }
+  };
+  const unLikePost = async (postId) => {
+    try {
+      const unLikeByAuthor = await handleUnLike(postId, authLogin);
+      getPostbyAuthor();
+    } catch (error) {
+      console.log(
+        "🚀 ~ file: AccountDetailUser.js ~ line 61 ~ unLikePost ~ error",
+        error
+      );
+    }
+  };
   const [postId, setPostId] = useState([]);
   const [authorId, setAuthorId] = useState([]);
   const getPostId = async (postId, authorId) => {
@@ -122,7 +115,30 @@ const AccountDetail = () => {
       );
     }
   };
+  const addFollowing = async () => {
+    try {
+      const addFollowing = await handleFollowingUser(userId, authLogin);
+      findDetailUser();
+    } catch (error) {
+      console.log(
+        "🚀 ~ file: storeContainer.js ~ line 58 ~ addFollowing ~ error",
+        error
+      );
+    }
+  };
+  const addUnFollowing = async () => {
+    try {
+      const addUnFollowing = await handleUnFollowingUser(userId, authLogin);
+      findDetailUser();
+    } catch (error) {
+      console.log(
+        "🚀 ~ file: storeContainer.js ~ line 58 ~ addFollowing ~ error",
+        error
+      );
+    }
+  };
   useEffect(() => {
+    findDetailOwner();
     findDetailUser();
     getPostbyAuthor();
     handleGetFollowing();
@@ -147,13 +163,46 @@ const AccountDetail = () => {
                   {postAuthor ? <p>Post: {postAuthor.length}</p> : <div></div>}
                 </div>
               </div>
+              <div>
+                {users._id == authLogin ? (
+                  <div></div>
+                ) : (
+                  <div>
+                    {accountDetail &&
+                      accountDetail.map((account) => (
+                        <div>
+                          {users.following.includes(account._id) ? (
+                            <div className="text-center">
+                              <button
+                                className="border rounded-xl h-[30px] w-[20vw] m-[2px] bg-[#0f80f2] text-white"
+                                onClick={() => addUnFollowing()}
+                              >
+                                Following
+                              </button>
+                            </div>
+                          ) : (
+                            <div className="text-center">
+                              <button
+                                className="border rounded-xl h-[30px] w-[20vw] m-[2px] bg-[#ffff] text-blue-600/100"
+                                onClick={() => addFollowing()}
+                              >
+                                Following
+                              </button>
+                            </div>
+                          )}
+                        </div>
+                      ))}
+                    {}
+                  </div>
+                )}
+              </div>
             </div>
           ))}
       </div>
       <div className="">
         {postAuthor &&
           postAuthor.map((postData) => (
-            <div className="rounded-2xl border-2 p-6 mt-3 w-[80vw]">
+            <div className="rounded-2xl border-2 p-6 mt-3 w-[80vw] ">
               <div>
                 <div className="flex flex-row  mb-[20px]">
                   <Avata width="w-10 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2"></Avata>
@@ -171,43 +220,7 @@ const AccountDetail = () => {
               </div>
 
               <div>
-                <div className="dropdown   dropdown-left dropdown-end absolute  top-0 right-0  ">
-                  <div className="App">
-                    <div className="container">
-                      <button type="button" class="button text-3xl  mt-5 mr-5">
-                        ☰
-                      </button>
-                    </div>
-                  </div>
-                  <div>
-                    <ul
-                      tabIndex={0}
-                      className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52"
-                    >
-                      <div>
-                        <div>
-                          <li>
-                            <label
-                              htmlFor="my-modal-4"
-                              onClick={() => editPost(postData._id)}
-                            >
-                              Edit
-                            </label>
-                          </li>
-                          <li>
-                            <label
-                              htmlFor="my-modal-3"
-                              className=""
-                              onClick={() => getPostId(postData._id)}
-                            >
-                              Delete
-                            </label>
-                          </li>
-                        </div>
-                      </div>
-                    </ul>
-                  </div>
-                </div>
+                <div></div>
                 <PersonLikedPost
                   liked={postData.liked.length}
                 ></PersonLikedPost>
@@ -242,18 +255,16 @@ const AccountDetail = () => {
                   >
                     <FaFacebookMessenger className="ml-[47%] text-2xl"></FaFacebookMessenger>
                   </label>
-                  <label>
-                    <button
-                      className="border rounded-xl h-[50px] w-[25vw] m-[2px] bg-[#ffff] text-blue-600/100"
-                      onClick={() => getStore(postData.store)}
-                    >
-                      <FaStore className="ml-[47%] text-2xl"></FaStore>
-                    </button>
-                  </label>
+                  <button
+                    className="border rounded-xl h-[50px] w-[25vw] m-[2px] bg-[#ffff] text-blue-600/100"
+                    onClick={() => getStore(postData.store)}
+                  >
+                    <FaStore className="ml-[47%] text-2xl"></FaStore>
+                  </button>
                 </div>
               </div>
             </div>
-          ))}
+          ))}{" "}
         {!postAuthor ? (
           <div>
             <h1 className="text-center text-4xl font-bold mt-20">
@@ -265,42 +276,8 @@ const AccountDetail = () => {
         )}
       </div>
       <Comment postID={postId} authorId={authorId}></Comment>
-      {/* Modal */}
-
-      <div>
-        <input type="checkbox" id="my-modal-3" className="modal-toggle" />
-        <div className="modal">
-          <div className="modal-box relative">
-            <label
-              htmlFor="my-modal-3"
-              className="btn btn-sm btn-circle absolute right-2 top-2"
-            >
-              ✕
-            </label>
-            <h3 className="text-lg font-bold text-center mb-10">
-              Are you sure ?
-            </h3>
-            <div className="flex row justify-center gap-3">
-              <label
-                htmlFor="my-modal-3"
-                className="border-2 rounded-2xl w-24 text-center"
-                onClick={() => deletePost()}
-              >
-                Yes
-              </label>
-              <label
-                htmlFor="my-modal-3"
-                className="border-2 rounded-2xl w-24 text-center"
-              >
-                {" "}
-                No
-              </label>
-            </div>
-          </div>
-        </div>
-      </div>
     </div>
   );
 };
 
-export default AccountDetail;
+export default AccountDetailUser;

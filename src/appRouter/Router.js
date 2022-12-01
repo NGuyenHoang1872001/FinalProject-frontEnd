@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Login from "../component/LoginPage/LoginPage";
-import SignUp from "../component/SignUpPage/SignUpPage";
+import Register from "../component/SignUpPage/SignUpPage";
 import NotFound from "../component/NotFoundPage/NotFound";
 import HomePage from "../component/HomePage/HomePage";
 import StorePage from "../container/storeContainer";
@@ -18,6 +18,8 @@ import InfoCustomer from "../container/paypal/informationPayPal";
 import PayPal from "../component/Paypal";
 import ViewProcess from "../container/paypal/processOrderProduct";
 import MyOrderPage from "../container/MyOrder/myOrder";
+import SearchPage from "../component/searchPage/searchIndex";
+import AccountDetailUser from "../container/Account/AccountDetailUser";
 const AppRouter = () => {
   return (
     <BrowserRouter>
@@ -38,9 +40,11 @@ const AppRouter = () => {
           <Route path="/payPal" element={<PayPal />}></Route>
           <Route path="/viewProcess" element={<ViewProcess />}></Route>
           <Route path="/myOrder" element={<MyOrderPage />}></Route>
+          <Route path="/searchPage" element={<SearchPage />}></Route>
+          <Route path="/userProfile" element={<AccountDetailUser />}></Route>
         </Route>
         <Route path="/login" element={<Login />}></Route>
-        <Route path="/signUp" element={<SignUp />}></Route>
+        <Route path="/register" element={<Register />}></Route>
 
         <Route path="*" element={<NotFound />} />
       </Routes>

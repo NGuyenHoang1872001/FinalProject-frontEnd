@@ -6,7 +6,11 @@ import {
   handleLike,
   handleUnLike,
 } from "../API/UserAPI";
+import { FaHeart } from "react-icons/fa";
+import { FaHeartBroken } from "react-icons/fa";
+import { FaFacebookMessenger } from "react-icons/fa";
 
+import { FaStore } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
@@ -17,10 +21,13 @@ import PersonLikedPost from "../component/PersonLikedPost";
 const PostContainer = () => {
   const dispatch = useDispatch();
   const authLogin = useSelector((state) => state.auth.id);
+  const authRole = useSelector((state) => state.auth.role);
   const navigate = useNavigate();
   const [post, setPost] = useState([]);
+  console.log("🚀 ~ file: postContainer.js:22 ~ PostContainer ~ post", post);
 
   const [postId, setPostId] = useState([]);
+  const [authorId, setAuthorId] = useState([]);
 
   const getAllPost = async () => {
     try {
@@ -49,9 +56,10 @@ const PostContainer = () => {
     }
   };
 
-  const getPostId = async (postId) => {
+  const getPostId = async (postId, authorId) => {
     try {
       setPostId(postId);
+      setAuthorId(authorId);
     } catch (error) {
       console.log(
         "🚀 ~ file: postContainer.js ~ line 55 ~ deletePost ~ error",
@@ -59,9 +67,11 @@ const PostContainer = () => {
       );
     }
   };
+
   const deletePost = async () => {
     const post = postId;
     const response = await handleDeletePost(post);
+
     getAllPost();
   };
 
@@ -101,6 +111,19 @@ const PostContainer = () => {
       );
     }
   };
+  const getUserPage = (userId) => {
+    try {
+      console.log(
+        "🚀 ~ file: postContainer.js ~ line 109 ~ getUserPage ~ userId",
+        userId
+      );
+      navigate("/userProfile", {
+        state: {
+          userId: userId,
+        },
+      });
+    } catch (error) {}
+  };
 
   useEffect(() => {
     getAllPost();
@@ -120,9 +143,14 @@ const PostContainer = () => {
                       <img src="https://placeimg.com/192/192/people" />
                     </div>
                   </div>
-                  <p className="ml-[10px] font-medium">
+                  <button
+                    className="ml-[10px] font-medium"
+                    onClick={() => {
+                      getUserPage(rows.author._id);
+                    }}
+                  >
                     {rows.author.firstName} {rows.author.lastName}
-                  </p>
+                  </button>
                 </div>
 
                 <p key={rows._id} className="ml-7">
@@ -137,54 +165,74 @@ const PostContainer = () => {
               </div>
 
               <div className="dropdown   dropdown-left dropdown-end absolute  top-0 right-0  ">
-                <label
-                  tabIndex={0}
-                  className="btn btn-circle swap swap-rotate m-1"
-                >
-                  <input type="checkbox" />
-
-                  <svg
-                    className="swap-off fill-current"
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="18"
-                    height="18"
-                    viewBox="0 0 512 512"
+                <div className="App">
+                  <div className="container">
+                    <button type="button" class="button text-3xl  mt-5 mr-5">
+                      ☰
+                    </button>
+                  </div>
+                </div>
+                <div>
+                  <ul
+                    tabIndex={0}
+                    className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52"
                   >
-                    <path d="M64,384H448V341.33H64Zm0-106.67H448V234.67H64ZM64,128v42.67H448V128Z" />
-                  </svg>
-
-                  <svg
-                    className="swap-on fill-current"
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="18"
-                    height="18"
-                    viewBox="0 0 512 512"
-                  >
-                    <polygon points="400 145.49 366.51 112 256 222.51 145.49 112 112 145.49 222.51 256 112 366.51 145.49 400 256 289.49 366.51 400 400 366.51 289.49 256 400 145.49" />
-                  </svg>
-                </label>
-                <ul
-                  tabIndex={0}
-                  className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52"
-                >
-                  <li>
-                    <label
-                      htmlFor="my-modal-3"
-                      className=""
-                      onClick={() => getPostId(rows._id)}
-                    >
-                      delete
-                    </label>
-                  </li>
-                  <li>
-                    <label
-                      htmlFor="my-modal-4"
-                      onClick={() => editPost(rows._id)}
-                    >
-                      edit
-                    </label>
-                  </li>
-                </ul>
+                    {authRole == "admin" ? (
+                      <div>
+                        {" "}
+                        <li>
+                          <label
+                            htmlFor="my-modal-3"
+                            className=""
+                            onClick={() => getPostId(rows._id)}
+                          >
+                            Delete
+                          </label>
+                        </li>
+                        <li>
+                          <label htmlFor="" className="">
+                            Report
+                          </label>
+                        </li>
+                      </div>
+                    ) : (
+                      <div>
+                        {" "}
+                        {authLogin == rows.author._id ? (
+                          <div>
+                            {" "}
+                            <li>
+                              <label
+                                htmlFor="my-modal-4"
+                                onClick={() => editPost(rows._id)}
+                              >
+                                Edit
+                              </label>
+                            </li>
+                            <li>
+                              <label
+                                htmlFor="my-modal-3"
+                                className=""
+                                onClick={() => getPostId(rows._id)}
+                              >
+                                Delete
+                              </label>
+                            </li>
+                          </div>
+                        ) : (
+                          <div>
+                            {" "}
+                            <li>
+                              <label htmlFor="" className="">
+                                Report
+                              </label>
+                            </li>
+                          </div>
+                        )}
+                      </div>
+                    )}
+                  </ul>
+                </div>
               </div>
               <div>
                 <PersonLikedPost liked={rows.liked.length}></PersonLikedPost>
@@ -194,44 +242,44 @@ const PostContainer = () => {
                 {rows.liked.includes(authLogin) ? (
                   <div>
                     <button
-                      className="border rounded-xl h-[50px] w-[30vw] m-[2px] bg-[#0f80f2] text-white"
+                      className="border rounded-xl h-[50px] w-[30vw] m-[2px]  text-blue-600/100 "
                       onClick={() => unLikePost(rows._id)}
                     >
-                      Like
+                      <FaHeart className="ml-[47%] text-2xl" />
                     </button>
                   </div>
                 ) : (
                   <div>
                     <button
-                      className="border rounded-xl h-[50px] w-[30vw] m-[2px] bg-[#ffff] text-blue-600/100"
+                      className="border rounded-xl h-[50px] w-[30vw] m-[2px]  text-blue-600/100 "
                       onClick={() => likePost(rows._id)}
                     >
-                      Like
+                      <FaHeartBroken className="ml-[47%] text-2xl"></FaHeartBroken>
                     </button>
                   </div>
                 )}
 
                 <label
                   onClick={() => {
-                    getPostId(rows._id);
+                    getPostId(rows._id, rows.author._id);
                   }}
                   className="border rounded-xl h-[50px] w-[25vw] m-[2px] bg-[#ffff] text-blue-600/100 text-center p-[10px]"
                   for="my-modal-5"
                 >
-                  Comment
+                  <FaFacebookMessenger className="ml-[47%] text-2xl"></FaFacebookMessenger>
                 </label>
                 <button
                   className="border rounded-xl h-[50px] w-[25vw] m-[2px] bg-[#ffff] text-blue-600/100"
                   onClick={() => getStore(rows.store)}
                 >
-                  Store
+                  <FaStore className="ml-[47%] text-2xl"></FaStore>
                 </button>
               </div>
             </div>
           ))}
       </div>
 
-      <Comment postID={postId}></Comment>
+      <Comment postID={postId} authorId={authorId}></Comment>
 
       {/* Modal */}
 

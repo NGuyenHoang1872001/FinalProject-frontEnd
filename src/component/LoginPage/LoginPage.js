@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 import { handleLoginUser } from "../../API/UserAPI";
 import { useDispatch } from "react-redux";
 import { setLoggedInUser } from "../../Redux/features/auth";
+import { useState } from "react";
 
 const schemaValidation = yup.object().shape({
   email: yup.string().required().email(),
@@ -34,6 +35,7 @@ const Login = () => {
       const payload = { email, password };
 
       const response = await handleLoginUser(payload);
+
       const { token, payload: loggedInData } = response.data;
       dispatch(setLoggedInUser(loggedInData));
 
@@ -50,10 +52,10 @@ const Login = () => {
   return (
     <div className="flex flex-col items-center bg-[#8CDE61] hover:bg-[#8CDE61] h-[100vh]">
       <div className="ml-[80%] p-8 ">
-        {"/singUp" && (
-          <RouteLink to={"/signUp"}>
+        {"/register" && (
+          <RouteLink to={"/register"}>
             <button className=" h-12 rounded-md w-32 text-lg font-bold bg-[#ffff]  text-[#8CDE61] shadow-2xl ">
-              SignUp
+              Register
             </button>{" "}
           </RouteLink>
         )}
@@ -75,6 +77,7 @@ const Login = () => {
             <div className="mb-[8px]">
               <p className="text-sm font-medium mb-3">Password</p>
               <input
+                type="password"
                 className="border rounder-2xl w-80 p-2 "
                 placeholder="Enter Password"
                 {...register("password")}
