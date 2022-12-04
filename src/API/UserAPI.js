@@ -395,6 +395,22 @@ const handleSearchUser = async (query) => {
   } catch (error) {}
 };
 
+const handleGetAllUser = async () => {
+  try {
+    const URL = `http://localhost:3001/routerAPI/getUser`;
+    const response = await axios.get(URL);
+    return response.data;
+  } catch (error) {}
+};
+
+const handleGetAllStore = async () => {
+  try {
+    const URL = `http://localhost:3001/routerAPI/getStore`;
+    const response = await axios.get(URL);
+    return response.data;
+  } catch (error) {}
+};
+
 export {
   handleRegisterUser,
   handleLoginUser,
@@ -433,4 +449,6 @@ export {
   handleReplyComment,
   handleGetReplyByComment,
   handleSearchUser,
+  handleGetAllUser,
+  handleGetAllStore,
 };

@@ -32,7 +32,7 @@ const SideBar = () => {
           {authLoginRole == "admin" ? (
             <div>
               <li>
-                <Link to={""}>Dashboard</Link>
+                <Link to={"/dashBoard"}>Dashboard</Link>
               </li>
               <li>
                 <Link to={""}>Create Admin</Link>
