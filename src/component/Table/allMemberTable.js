@@ -1,5 +1,5 @@
 import { useQuery } from "react-query";
-import { handleGetAllUser } from "../../API/UserAPI";
+import { handleGetAllUser, handleUpdateUser } from "../../API/UserAPI";
 import { TableControl } from "react-bootstrap-table-control";
 import { useEffect, useState } from "react";
 import { IoIosArrowDown } from "react-icons/io";
@@ -13,6 +13,23 @@ const AllMemberTable = () => {
     try {
       const getUser = await handleGetAllUser();
       setUserData(getUser);
+    } catch (error) {}
+  };
+  const [userName, setUserName] = useState();
+  const [userId, setUserId] = useState();
+  const getUserName = (firstName, lastName, userID) => {
+    try {
+      const userFullName = firstName + lastName;
+      setUserName(userFullName);
+      setUserId(userID);
+    } catch (error) {}
+  };
+  const handleUpdateAdmin = async () => {
+    try {
+      const role = "admin";
+      const option = { role };
+      const response = await handleUpdateUser(userId, option);
+      getAllUser();
     } catch (error) {}
   };
 
@@ -38,18 +55,18 @@ const AllMemberTable = () => {
 
   return (
     <div className>
-      <div className="flex flex-row mt-10 mb-10 justify-between">
+      <div className="flex flex-row mt-10 mb-10 justify-between ">
         {" "}
-        <h1 className="text-4xl font-bold ">User Table</h1>
+        <h1 className="text-4xl font-bold  ">User Table</h1>
         <label for="my-modal-6" class="link">
           Open Dashboard
         </label>
       </div>
 
       <div class="overflow-x-auto">
-        <table class="table table-zebra w-[60vw]">
+        <table class="table table-zebra w-[75vw] ">
           <thead>
-            <tr>
+            <tr className="">
               <th>
                 Name{" "}
                 <button onClick={() => onSortChange(currentSort, "firtName")}>
@@ -137,6 +154,7 @@ const AllMemberTable = () => {
                   )}
                 </button>
               </th>
+              <th>Action</th>
             </tr>
           </thead>
           <tbody>
@@ -150,12 +168,62 @@ const AllMemberTable = () => {
                   </td>
                   <td>{rows.email}</td>
                   <td>{rows.role}</td>
+
+                  {rows.role == "user" ? (
+                    <td>
+                      <label
+                        for="my-modal-3"
+                        class="link"
+                        onClick={() =>
+                          getUserName(rows.firstName, rows.lastName, rows._id)
+                        }
+                      >
+                        Add Admin
+                      </label>
+                    </td>
+                  ) : (
+                    <td></td>
+                  )}
                 </tr>
               ))}
           </tbody>
         </table>
       </div>
       <UserMonthly></UserMonthly>
+
+      {/* Modal Question */}
+      <div>
+        <input type="checkbox" id="my-modal-3" className="modal-toggle" />
+        <div className="modal">
+          <div className="modal-box relative">
+            <label
+              htmlFor="my-modal-3"
+              className="btn btn-sm btn-circle absolute right-2 top-2"
+            >
+              ✕
+            </label>
+            <h3 className="text-lg font-bold text-center mb-10">
+              Are you sure you want {userName} to be an admin?
+            </h3>
+            <div className="flex row justify-center gap-3">
+              <label
+                htmlFor="my-modal-3"
+                className="border-2 rounded-2xl w-24 text-center"
+                onClick={() => handleUpdateAdmin()}
+              >
+                Yes
+              </label>
+              <label
+                htmlFor="my-modal-3"
+                className="border-2 rounded-2xl w-24 text-center"
+              >
+                {" "}
+                No
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

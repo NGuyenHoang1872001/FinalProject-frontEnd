@@ -2,12 +2,15 @@ import { handleGetInvoiceByUser } from "../../API/UserAPI";
 import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { data } from "autoprefixer";
+import { useNavigate, useLocation, Outlet } from "react-router-dom";
 const MyOrderPage = () => {
   const [orderData, setOrderData] = useState([]);
   console.log(
     "🚀 ~ file: myOrder.js ~ line 6 ~ MyOrderPage ~ orderData",
     orderData
   );
+  const navigate = useNavigate();
+  const location = useLocation();
   const authLogin = useSelector((state) => state.auth);
   console.log(
     "🚀 ~ file: myOrder.js ~ line 11 ~ MyOrderPage ~ authLogin",
@@ -21,7 +24,7 @@ const MyOrderPage = () => {
   useEffect(() => {
     handleGetOrder();
   }, []);
-  return (
+  return authLogin ? (
     <div>
       <p className="font-bold text-2xl">My Order History</p>
       <div className="flex flex-row flex-wrap justify-center  ">
@@ -52,6 +55,8 @@ const MyOrderPage = () => {
           ))}
       </div>
     </div>
+  ) : (
+    <navigate to="/login" replace state={{ from: location }} />
   );
 };
 export default MyOrderPage;

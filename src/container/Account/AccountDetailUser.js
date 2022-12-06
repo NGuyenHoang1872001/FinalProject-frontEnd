@@ -23,9 +23,11 @@ import Comment from "../../component/Comment/comment";
 import Avata from "../../component/Avata";
 import PersonLikedPost from "../../component/PersonLikedPost.js";
 import { setStoreIdProduct } from "../../Redux/features/storeIdProduct";
+
 const AccountDetailUser = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
   const authLogin = useSelector((state) => state.auth.id);
   const { state } = useLocation();
   const { userId } = state;
@@ -144,7 +146,7 @@ const AccountDetailUser = () => {
     handleGetFollowing();
   }, []);
 
-  return (
+  return authLogin ? (
     <div className="flex flex-col pl-[20px] pr-[20px] w-[80vw] ">
       <div>
         {detailUser &&
@@ -277,6 +279,8 @@ const AccountDetailUser = () => {
       </div>
       <Comment postID={postId} authorId={authorId}></Comment>
     </div>
+  ) : (
+    <navigate to="/login" replace state={{ from: location }} />
   );
 };
 

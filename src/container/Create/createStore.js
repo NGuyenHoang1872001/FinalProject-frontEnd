@@ -22,6 +22,7 @@ const CreateStore = () => {
   } = useForm({
     resolver: yupResolver(schemaValidation),
   });
+  const location = useLocation();
 
   const navigate = useNavigate();
   const authLogin = useSelector((state) => state.auth.id);
@@ -46,7 +47,7 @@ const CreateStore = () => {
     } catch (error) {}
   };
 
-  return (
+  return authLogin ? (
     <div className="rounded-2xl border-2 p-10 w-[80vw] flex flex-col mt-3 ">
       <form onSubmit={handleSubmit(createStore)}>
         <div className="flex flex-col  gap-8">
@@ -98,6 +99,8 @@ const CreateStore = () => {
         </div>
       </form>
     </div>
+  ) : (
+    <navigate to="/login" replace state={{ from: location }} />
   );
 };
 

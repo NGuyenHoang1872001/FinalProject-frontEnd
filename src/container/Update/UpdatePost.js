@@ -7,6 +7,7 @@ import { handleUpdatePost } from "../../API/UserAPI";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import uploadPicture from "../../service/upLoadPicture";
+import { useSelector } from "react-redux";
 const schemaValidation = yup.object().shape({
   title: yup.string().required(),
 });
@@ -16,6 +17,8 @@ const UpdatePostPage = () => {
   const { postId, payload } = state;
   const [picture, setPicture] = useState();
   const navigate = useNavigate();
+  const location = useLocation();
+  const dataLogin = useSelector((state) => state.auth.id);
   const {
     register,
     handleSubmit,
@@ -71,7 +74,7 @@ const UpdatePostPage = () => {
     setPicture(file);
   };
 
-  return (
+  return dataLogin ? (
     <div className="rounded-2xl border-2 p-10 w-[80vw] flex flex-col mt-3 ">
       <form onSubmit={handleSubmit(updatePost)}>
         <div className="flex flex-col  gap-8">
@@ -101,6 +104,8 @@ const UpdatePostPage = () => {
         </div>
       </form>
     </div>
+  ) : (
+    <navigate to="/login" replace state={{ from: location }} />
   );
 };
 

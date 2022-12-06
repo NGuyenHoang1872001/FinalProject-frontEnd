@@ -35,6 +35,7 @@ const InfoCustomer = () => {
   const { product, quantityPr, priceProduct, storeEmail } = state;
 
   const navigate = useNavigate();
+  const location = useLocation();
 
   const [count, setCount] = useState(0);
   const [checkout, setCheckOut] = useState(false);
@@ -44,7 +45,12 @@ const InfoCustomer = () => {
       if (count < quantityPr) {
         setCount(Number(count) + 1);
       }
-    } catch (error) {}
+    } catch (error) {
+      console.log(
+        "🚀 ~ file: informationPayPal.js:49 ~ increase ~ error",
+        error
+      );
+    }
   };
   const reduced = (number) => {
     try {
@@ -114,7 +120,7 @@ const InfoCustomer = () => {
     }
   };
 
-  return (
+  return authLogin ? (
     <div className="rounded-2xl border-2 p-10 w-[80vw] flex flex-col mt-3 ">
       <form onSubmit={handleSubmit(handleCheckout)}>
         <div className=" flex flex-col  gap-8">
@@ -180,9 +186,15 @@ const InfoCustomer = () => {
             <p>Quantity</p>
             <div className="flex flex-row gap-1 ">
               {" "}
-              <button onClick={() => reduced(count)}> - </button>
+              <p onClick={() => reduced(count)}>
+                {" "}
+                {""}-{""}{" "}
+              </p>
               <p>{count}</p>
-              <button onClick={() => increase(count)}> + </button>
+              <p onClick={() => increase(count)}>
+                {" "}
+                {""}+{""}{" "}
+              </p>
             </div>
           </div>
           <div className="text-center">
@@ -193,6 +205,8 @@ const InfoCustomer = () => {
         </div>
       </form>
     </div>
+  ) : (
+    <navigate to="/login" replace state={{ from: location }} />
   );
 };
 

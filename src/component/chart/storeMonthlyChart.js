@@ -37,7 +37,7 @@ const StoreMonthly = () => {
         <div class="modal-box w-11/12 max-w-5xl">
           <div class="modal-action">
             <label for="my-modal-6" class="btn">
-              Yay!
+              Close
             </label>
           </div>
           <VerticalBarChart

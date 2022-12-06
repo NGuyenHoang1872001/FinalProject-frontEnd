@@ -1,11 +1,12 @@
 import { handleGetOwnerStore, handleDeleteStore } from "../../API/UserAPI";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { setStoreIdProduct } from "../../Redux/features/storeIdProduct";
 
 const MyStore = () => {
   const dispatch = useDispatch();
+  const location = useLocation();
   const authLogin = useSelector((state) => state.auth.id);
 
   const [store, setStore] = useState([]);
@@ -70,7 +71,7 @@ const MyStore = () => {
     const response = await handleDeleteStore(store);
     getAllStore();
   };
-  return (
+  return authLogin ? (
     <div className="rounded-2xl border-2 mt-3 shadow-lg w-[80vw] h-[100vh] p-4  ">
       {store.data && store.data.length == 0 ? (
         <div>
@@ -204,6 +205,8 @@ const MyStore = () => {
         </div>
       </div>
     </div>
+  ) : (
+    <navigate to="/login" replace state={{ from: location }} />
   );
 };
 export default MyStore;

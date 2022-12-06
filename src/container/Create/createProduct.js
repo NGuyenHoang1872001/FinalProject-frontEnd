@@ -35,6 +35,7 @@ const CreateProduct = () => {
 
   const navigate = useNavigate();
   const authLogin = useSelector((state) => state.auth.id);
+  const location = useLocation();
   const createProduct = async (data) => {
     try {
       if (picture != null) {
@@ -91,7 +92,7 @@ const CreateProduct = () => {
 
     setPicture(file);
   };
-  return (
+  return authLogin ? (
     <div className="rounded-2xl border-2 p-10 w-[80vw] flex flex-col mt-3 ">
       <form onSubmit={handleSubmit(createProduct)}>
         <div className="flex flex-col  gap-8">
@@ -157,6 +158,8 @@ const CreateProduct = () => {
         </div>
       </form>
     </div>
+  ) : (
+    <navigate to="/login" replace state={{ from: location }} />
   );
 };
 

@@ -52,7 +52,7 @@ const OwnerUserTable = () => {
       </div>
 
       <div class="overflow-x-auto">
-        <table class="table table-zebra w-[60vw]">
+        <table class="table table-zebra w-[75vw]">
           <thead>
             <tr>
               <th>

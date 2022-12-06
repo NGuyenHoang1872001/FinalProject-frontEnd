@@ -11,6 +11,7 @@ import Avata from "../component/Avata";
 import ShowPicture from "./Store/showPicture";
 
 const StoreContainer = () => {
+  const location = useLocation();
   const storeOfProduct = useSelector((state) => state.storeIdProduct.store_Id);
   const authLogin = useSelector((state) => state.auth.id);
 
@@ -86,7 +87,7 @@ const StoreContainer = () => {
     getProductStore();
     getDetailStore();
   }, []);
-  return (
+  return authLogin ? (
     <div>
       <div className="rounded-2xl border-2 mt-3 shadow-lg">
         {storeDetail.data && (
@@ -188,6 +189,8 @@ const StoreContainer = () => {
         <ShowPicture cover={cover}></ShowPicture>;
       </div>
     </div>
+  ) : (
+    <navigate to="/login" replace state={{ from: location }} />
   );
 };
 

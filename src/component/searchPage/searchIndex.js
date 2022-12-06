@@ -1,13 +1,16 @@
 import { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 import Avata from "../Avata";
 const SearchPage = () => {
   const { state } = useLocation();
   const { data } = state;
 
   const [dataUser, setDataUser] = useState();
+  console.log("🚀 ~ file: searchIndex.js:9 ~ SearchPage ~ dataUser", dataUser);
   const navigate = useNavigate();
-
+  const location = useLocation();
+  const dataLogin = useSelector((state) => state.auth.id);
   const getDataUser = () => {
     try {
       setDataUser(data);
@@ -25,7 +28,7 @@ const SearchPage = () => {
   useEffect(() => {
     getDataUser();
   }, [data]);
-  return (
+  return dataLogin ? (
     <div>
       {dataUser &&
         dataUser.map((rows) => (
@@ -43,14 +46,18 @@ const SearchPage = () => {
             </div>
           </div>
         ))}{" "}
-      {
+      {!dataUser == [] ? (
         <div>
           <h1 className="text-center text-4xl font-bold mt-20 w-[80vw]">
             No Data
           </h1>
         </div>
-      }
+      ) : (
+        <div></div>
+      )}
     </div>
+  ) : (
+    <navigate to="/login" replace state={{ from: location }} />
   );
 };
 export default SearchPage;

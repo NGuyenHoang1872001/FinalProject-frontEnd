@@ -21,6 +21,8 @@ import MyOrderPage from "../container/MyOrder/myOrder";
 import SearchPage from "../component/searchPage/searchIndex";
 import AccountDetailUser from "../container/Account/AccountDetailUser";
 import DashBoard from "../container/Dashboard.js/dashBoard";
+import ReportPage from "../component/reportPage";
+
 const AppRouter = () => {
   return (
     <BrowserRouter>
@@ -44,6 +46,7 @@ const AppRouter = () => {
           <Route path="/searchPage" element={<SearchPage />}></Route>
           <Route path="/userProfile" element={<AccountDetailUser />}></Route>
           <Route path="/dashBoard" element={<DashBoard />}></Route>
+          <Route path="/report" element={<ReportPage />}></Route>
         </Route>
         <Route path="/login" element={<Login />}></Route>
         <Route path="/register" element={<Register />}></Route>

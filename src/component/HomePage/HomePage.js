@@ -6,11 +6,11 @@ import { useSelector } from "react-redux";
 
 const HomePage = () => {
   const location = useLocation();
-  const dataLogin = useSelector((state) => state.auth);
+  const dataLogin = useSelector((state) => state.auth.id);
 
-  return Object.keys(dataLogin).length !== 0 ? (
+  return dataLogin ? (
     <div className="flex flex-col">
-      <div className="">
+      <div className="  ">
         <Navbar></Navbar>
       </div>
       <div className=" flex flex-row ">

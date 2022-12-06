@@ -2,12 +2,12 @@ import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import InputForm from "../../component/input/input";
-import { handleCreatePost } from "../../API/UserAPI";
+import { handleCreatePost, handleUpdatePost } from "../../API/UserAPI";
 import { useSelector } from "react-redux";
 import { storage } from "../../service/fireBase";
 import { ref, uploadBytes } from "firebase/storage";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import handleGetDownloadToken from "../../API/Firebase";
 
 const schemaValidation = yup.object().shape({
@@ -23,6 +23,7 @@ const CreatePost = () => {
   } = useForm({
     resolver: yupResolver(schemaValidation),
   });
+  const location = useLocation();
   const navigate = useNavigate();
   const [picture, setPicture] = useState();
 
@@ -65,7 +66,8 @@ const CreatePost = () => {
 
     setPicture(file);
   };
-  return (
+
+  return authLogin ? (
     <div className="rounded-2xl border-2 p-10 w-[80vw] flex flex-col mt-3 ">
       <form onSubmit={handleSubmit(createPost)}>
         <div className="flex flex-col  gap-8">
@@ -111,6 +113,8 @@ const CreatePost = () => {
         </div>
       </form>
     </div>
+  ) : (
+    <navigate to="/login" replace state={{ from: location }} />
   );
 };
 

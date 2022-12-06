@@ -7,6 +7,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { handleSearchUser } from "../API/UserAPI";
 import { async } from "@firebase/util";
 import { AiOutlineSearch } from "react-icons/ai";
+import App from "../App";
 const schemaValidation = yup.object().shape({
   searchInput: yup.string(),
 });
@@ -37,11 +38,12 @@ const Navbar = () => {
       });
     } catch (error) {}
   };
+
   return (
-    <div className="flex flex-row justify-between p-4 border-2 m-3 items-center">
+    <div className="flex flex-row justify-between p-4 border-2 m-3 items-center text-[#4dc39a]">
       <div>
         <form onSubmit={handleSubmit(handleSearch)}>
-          <div className="flex flex-row">
+          <div className="flex flex-row gap-3">
             <textarea
               id="TitleInput"
               type="text"
@@ -57,7 +59,7 @@ const Navbar = () => {
           </div>
         </form>
       </div>
-      <div>
+      <div className="">
         <h4 className="font-extralight text-5xl mr-[160px]">Easy Meal</h4>
       </div>
       <div className="dropdown dropdown-end">

@@ -50,7 +50,7 @@ const Login = () => {
     }
   };
   return (
-    <div className="flex flex-col items-center bg-[#8CDE61] hover:bg-[#8CDE61] h-[100vh]">
+    <div className="flex flex-col items-center  h-[100vh] bg-[url('https://firebasestorage.googleapis.com/v0/b/finalproject-8a79b.appspot.com/o/images%2Ffood-with-delivery-set-dishes-diet-top-view-free-space-your-text-black-background_187166-3087.jpg?alt=media&token=848f50c2-510e-4fb2-b5f6-c6ff05c8b610')]">
       <div className="ml-[80%] p-8 ">
         {"/register" && (
           <RouteLink to={"/register"}>

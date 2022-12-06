@@ -1,12 +1,16 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
+import { useSelector } from "react-redux";
 const ViewProcess = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const dataLogin = useSelector((state) => state.auth.id);
+
   const navigateToHome = () => {
     navigate("/");
   };
-  return (
+  return dataLogin ? (
     <div>
-      <div className=" flex flex-col text-center w-[80vw]  h-[100vh] bg-gradient-to-r from-cyan-500 to-blue-500 rounded-2xl border-2 mt-3 ">
+      <div className=" flex flex-col text-center w-[80vw]  h-[100vh]  rounded-2xl border-2 mt-3 ">
         <div className="mt-[200px]">
           <div>
             <h1 className="text-[50px] font-[600] mb-[40px]">
@@ -29,6 +33,8 @@ const ViewProcess = () => {
         </div>
       </div>
     </div>
+  ) : (
+    <navigate to="/login" replace state={{ from: location }} />
   );
 };
 export default ViewProcess;

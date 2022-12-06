@@ -8,6 +8,7 @@ import uploadPicture from "../../service/upLoadPicture";
 
 import { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
+import auth from "../../Redux/features/auth";
 const schemaValidation = yup.object().shape({
   name: yup.string().required(),
   description: yup.string().required(),
@@ -17,8 +18,10 @@ const schemaValidation = yup.object().shape({
 
 const UpdateProduct = () => {
   const { state } = useLocation();
+  const location = useLocation();
   const { payload } = state;
   const [picture, setPicture] = useState();
+  const authLogin = useSelector((state) => state.auth.id);
 
   const {
     register,
@@ -91,7 +94,7 @@ const UpdateProduct = () => {
 
     setPicture(file);
   };
-  return (
+  return authLogin ? (
     <div className="rounded-2xl border-2 p-10 w-[80vw] flex flex-col mt-3 ">
       <form onSubmit={handleSubmit(updateProduct)}>
         <div className="flex flex-col  gap-8">
@@ -156,6 +159,8 @@ const UpdateProduct = () => {
         </div>
       </form>
     </div>
+  ) : (
+    <navigate to="/login" replace state={{ from: location }} />
   );
 };
 

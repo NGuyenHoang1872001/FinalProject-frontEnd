@@ -14,6 +14,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { data } from "autoprefixer";
 import Avata from "../Avata";
 import { useRef } from "react";
+import { faL } from "@fortawesome/free-solid-svg-icons";
 
 const schemaValidation = yup.object().shape({
   comment: yup.string(),
@@ -68,6 +69,16 @@ const Comment = ({ postID, authorId }) => {
     commentID
   );
   const [replyData, setReplyData] = useState([]);
+  console.log("🚀 ~ file: comment.js:72 ~ Comment ~ replyData", replyData);
+  const getReplyComment = async (commentId) => {
+    try {
+      if (commentId) {
+        // const commentId = commentID;
+        const response = await handleGetReplyByComment(commentId);
+        setReplyData(response);
+      }
+    } catch (error) {}
+  };
 
   const handleReplyInput = async (commentId) => {
     try {
@@ -81,20 +92,25 @@ const Comment = ({ postID, authorId }) => {
       );
     }
   };
+  const [readReply, setReadReply] = useState(false);
+  const handleGetReply = (replyStatus, commentId) => {
+    try {
+      if (replyStatus == false) {
+        setReadReply(true);
+        getReplyComment(commentId);
+      }
+      if (replyStatus == true) {
+        setReadReply(false);
+      }
+    } catch (error) {
+      console.log("🚀 ~ file: comment.js:96 ~ handleGetReply ~ error", error);
+    }
+  };
 
   const handleCloseReplyInput = async () => {
     try {
       setReplyStatus(false);
-    } catch (error) {}
-  };
-
-  const getReplyComment = async (commentId) => {
-    try {
-      if (commentId) {
-        // const commentId = commentID;
-        const response = await handleGetReplyByComment(commentId);
-        setReplyData(response);
-      }
+      setReadReply(false);
     } catch (error) {}
   };
 
@@ -189,7 +205,67 @@ const Comment = ({ postID, authorId }) => {
                               </button>
                             </div>
                           ) : (
-                            <div></div>
+                            <div>
+                              {readReply == true ? (
+                                <div>
+                                  {replyData &&
+                                    replyData.map((reply) => (
+                                      <div>
+                                        {reply.commentId == Comment._id ? (
+                                          <div>
+                                            {reply.author.map((user) => (
+                                              <div className=" flex flex-col m-5 ml-12 ">
+                                                <div className="flex flex-row">
+                                                  <Avata width="w-8  rounded-full ring ring-primary ring-offset-base-100 ring-offset-2"></Avata>{" "}
+                                                  <p className="ml-[10px] font-medium">
+                                                    {user.firstName}
+                                                    {} {user.lastName}
+                                                  </p>
+                                                </div>
+
+                                                <p className="ml-10 border rounded-3xl p-3 bg-[#C8C8C8] w-[45vw]">
+                                                  {reply.reply}
+                                                </p>
+                                              </div>
+                                            ))}
+                                            <div>
+                                              {" "}
+                                              <button
+                                                onClick={() =>
+                                                  handleGetReply(
+                                                    readReply,
+                                                    Comment._id
+                                                  )
+                                                }
+                                              >
+                                                minimize
+                                              </button>
+                                            </div>
+                                          </div>
+                                        ) : (
+                                          <div></div>
+                                        )}
+                                      </div>
+                                    ))}
+                                </div>
+                              ) : (
+                                <div>
+                                  {authLogin != authorId ? (
+                                    <div>
+                                      <button
+                                        onClick={() =>
+                                          handleGetReply(readReply, Comment._id)
+                                        }
+                                      >
+                                        Click more
+                                      </button>
+                                    </div>
+                                  ) : (
+                                    <div></div>
+                                  )}{" "}
+                                </div>
+                              )}
+                            </div>
                           )}
                         </div>
                         <div>
@@ -224,7 +300,7 @@ const Comment = ({ postID, authorId }) => {
                                                 </p>
                                               </div>
 
-                                              <p className="ml-10 border rounded-3xl p-3 bg-[#C8C8C8] w-[65vw]">
+                                              <p className="ml-10 border rounded-3xl p-3 bg-[#C8C8C8] w-[45vw]">
                                                 {reply.reply}
                                               </p>
                                             </div>

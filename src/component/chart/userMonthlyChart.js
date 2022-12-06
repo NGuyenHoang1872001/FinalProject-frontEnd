@@ -21,7 +21,7 @@ const UserMonthly = () => {
           <LineChart userData={data}></LineChart>
           <div class="modal-action">
             <label for="my-modal-5" class="btn">
-              Yay!
+              Close
             </label>
           </div>
         </div>

@@ -23,6 +23,7 @@ const PayPal = () => {
   } = state;
   const paypal = useRef();
   const total = countProduct * priceProductData;
+  const location = useLocation();
   const navigate = useNavigate();
   const storeEmail = stroreId;
   const email = authLogin.email;
@@ -125,10 +126,12 @@ const PayPal = () => {
   useEffect(() => {
     handleCreatePayPal();
   }, []);
-  return (
+  return authLogin ? (
     <div>
       <div ref={paypal}></div>
     </div>
+  ) : (
+    <navigate to="/login" replace state={{ from: location }} />
   );
 };
 

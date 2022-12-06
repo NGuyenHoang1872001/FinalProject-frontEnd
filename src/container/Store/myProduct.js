@@ -6,9 +6,9 @@ import {
   handleFollowingStore,
   handleUnFollowingStore,
 } from "../../API/UserAPI";
-import { useLocation, Navigate } from "react-router-dom";
+
 import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import Avata from "../../component/Avata";
 import ShowPicture from "./showPicture";
 
@@ -17,6 +17,7 @@ const MyProduct = () => {
 
   const storeOfProduct = useSelector((state) => state.storeIdProduct.store_Id);
   const authLogin = useSelector((state) => state.auth.id);
+  const location = useLocation();
   const [productId, setProductId] = useState([]);
   const [storeDetail, setStoreDetail] = useState([]);
 
@@ -115,7 +116,7 @@ const MyProduct = () => {
     getProductStore();
     getDetailStore();
   }, []);
-  return (
+  return authLogin ? (
     <div>
       <div className="rounded-2xl border-2 mt-3 shadow-lg">
         {storeDetail.data && (
@@ -292,6 +293,8 @@ const MyProduct = () => {
         </div>
       </div>
     </div>
+  ) : (
+    <navigate to="/login" replace state={{ from: location }} />
   );
 };
 

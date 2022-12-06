@@ -20,10 +20,12 @@ import { FaHeartBroken } from "react-icons/fa";
 import { FaFacebookMessenger } from "react-icons/fa";
 import { FaStore } from "react-icons/fa";
 import { setStoreIdProduct } from "../../Redux/features/storeIdProduct";
+import { useLocation } from "react-router-dom";
 
 const AccountDetail = () => {
   const authLogin = useSelector((state) => state.auth.id);
   const authRole = useSelector((state) => state.auth.role);
+  const location = useLocation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [detailUser, setDetailUSer] = useState();
@@ -128,7 +130,7 @@ const AccountDetail = () => {
     handleGetFollowing();
   }, []);
 
-  return (
+  return authLogin ? (
     <div className="flex flex-col pl-[20px] pr-[20px] w-[80vw] ">
       <div>
         {detailUser &&
@@ -153,7 +155,7 @@ const AccountDetail = () => {
       <div className="">
         {postAuthor &&
           postAuthor.map((postData) => (
-            <div className="rounded-2xl border-2 p-6 mt-3 w-[80vw]">
+            <div className="rounded-2xl border-2 p-6 mt-3 w-[80vw] relative">
               <div>
                 <div className="flex flex-row  mb-[20px]">
                   <Avata width="w-10 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2"></Avata>
@@ -300,6 +302,8 @@ const AccountDetail = () => {
         </div>
       </div>
     </div>
+  ) : (
+    <navigate to="/login" replace state={{ from: location }} />
   );
 };
 

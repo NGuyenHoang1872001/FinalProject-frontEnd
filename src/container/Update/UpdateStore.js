@@ -6,6 +6,7 @@ import { useLocation } from "react-router-dom";
 import { handleUpdateStore } from "../../API/UserAPI";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 const schemaValidation = yup.object().shape({
   name: yup.string().required(),
   email: yup.string().required().email(),
@@ -14,8 +15,9 @@ const schemaValidation = yup.object().shape({
 
 const UpdateStorePage = () => {
   const { state } = useLocation();
+  const location = useLocation();
   const { payload } = state;
-
+  const dataLogin = useSelector((state) => state.auth.id);
   const navigate = useNavigate();
   const {
     register,
@@ -41,7 +43,7 @@ const UpdateStorePage = () => {
     }
   };
 
-  return (
+  return dataLogin ? (
     <div className="rounded-2xl border-2 p-10 w-[80vw] flex flex-col mt-3 ">
       <form onSubmit={handleSubmit(updateStore)}>
         <div className="flex flex-col  gap-8">
@@ -92,6 +94,8 @@ const UpdateStorePage = () => {
         </div>
       </form>
     </div>
+  ) : (
+    <navigate to="/login" replace state={{ from: location }} />
   );
 };
 

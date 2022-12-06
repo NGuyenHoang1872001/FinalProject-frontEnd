@@ -5,6 +5,7 @@ import {
   handleDeletePost,
   handleLike,
   handleUnLike,
+  handleReport,
 } from "../API/UserAPI";
 import { FaHeart } from "react-icons/fa";
 import { FaHeartBroken } from "react-icons/fa";
@@ -113,15 +114,16 @@ const PostContainer = () => {
   };
   const getUserPage = (userId) => {
     try {
-      console.log(
-        "🚀 ~ file: postContainer.js ~ line 109 ~ getUserPage ~ userId",
-        userId
-      );
       navigate("/userProfile", {
         state: {
           userId: userId,
         },
       });
+    } catch (error) {}
+  };
+  const reportPost = async () => {
+    try {
+      const report = await handleReport(postId, authLogin);
     } catch (error) {}
   };
 
@@ -190,7 +192,11 @@ const PostContainer = () => {
                           </label>
                         </li>
                         <li>
-                          <label htmlFor="" className="">
+                          <label
+                            htmlFor="my-modal-7"
+                            className=""
+                            onClick={() => getPostId(rows._id)}
+                          >
                             Report
                           </label>
                         </li>
@@ -223,7 +229,11 @@ const PostContainer = () => {
                           <div>
                             {" "}
                             <li>
-                              <label htmlFor="" className="">
+                              <label
+                                htmlFor="my-modal-7"
+                                className=""
+                                onClick={() => getPostId(rows._id)}
+                              >
                                 Report
                               </label>
                             </li>
@@ -280,6 +290,40 @@ const PostContainer = () => {
       </div>
 
       <Comment postID={postId} authorId={authorId}></Comment>
+      {/* Modal Report */}
+
+      <div>
+        <input type="checkbox" id="my-modal-7" className="modal-toggle" />
+        <div className="modal">
+          <div className="modal-box relative">
+            <label
+              htmlFor="my-modal-7"
+              className="btn btn-sm btn-circle absolute right-2 top-2"
+            >
+              ✕
+            </label>
+            <h3 className="text-lg font-bold text-center mb-10">
+              Are you sure report this post ?
+            </h3>
+            <div className="flex row justify-center gap-3">
+              <label
+                htmlFor="my-modal-7"
+                className="border-2 rounded-2xl w-24 text-center"
+                onClick={() => reportPost()}
+              >
+                Yes
+              </label>
+              <label
+                htmlFor="my-modal-3"
+                className="border-2 rounded-2xl w-24 text-center"
+              >
+                {" "}
+                No
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
 
       {/* Modal */}
 
