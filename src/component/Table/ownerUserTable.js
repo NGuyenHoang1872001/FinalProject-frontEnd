@@ -6,6 +6,7 @@ import { IoIosArrowDown } from "react-icons/io";
 
 import { IoIosArrowUp } from "react-icons/io";
 import { IoIosCode } from "react-icons/io";
+import StoreMonthly from "../chart/storeMonthlyChart";
 
 const OwnerUserTable = () => {
   const [userOwner, setUserOwner] = useState();
@@ -42,9 +43,14 @@ const OwnerUserTable = () => {
 
   return (
     <div className>
-      <h1 className="text-4xl font-bold  mt-10 mb-10 ">
-        User Table have Store
-      </h1>
+      <div className="flex flex-row mt-10 mb-10 justify-between">
+        {" "}
+        <h1 className="text-4xl font-bold   ">User Table have Store</h1>
+        <label for="my-modal-6" class="link">
+          Open Dashboard
+        </label>
+      </div>
+
       <div class="overflow-x-auto">
         <table class="table table-zebra w-[60vw]">
           <thead>
@@ -154,6 +160,7 @@ const OwnerUserTable = () => {
           </tbody>
         </table>
       </div>
+      <StoreMonthly></StoreMonthly>
     </div>
   );
 };

@@ -421,6 +421,28 @@ const handleUpdateUser = async (userId, option) => {
     console.log("🚀 ~ file: UserAPI.js:420 ~ handleUpdateUser ~ error", error);
   }
 };
+const handleGetUserMonthly = async () => {
+  try {
+    const URL = `http://localhost:3001/routerAPI/userMonthly`;
+    const response = await axios.get(URL);
+    return response.data;
+  } catch (error) {}
+};
+
+const handleGetStoreMonthly = async () => {
+  try {
+    const URL = `http://localhost:3001/routerAPI/storeMonthly`;
+    const response = await axios.get(URL);
+    return response.data;
+  } catch (error) {}
+};
+const handleGetProductMonthly = async () => {
+  try {
+    const URL = `http://localhost:3001/routerAPI/productMonthly`;
+    const response = await axios.get(URL);
+    return response.data;
+  } catch (error) {}
+};
 
 export {
   handleRegisterUser,
@@ -463,4 +485,7 @@ export {
   handleGetAllUser,
   handleGetAllStore,
   handleUpdateUser,
+  handleGetUserMonthly,
+  handleGetStoreMonthly,
+  handleGetProductMonthly,
 };

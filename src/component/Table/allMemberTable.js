@@ -3,7 +3,7 @@ import { handleGetAllUser } from "../../API/UserAPI";
 import { TableControl } from "react-bootstrap-table-control";
 import { useEffect, useState } from "react";
 import { IoIosArrowDown } from "react-icons/io";
-
+import UserMonthly from "../chart/userMonthlyChart";
 import { IoIosArrowUp } from "react-icons/io";
 import { IoIosCode } from "react-icons/io";
 const AllMemberTable = () => {
@@ -38,7 +38,14 @@ const AllMemberTable = () => {
 
   return (
     <div className>
-      <h1 className="text-4xl font-bold  mt-10 mb-10 ">User Table</h1>
+      <div className="flex flex-row mt-10 mb-10 justify-between">
+        {" "}
+        <h1 className="text-4xl font-bold ">User Table</h1>
+        <label for="my-modal-6" class="link">
+          Open Dashboard
+        </label>
+      </div>
+
       <div class="overflow-x-auto">
         <table class="table table-zebra w-[60vw]">
           <thead>
@@ -148,6 +155,7 @@ const AllMemberTable = () => {
           </tbody>
         </table>
       </div>
+      <UserMonthly></UserMonthly>
     </div>
   );
 };
