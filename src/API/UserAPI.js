@@ -113,6 +113,7 @@ const handleCreateStore = async (payload) => {
   try {
     const URL = `http://localhost:3001/routerAPI/createStore`;
     const response = await axios.post(URL, payload);
+    return response;
   } catch (error) {
     console.log(
       "🚀 ~ file: UserAPI.js ~ line 80 ~ handleCreateStore ~ error",
@@ -411,6 +412,16 @@ const handleGetAllStore = async () => {
   } catch (error) {}
 };
 
+const handleUpdateUser = async (userId, option) => {
+  try {
+    const URL = `http://localhost:3001/routerAPI/updateUser/${userId}`;
+    const response = axios.put(URL, option);
+    console.log("hello okeii");
+  } catch (error) {
+    console.log("🚀 ~ file: UserAPI.js:420 ~ handleUpdateUser ~ error", error);
+  }
+};
+
 export {
   handleRegisterUser,
   handleLoginUser,
@@ -451,4 +462,5 @@ export {
   handleSearchUser,
   handleGetAllUser,
   handleGetAllStore,
+  handleUpdateUser,
 };

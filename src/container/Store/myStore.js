@@ -9,6 +9,7 @@ const MyStore = () => {
   const authLogin = useSelector((state) => state.auth.id);
 
   const [store, setStore] = useState([]);
+  console.log("🚀 ~ file: myStore.js:12 ~ MyStore ~ store", store);
 
   const [storeId, setStoreId] = useState([]);
 
@@ -20,16 +21,8 @@ const MyStore = () => {
   const getAllStore = async (req, res) => {
     try {
       const ownerId = authLogin;
-      console.log(
-        "🚀 ~ file: myStore.js ~ line 24 ~ getAllStore ~ ownerId",
-        ownerId
-      );
 
       const response = await handleGetOwnerStore(ownerId);
-      console.log(
-        "🚀 ~ file: myStore.js ~ line 30 ~ getAllStore ~ response",
-        response
-      );
       setStore(response);
     } catch (error) {
       console.log(
@@ -79,9 +72,17 @@ const MyStore = () => {
   };
   return (
     <div className="rounded-2xl border-2 mt-3 shadow-lg w-[80vw] h-[100vh] p-4  ">
-      <button className="btn btn-success" onClick={() => createStore()}>
-        Create Store
-      </button>
+      {store.data && store.data.length == 0 ? (
+        <div>
+          {" "}
+          <button className="btn btn-success" onClick={() => createStore()}>
+            Create Store
+          </button>
+        </div>
+      ) : (
+        <div></div>
+      )}
+
       <div>
         <div className="flex flex-row flex-wrap justify-center ">
           {store.data &&

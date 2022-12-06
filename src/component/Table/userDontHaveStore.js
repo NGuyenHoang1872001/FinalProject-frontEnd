@@ -1,12 +1,13 @@
 import { useQuery } from "react-query";
 import { handleGetAllUser } from "../../API/UserAPI";
 import { TableControl } from "react-bootstrap-table-control";
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
+
 import { IoIosArrowDown } from "react-icons/io";
 
 import { IoIosArrowUp } from "react-icons/io";
 import { IoIosCode } from "react-icons/io";
-const AllMemberTable = () => {
+const UserDontStore = () => {
   const [userData, setUserData] = useState();
 
   const getAllUser = async () => {
@@ -38,7 +39,10 @@ const AllMemberTable = () => {
 
   return (
     <div className>
-      <h1 className="text-4xl font-bold  mt-10 mb-10 ">User Table</h1>
+      <h1 className="text-4xl font-bold  mt-10 mb-10 ">
+        User Don't Have Store
+      </h1>
+
       <div class="overflow-x-auto">
         <table class="table table-zebra w-[60vw]">
           <thead>
@@ -73,7 +77,7 @@ const AllMemberTable = () => {
                 </button>
               </th>
               <th>
-                Email
+                Email{" "}
                 <button onClick={() => onSortChange(currentSort, "email")}>
                   {currentSort == "down" ? (
                     <div>
@@ -132,23 +136,29 @@ const AllMemberTable = () => {
               </th>
             </tr>
           </thead>
-          <tbody>
-            {userData &&
-              userData.map((rows) => (
-                <tr>
-                  <td>
-                    {rows.firstName}
-                    {""}
-                    {rows.lastName}
-                  </td>
-                  <td>{rows.email}</td>
-                  <td>{rows.role}</td>
-                </tr>
-              ))}
-          </tbody>
+
+          {userData &&
+            userData.map((rows) => (
+              <tbody>
+                {" "}
+                {rows.storeId ? (
+                  <div></div>
+                ) : (
+                  <tr>
+                    <td>
+                      {rows.firstName}
+                      {""}
+                      {rows.lastName}
+                    </td>
+                    <td>{rows.email}</td>
+                    <td>{rows.role}</td>
+                  </tr>
+                )}
+              </tbody>
+            ))}
         </table>
       </div>
     </div>
   );
 };
-export default AllMemberTable;
+export default UserDontStore;

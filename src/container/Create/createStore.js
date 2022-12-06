@@ -2,7 +2,7 @@ import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import InputForm from "../../component/input/input";
-import { handleCreateStore } from "../../API/UserAPI";
+import { handleCreateStore, handleUpdateUser } from "../../API/UserAPI";
 import { useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
@@ -32,12 +32,16 @@ const CreateStore = () => {
       const email = data.email;
       const phoneNumber = data.phoneNumber;
       const payload = { name, email, phoneNumber, ownerId };
-      console.log(
-        "🚀 ~ file: createStore.js ~ line 33 ~ createStore ~ payload",
-        payload
-      );
 
       const response = await handleCreateStore(payload);
+      const storeId = response.data._id;
+      console.log(
+        "🚀 ~ file: createStore.js:38 ~ createStore ~ storeId",
+        storeId
+      );
+      const option = { storeId };
+      const updateUser = handleUpdateUser(ownerId, option);
+
       navigate("/viewOwnerStore");
     } catch (error) {}
   };
