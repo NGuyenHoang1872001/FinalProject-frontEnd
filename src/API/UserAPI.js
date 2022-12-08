@@ -8,7 +8,7 @@ const handleRegisterUser = async (data) => {
       "🚀 ~ file: UserAPI.js ~ line 6 ~ handleRegisterUser ~ data",
       data
     );
-    const URL = "http://localhost:3001/routerAPI/register";
+    const URL = `${process.env.React_App_URL_Deploy}/routerAPI/register`;
     const dataUser = data;
     const createUser = await axios.post(URL, dataUser);
   } catch (error) {
@@ -22,7 +22,7 @@ const handleRegisterUser = async (data) => {
 const handleLoginUser = async (payload) => {
   console.log("🚀 ~ file: UserAPI.js:23 ~ handleLoginUser ~ payload", payload);
   try {
-    const URL = "http://localhost:3001/routerAPI/login";
+    const URL = `${process.env.React_App_URL_Deploy}/routerAPI/login`;
 
     // console.log(
     //   "🚀 ~ file: UserAPI.js:25 ~ handleLoginUser ~ dataUser",
@@ -36,25 +36,25 @@ const handleLoginUser = async (payload) => {
 };
 
 const handleGetAllPost = async () => {
-  const URL = "http://localhost:3001/routerAPI/getPost";
+  const URL = "${process.env.React_App_URL_Deploy}/routerAPI/getPost";
   const getData = await axios.get(URL);
   return getData;
 };
 
 const handleGetStore = async (storeId) => {
-  const URL = `http://localhost:3001/routerAPI/getOneStore/${storeId}`;
+  const URL = `${process.env.React_App_URL_Deploy}/routerAPI/getOneStore/${storeId}`;
   const getStore = await axios.get(URL);
   return getStore;
 };
 
 const handleGetProductStore = async (storeId) => {
-  const URL = `http://localhost:3001/routerAPI/productInStore/${storeId}`;
+  const URL = `${process.env.React_App_URL_Deploy}/routerAPI/productInStore/${storeId}`;
   const getProduct = await axios.get(URL);
   return getProduct;
 };
 
 const handleCreatePost = async (payload) => {
-  const URl = `http://localhost:3001/routerAPI/createPost`;
+  const URl = `${process.env.React_App_URL_Deploy}/routerAPI/createPost`;
   const createPost = await axios.post(URl, payload);
   return createPost;
 };
@@ -66,7 +66,7 @@ const handleDeletePost = async (post) => {
     postId
   );
 
-  const URL = `http://localhost:3001/routerAPI/deletePost/${postId}`;
+  const URL = `${process.env.React_App_URL_Deploy}/routerAPI/deletePost/${postId}`;
   const deletePost = await axios.delete(URL);
 };
 
@@ -76,7 +76,7 @@ const handleGetOnePost = async (postId) => {
     "🚀 ~ file: UserAPI.js ~ line 52 ~ handleGetOnePost ~ getPostId",
     getPostId
   );
-  const URL = `http://localhost:3001/routerAPI/getOnePost/${getPostId}`;
+  const URL = `${process.env.React_App_URL_Deploy}/routerAPI/getOnePost/${getPostId}`;
   const getOnePost = await axios.get(URL);
   return getOnePost.data;
 };
@@ -86,20 +86,20 @@ const handleGetPostByAuthor = async (authorId) => {
     "🚀 ~ file: UserAPI.js ~ line 65 ~ handleGetPostByAuthor ~ authorId",
     authorId
   );
-  const URl = `http://localhost:3001/routerAPI/getPostByAuthor/${authorId}`;
+  const URl = `${process.env.React_App_URL_Deploy}/routerAPI/getPostByAuthor/${authorId}`;
   const getPost = await axios.get(URl);
   return getPost.data;
 };
 
 const handleUpdatePost = async (postId, payload) => {
   console.log("hello", payload);
-  const URL = `http://localhost:3001/routerAPI/updatePost/${postId}`;
+  const URL = `${process.env.React_App_URL_Deploy}/routerAPI/updatePost/${postId}`;
   const updatePost = await axios.put(URL, payload);
 };
 
 const handleGetOwnerStore = async (ownerId) => {
   try {
-    const URL = `http://localhost:3001/routerAPI/getOwnerStore/${ownerId}`;
+    const URL = `${process.env.React_App_URL_Deploy}/routerAPI/getOwnerStore/${ownerId}`;
     const getOwnerStore = await axios.get(URL);
     console.log(
       "🚀 ~ file: UserAPI.js ~ line 71 ~ handleGetOwnerStore ~ getOwnerStore",
@@ -111,7 +111,7 @@ const handleGetOwnerStore = async (ownerId) => {
 
 const handleCreateStore = async (payload) => {
   try {
-    const URL = `http://localhost:3001/routerAPI/createStore`;
+    const URL = `${process.env.React_App_URL_Deploy}/routerAPI/createStore`;
     const response = await axios.post(URL, payload);
     return response;
   } catch (error) {
@@ -131,7 +131,7 @@ const handleUpdateStore = async (payload, storeId) => {
     storeId
   );
   try {
-    const URL = `http://localhost:3001/routerAPI/updateStore/${storeId}`;
+    const URL = `${process.env.React_App_URL_Deploy}/routerAPI/updateStore/${storeId}`;
     const response = axios.put(URL, payload);
   } catch (error) {
     console.log(
@@ -143,14 +143,14 @@ const handleUpdateStore = async (payload, storeId) => {
 
 const handleDeleteStore = async (storeId) => {
   try {
-    const URL = `http://localhost:3001/routerAPI/deleteStore/${storeId}`;
+    const URL = `${process.env.React_App_URL_Deploy}/routerAPI/deleteStore/${storeId}`;
     const response = await axios.delete(URL);
   } catch (error) {}
 };
 
 const handleCreateProduct = async (payload) => {
   try {
-    const URL = `http://localhost:3001/routerAPI/createProduct`;
+    const URL = `${process.env.React_App_URL_Deploy}/routerAPI/createProduct`;
     const response = await axios.post(URL, payload);
     console.log(
       "🚀 ~ file: UserAPI.js ~ line 121 ~ handleCreateProduct ~ payload",
@@ -170,7 +170,7 @@ const handleUpdateProduct = async (productId, payload) => {
       "🚀 ~ file: UserAPI.js ~ line 134 ~ handleUpdateProduct ~ payload",
       payload
     );
-    const URL = `http://localhost:3001/routerAPI/updateProduct/${productId}`;
+    const URL = `${process.env.React_App_URL_Deploy}/routerAPI/updateProduct/${productId}`;
     const response = await axios.put(URL, payload);
   } catch (error) {
     console.log(
@@ -181,14 +181,14 @@ const handleUpdateProduct = async (productId, payload) => {
 };
 const handleDeleteProduct = async (productId) => {
   try {
-    const URL = `http://localhost:3001/routerAPI/deleteProduct/${productId}`;
+    const URL = `${process.env.React_App_URL_Deploy}/routerAPI/deleteProduct/${productId}`;
     const response = await axios.delete(URL);
   } catch (error) {}
 };
 
 const handleGetDetailUser = async (userId) => {
   try {
-    const URl = `http://localhost:3001/routerAPI/getDetailUser/${userId}`;
+    const URl = `${process.env.React_App_URL_Deploy}/routerAPI/getDetailUser/${userId}`;
     const response = await axios.get(URl);
     return response;
   } catch (error) {}
@@ -199,7 +199,7 @@ const handleCreateInvoice = async (payload) => {
     "🚀 ~ file: UserAPI.js ~ line 160 ~ handleCreateInvoice ~ payload",
     payload
   );
-  const URl = `http://localhost:3001/routerAPI/createInvoice`;
+  const URl = `${process.env.React_App_URL_Deploy}/routerAPI/createInvoice`;
   const createInvoice = await axios.post(URl, payload);
   return createInvoice;
 };
@@ -210,14 +210,14 @@ const handleUpdateInvoice = async (id, option) => {
       "🚀 ~ file: UserAPI.js ~ line 170 ~ handleUpdateInvoice ~ option",
       option
     );
-    const URL = `http://localhost:3001/routerAPI/updateInvoice/${id}`;
+    const URL = `${process.env.React_App_URL_Deploy}/routerAPI/updateInvoice/${id}`;
     const updateInvoice = await axios.put(URL, option);
   } catch (error) {}
 };
 
 const handleGetInvoice = async () => {
   try {
-    const URL = `http://localhost:3001/routerAPI/getInvoice`;
+    const URL = `${process.env.React_App_URL_Deploy}/routerAPI/getInvoice`;
     const getInvoice = await axios.get(URL);
     return getInvoice;
   } catch (error) {}
@@ -225,7 +225,7 @@ const handleGetInvoice = async () => {
 
 const handleGetInvoiceByUser = async (userId) => {
   try {
-    const URL = `http://localhost:3001/routerAPI/getInvoiceByAuthor/${userId}`;
+    const URL = `${process.env.React_App_URL_Deploy}/routerAPI/getInvoiceByAuthor/${userId}`;
     const getInvoiceByUser = await axios.get(URL);
     return getInvoiceByUser;
   } catch (error) {}
@@ -233,7 +233,7 @@ const handleGetInvoiceByUser = async (userId) => {
 
 const handleCreateTransaction = async (payload) => {
   try {
-    const URL = `http://localhost:3001/routerAPI/createTransaction`;
+    const URL = `${process.env.React_App_URL_Deploy}/routerAPI/createTransaction`;
     const createTransaction = await axios.post(URL, payload);
     return createTransaction;
   } catch (error) {
@@ -246,7 +246,7 @@ const handleCreateTransaction = async (payload) => {
 
 const handleViewTransaction = async () => {
   try {
-    const URL = `http://localhost:3001/routerAPI/viewTransaction`;
+    const URL = `${process.env.React_App_URL_Deploy}/routerAPI/viewTransaction`;
     const viewTransaction = await axios.get(URL);
     return viewTransaction;
   } catch (error) {}
@@ -254,14 +254,14 @@ const handleViewTransaction = async () => {
 
 const handleCreateComment = async (payload) => {
   try {
-    const URL = `http://localhost:3001/routerAPI/createComment`;
+    const URL = `${process.env.React_App_URL_Deploy}/routerAPI/createComment`;
     const response = await axios.post(URL, payload);
   } catch (error) {}
 };
 
 const handleGetComment = async (postId) => {
   try {
-    const URL = `http://localhost:3001/routerAPI/getComment/${postId}`;
+    const URL = `${process.env.React_App_URL_Deploy}/routerAPI/getComment/${postId}`;
     const response = await axios.get(URL);
     return response.data;
   } catch (error) {}
@@ -271,7 +271,7 @@ const handleLike = async (postId, liked) => {
   try {
     const payload = { liked };
 
-    const URL = `http://localhost:3001/routerAPI/getLikedPost/${postId}`;
+    const URL = `${process.env.React_App_URL_Deploy}/routerAPI/getLikedPost/${postId}`;
     const response = await axios.put(URL, payload);
     return response;
   } catch (error) {
@@ -286,7 +286,7 @@ const handleUnLike = async (postId, liked) => {
     );
     const payload = { liked };
 
-    const URL = `http://localhost:3001/routerAPI/getUnLikedPost/${postId}`;
+    const URL = `${process.env.React_App_URL_Deploy}/routerAPI/getUnLikedPost/${postId}`;
     const response = await axios.put(URL, payload);
 
     return response;
@@ -300,7 +300,7 @@ const handleUnLike = async (postId, liked) => {
 
 const handleFollowingStore = async (id, following) => {
   try {
-    const url = "http://localhost:3001/routerAPI/getStoreFollowing/";
+    const url = `${process.env.React_App_URL_Deploy}/routerAPI/getStoreFollowing/`;
     const response = handleFollowing(id, following, url);
   } catch (error) {
     console.log(
@@ -312,7 +312,7 @@ const handleFollowingStore = async (id, following) => {
 
 const handleUnFollowingStore = async (id, following) => {
   try {
-    const url = "http://localhost:3001/routerAPI/getStoreUnFollowing/";
+    const url = `${process.env.React_App_URL_Deploy}/routerAPI/getStoreUnFollowing/`;
     const response = handleFollowing(id, following, url);
   } catch (error) {
     console.log(
@@ -322,13 +322,13 @@ const handleUnFollowingStore = async (id, following) => {
   }
 };
 const handleGetInvoiceByProduct = async (productId) => {
-  const URL = `http://localhost:3001/routerAPI/getInvoiceByProduct/${productId}`;
+  const URL = `${process.env.React_App_URL_Deploy}/routerAPI/getInvoiceByProduct/${productId}`;
   const response = await axios.get(URL);
   return response.data;
 };
 const handleFollowingUser = async (id, following) => {
   try {
-    const url = "http://localhost:3001/routerAPI/getUserFollowing/";
+    const url = `${process.env.React_App_URL_Deploy}/routerAPI/getUserFollowing/`;
 
     const response = handleFollowing(id, following, url);
   } catch (error) {
@@ -341,7 +341,7 @@ const handleFollowingUser = async (id, following) => {
 
 const handleUnFollowingUser = async (id, following) => {
   try {
-    const url = "http://localhost:3001/routerAPI/getUserUnFollowing/";
+    const url = `${process.env.React_App_URL_Deploy}/routerAPI/getUserUnFollowing/`;
 
     const response = handleFollowing(id, following, url);
   } catch (error) {
@@ -354,7 +354,7 @@ const handleUnFollowingUser = async (id, following) => {
 
 const handleGetUserFollowing = async (id) => {
   try {
-    const URL = `http://localhost:3001/routerAPI/getUserFollow/${id}`;
+    const URL = `${process.env.React_App_URL_Deploy}/routerAPI/getUserFollow/${id}`;
     const response = await axios.get(URL);
     console.log(
       "🚀 ~ file: UserAPI.js ~ line 335 ~ handleGetUserFollowing ~ response",
@@ -371,13 +371,13 @@ const handleGetUserFollowing = async (id) => {
 
 const handleReplyComment = async (payload) => {
   try {
-    const URL = `http://localhost:3001/routerAPI/createReply`;
+    const URL = `${process.env.React_App_URL_Deploy}/routerAPI/createReply`;
     const response = await axios.post(URL, payload);
   } catch (error) {}
 };
 const handleGetReplyByComment = async (commentId) => {
   try {
-    const URL = `http://localhost:3001/routerAPI/getReply/${commentId}`;
+    const URL = `${process.env.React_App_URL_Deploy}/routerAPI/getReply/${commentId}`;
     const response = await axios.get(URL);
     return response.data;
   } catch (error) {
@@ -390,7 +390,7 @@ const handleGetReplyByComment = async (commentId) => {
 
 const handleSearchUser = async (query) => {
   try {
-    const URI = `http://localhost:3001/routerAPI/searchUser?query=${query}&page=1&limit=5`;
+    const URI = `${process.env.React_App_URL_Deploy}/routerAPI/searchUser?query=${query}&page=1&limit=5`;
     const response = await axios.get(URI);
     return response.data.docs;
   } catch (error) {}
@@ -398,7 +398,7 @@ const handleSearchUser = async (query) => {
 
 const handleGetAllUser = async () => {
   try {
-    const URL = `http://localhost:3001/routerAPI/getUser`;
+    const URL = `${process.env.React_App_URL_Deploy}/routerAPI/getUser`;
     const response = await axios.get(URL);
     return response.data;
   } catch (error) {}
@@ -406,7 +406,7 @@ const handleGetAllUser = async () => {
 
 const handleGetAllStore = async () => {
   try {
-    const URL = `http://localhost:3001/routerAPI/getStore`;
+    const URL = `${process.env.React_App_URL_Deploy}/routerAPI/getStore`;
     const response = await axios.get(URL);
     return response.data;
   } catch (error) {}
@@ -414,7 +414,7 @@ const handleGetAllStore = async () => {
 
 const handleUpdateUser = async (userId, option) => {
   try {
-    const URL = `http://localhost:3001/routerAPI/updateUser/${userId}`;
+    const URL = `${process.env.React_App_URL_Deploy}/routerAPI/updateUser/${userId}`;
     const response = axios.put(URL, option);
     console.log("hello okeii");
   } catch (error) {
@@ -423,7 +423,7 @@ const handleUpdateUser = async (userId, option) => {
 };
 const handleGetUserMonthly = async () => {
   try {
-    const URL = `http://localhost:3001/routerAPI/userMonthly`;
+    const URL = `${process.env.React_App_URL_Deploy}/routerAPI/userMonthly`;
     const response = await axios.get(URL);
     return response.data;
   } catch (error) {}
@@ -431,14 +431,14 @@ const handleGetUserMonthly = async () => {
 
 const handleGetStoreMonthly = async () => {
   try {
-    const URL = `http://localhost:3001/routerAPI/storeMonthly`;
+    const URL = `${process.env.React_App_URL_Deploy}/routerAPI/storeMonthly`;
     const response = await axios.get(URL);
     return response.data;
   } catch (error) {}
 };
 const handleGetProductMonthly = async () => {
   try {
-    const URL = `http://localhost:3001/routerAPI/productMonthly`;
+    const URL = `${process.env.React_App_URL_Deploy}/routerAPI/productMonthly`;
     const response = await axios.get(URL);
     return response.data;
   } catch (error) {}
@@ -446,7 +446,7 @@ const handleGetProductMonthly = async () => {
 
 const handleReport = async (postId, payload) => {
   try {
-    const URL = `http://localhost:3001/routerAPI/getReport/${postId}`;
+    const URL = `${process.env.React_App_URL_Deploy}/routerAPI/getReport/${postId}`;
     const response = await axios.put(URL, payload);
     return response;
   } catch (error) {
