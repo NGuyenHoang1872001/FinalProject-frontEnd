@@ -36,7 +36,7 @@ const handleLoginUser = async (payload) => {
 };
 
 const handleGetAllPost = async () => {
-  const URL = "${process.env.React_App_URL_Backend_deploy}/routerAPI/getPost";
+  const URL = `${process.env.React_App_URL_Backend_deploy}/routerAPI/getPost`;
   const getData = await axios.get(URL);
   return getData;
 };
