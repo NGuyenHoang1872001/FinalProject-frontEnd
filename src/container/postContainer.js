@@ -124,7 +124,8 @@ const PostContainer = () => {
   const reportPost = async () => {
     try {
       const report = authLogin;
-      const reportPost = await handleReport(postId, report);
+      const payload = { report };
+      const reportPost = await handleReport(postId, payload);
     } catch (error) {}
   };
 

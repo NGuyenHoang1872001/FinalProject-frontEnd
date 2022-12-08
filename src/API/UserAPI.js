@@ -444,10 +444,10 @@ const handleGetProductMonthly = async () => {
   } catch (error) {}
 };
 
-const handleReport = async (postId, report) => {
+const handleReport = async (postId, payload) => {
   try {
     const URL = `http://localhost:3001/routerAPI/getReport/${postId}`;
-    const response = await axios.put(URL, report);
+    const response = await axios.put(URL, payload);
     return response;
   } catch (error) {
     console.log("🚀 ~ file: UserAPI.js ~ line 248 ~ handleLike ~ error", error);
