@@ -446,9 +446,6 @@ const handleGetProductMonthly = async () => {
 
 const handleReport = async (postId, report) => {
   try {
-    console.log("🚀 ~ file: UserAPI.js:450 ~ handleReport ~ payload", report);
-    console.log("🚀 ~ file: UserAPI.js:448 ~ handleReport ~ postId", postId);
-
     const URL = `http://localhost:3001/routerAPI/getReport/${postId}`;
     const response = await axios.put(URL, report);
     return response;

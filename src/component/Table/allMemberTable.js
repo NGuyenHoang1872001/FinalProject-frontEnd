@@ -58,7 +58,7 @@ const AllMemberTable = () => {
       <div className="flex flex-row mt-10 mb-10 justify-between ">
         {" "}
         <h1 className="text-4xl font-bold  ">User Table</h1>
-        <label for="my-modal-6" class="link">
+        <label for="my-modal-5" class="link">
           Open Dashboard
         </label>
       </div>

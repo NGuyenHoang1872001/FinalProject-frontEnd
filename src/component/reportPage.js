@@ -58,7 +58,7 @@ const ReportPage = () => {
       {postData &&
         postData.map((rows) => (
           <div>
-            {rows.report ? (
+            {rows.report.length != 0 ? (
               <div className=" mb-[20px] rounded w-[78vw] relative shadow-mg border-2 p-4">
                 <div className="flex flex-row justify-between">
                   {" "}

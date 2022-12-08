@@ -123,7 +123,8 @@ const PostContainer = () => {
   };
   const reportPost = async () => {
     try {
-      const report = await handleReport(postId, authLogin);
+      const report = authLogin;
+      const reportPost = await handleReport(postId, report);
     } catch (error) {}
   };
 
