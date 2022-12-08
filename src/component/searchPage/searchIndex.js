@@ -46,7 +46,7 @@ const SearchPage = () => {
             </div>
           </div>
         ))}{" "}
-      {!dataUser == [] ? (
+      {dataUser && dataUser.length == 0 ? (
         <div>
           <h1 className="text-center text-4xl font-bold mt-20 w-[80vw]">
             No Data
