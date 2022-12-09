@@ -4,13 +4,10 @@ import { handleFollowing, handleUnFollowing } from "./UserAPIFollowing";
 
 const handleRegisterUser = async (data) => {
   try {
-    console.log(
-      "🚀 ~ file: UserAPI.js ~ line 6 ~ handleRegisterUser ~ data",
-      data
-    );
     const URL = `${process.env.React_App_URL_Backend_deploy}/routerAPI/register`;
     const dataUser = data;
     const createUser = await axios.post(URL, dataUser);
+    return createUser.data;
   } catch (error) {
     console.log(
       "🚀 ~ file: UserAPI.js ~ line 11 ~ handleRegisterUser ~ error",
@@ -24,10 +21,6 @@ const handleLoginUser = async (payload) => {
   try {
     const URL = `${process.env.React_App_URL_Backend_deploy}/routerAPI/login`;
 
-    // console.log(
-    //   "🚀 ~ file: UserAPI.js:25 ~ handleLoginUser ~ dataUser",
-    //   dataUser
-    // );
     const token = await axios.post(URL, payload);
     return token;
   } catch (error) {

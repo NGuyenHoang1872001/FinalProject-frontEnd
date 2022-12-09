@@ -28,6 +28,8 @@ const Login = () => {
   } = useForm({
     resolver: yupResolver(schemaValidation),
   });
+  const [error, setError] = useState();
+  console.log("🚀 ~ file: LoginPage.js:32 ~ Login ~ error", error);
 
   const handleLogin = async (data) => {
     try {
@@ -35,12 +37,17 @@ const Login = () => {
       const payload = { email, password };
 
       const response = await handleLoginUser(payload);
-
+      console.log(
+        "🚀 ~ file: LoginPage.js:38 ~ handleLogin ~ response",
+        response
+      );
+      if (!response) return setError("something Wrong");
       const { token, payload: loggedInData } = response.data;
       dispatch(setLoggedInUser(loggedInData));
 
       if (!token) return;
       localStorage.setItem("access_token", token);
+
       navigate("/");
     } catch (error) {
       console.log(
@@ -64,6 +71,8 @@ const Login = () => {
         <form onSubmit={handleSubmit(handleLogin)}>
           <div className="  p-8 w-96 h-100 flex flex-col items-center gap-6  ">
             <p className="text-3xl font-bold">Welcome Back</p>
+            {error ? <p className="text-xs text-red">{error}</p> : <p></p>}
+
             <div className="mb-[8px]">
               <p className="text-sm font-medium mb-3">Email</p>
               <input

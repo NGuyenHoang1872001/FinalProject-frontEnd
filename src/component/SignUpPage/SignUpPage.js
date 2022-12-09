@@ -17,7 +17,7 @@ const schemaValidation = yup.object().shape({
 
 const Register = () => {
   const navigate = useNavigate();
-  const [error, setError] = useState("");
+  const [error, setError] = useState();
   const {
     register,
     handleSubmit,
@@ -30,12 +30,12 @@ const Register = () => {
     const { firstName, lastName, email, password } = data;
     const role = "user";
     const payload = { firstName, lastName, email, password, role };
-
     const response = await handleRegisterUser(payload);
     console.log(
-      "🚀 ~ file: SignUpPage.js ~ line 33 ~ HandleRegister ~ response",
+      "🚀 ~ file: SignUpPage.js:35 ~ handleRegister ~ response",
       response
     );
+    if (!response) return setError("Emai Existed");
     navigate("/login");
   };
   return (
@@ -49,10 +49,11 @@ const Register = () => {
           </RouteLink>
         )}
       </div>
-      <div className="bg-[#ffff] hover:bg-[#ffff] rounded-2xl shadow-2xl h-[80vh]">
+      <div className="bg-[#ffff] hover:bg-[#ffff] rounded-2xl shadow-2xl h-[75vh]">
         <form onSubmit={handleSubmit(handleRegister)}>
           <div className="  p-8 w-96 h-[85px] flex flex-col gap-6 items-center">
             <p className="text-3xl font-bold ">Sign Up</p>
+            {error ? <p className="text-xs text-red">{error}</p> : <p></p>}
             <div className="mb-[8px]">
               <p className="text-sm font-medium mb-3">FirstName</p>
               <input
