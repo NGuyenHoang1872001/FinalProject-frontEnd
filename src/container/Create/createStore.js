@@ -58,7 +58,7 @@ const CreateStore = () => {
             <p className="text-sm font-medium mb-3">Store Name</p>
             <textarea
               id="NameInput"
-              className="textarea textarea-accent  w-[75vw] h-10 "
+              className="textarea textarea-accent  w-[75vw] h-10 font-light text-black "
               placeholder="Name"
               {...register("name")}
             ></textarea>
@@ -71,7 +71,7 @@ const CreateStore = () => {
             <p className="text-sm font-medium mb-3">Email</p>
             <textarea
               id="EmailInput"
-              className="textarea textarea-accent  w-[75vw] h-10"
+              className="textarea textarea-accent  w-[75vw] h-10 font-light text-black"
               placeholder="Email"
               {...register("email")}
             ></textarea>
@@ -83,7 +83,7 @@ const CreateStore = () => {
             <p className="text-sm font-medium mb-3">PhoneNumber</p>
             <textarea
               id="PhoneNumberInput"
-              className="textarea textarea-accent   w-[75vw] h-10 "
+              className="textarea textarea-accent   w-[75vw] h-10 font-light text-black "
               placeholder="PhoneNumber"
               {...register("phoneNumber")}
             ></textarea>

@@ -78,7 +78,7 @@ const CreatePost = () => {
             <p className="text-sm font-medium mb-3"> Title</p>
             <textarea
               id="TitleInput"
-              className="textarea textarea-accent  w-[75vw] h-10 "
+              className="textarea textarea-accent  w-[75vw] h-10 font-light text-black "
               placeholder="Title"
               {...register("title")}
             ></textarea>
@@ -91,7 +91,7 @@ const CreatePost = () => {
             <p className="text-sm font-medium mb-3">StoreId</p>
             <textarea
               id="StoreInput"
-              className="textarea textarea-accent  w-[75vw] h-10 "
+              className="textarea textarea-accent  w-[75vw] h-10 font-light text-black"
               placeholder="Store"
               {...register("store")}
             ></textarea>

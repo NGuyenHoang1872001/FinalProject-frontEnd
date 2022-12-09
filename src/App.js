@@ -5,7 +5,7 @@ import AppRouter from "./appRouter/Router";
 
 function App() {
   return (
-    <html data-theme="wireframe">
+    <html>
       <div>
         <AppRouter></AppRouter>
       </div>

@@ -85,7 +85,7 @@ const UpdatePostPage = () => {
             <p className="text-sm font-medium mb-3">Title</p>{" "}
             <textarea
               id="TitleInput"
-              className="textarea textarea-accent  w-[75vw] h-10"
+              className="textarea textarea-accent  w-[75vw] h-10 font-light text-black"
               defaultValue={payload.title}
               {...register("title")}
             ></textarea>

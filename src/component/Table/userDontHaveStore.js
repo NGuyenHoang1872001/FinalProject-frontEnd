@@ -46,7 +46,7 @@ const UserDontStore = () => {
       <div class="overflow-x-auto">
         <table class="table table-zebra w-[75vw]">
           <thead>
-            <tr>
+            <tr className="font-bold text-black">
               <th>
                 Name{" "}
                 <button onClick={() => onSortChange(currentSort, "firtName")}>
@@ -144,7 +144,7 @@ const UserDontStore = () => {
                 {rows.storeId ? (
                   <div></div>
                 ) : (
-                  <tr>
+                  <tr className="font-light text-black">
                     <td>
                       {rows.firstName}
                       {""}

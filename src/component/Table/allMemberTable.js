@@ -67,7 +67,7 @@ const AllMemberTable = () => {
         <table class="table table-zebra w-[75vw] ">
           <thead>
             <tr className="">
-              <th>
+              <th className="font-bold text-black">
                 Name{" "}
                 <button onClick={() => onSortChange(currentSort, "firtName")}>
                   {currentSort == "down" ? (
@@ -96,7 +96,7 @@ const AllMemberTable = () => {
                   )}
                 </button>
               </th>
-              <th>
+              <th className="font-bold text-black">
                 Email
                 <button onClick={() => onSortChange(currentSort, "email")}>
                   {currentSort == "down" ? (
@@ -125,7 +125,7 @@ const AllMemberTable = () => {
                   )}
                 </button>
               </th>
-              <th>
+              <th className="font-bold text-black">
                 Role{" "}
                 <button onClick={() => onSortChange(currentSort, "role")}>
                   {currentSort == "down" ? (
@@ -154,13 +154,13 @@ const AllMemberTable = () => {
                   )}
                 </button>
               </th>
-              <th>Action</th>
+              <th className="font-bold text-black">Action</th>
             </tr>
           </thead>
           <tbody>
             {userData &&
               userData.map((rows) => (
-                <tr>
+                <tr className="font-light text-black">
                   <td>
                     {rows.firstName}
                     {""}

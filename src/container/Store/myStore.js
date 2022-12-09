@@ -126,7 +126,7 @@ const MyStore = () => {
                           <li>
                             <label
                               htmlFor="my-modal-3"
-                              className=""
+                              className="font-light text-black"
                               onClick={() => getStoreId(store._id)}
                             >
                               delete
@@ -134,6 +134,7 @@ const MyStore = () => {
                           </li>
                           <li>
                             <label
+                              className="font-light text-black"
                               onClick={() =>
                                 updateStore(
                                   store._id,
@@ -175,7 +176,7 @@ const MyStore = () => {
         {/* PopUpDelete */}
         <input type="checkbox" id="my-modal-3" className="modal-toggle" />
         <div className="modal">
-          <div className="modal-box relative">
+          <div className="modal-box relative font-light text-black">
             <label
               htmlFor="my-modal-3"
               className="btn btn-sm btn-circle absolute right-2 top-2"

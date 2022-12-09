@@ -54,7 +54,7 @@ const UpdateStorePage = () => {
             <p className="text-sm font-medium mb-3">Name</p>
             <textarea
               id="TitleInput"
-              className="textarea textarea-accent  w-[75vw] h-10 "
+              className="textarea textarea-accent  w-[75vw] h-10 font-light text-black "
               defaultValue={payload.name}
               {...register("name")}
             ></textarea>
@@ -66,7 +66,7 @@ const UpdateStorePage = () => {
             <p className="text-sm font-medium mb-3">Email</p>
             <textarea
               id="email"
-              className="textarea textarea-accent  w-[75vw] h-10"
+              className="textarea textarea-accent  w-[75vw] h-10 font-light text-black"
               defaultValue={payload.email}
               {...register("email")}
             ></textarea>
@@ -78,7 +78,7 @@ const UpdateStorePage = () => {
             <p className="text-sm font-medium mb-3">PhoneNumber</p>
             <textarea
               id="phoneNumber"
-              className="textarea textarea-accent   w-[75vw] h-10 "
+              className="textarea textarea-accent   w-[75vw] h-10 font-light text-black "
               defaultValue={payload.phoneNumber}
               {...register("phoneNumber")}
             ></textarea>
@@ -87,7 +87,7 @@ const UpdateStorePage = () => {
             </span>
           </div>
           <div className="text-center">
-            <button className="mr-3 border-4 rounded-md w-32 text-lg font-medium">
+            <button className="mr-3 border-4 rounded-md w-32 text-lg font-medium ">
               Update
             </button>
           </div>

@@ -103,7 +103,7 @@ const CreateProduct = () => {
             <p className="text-sm font-medium mb-3">Product Name</p>
             <textarea
               id="NameInput"
-              className="textarea textarea-accent  w-[75vw] h-10"
+              className="textarea textarea-accent  w-[75vw] h-10 font-light text-black"
               placeholder="Name"
               {...register("name")}
             ></textarea>
@@ -115,7 +115,7 @@ const CreateProduct = () => {
             <p className="text-sm font-medium mb-3">Description</p>
             <textarea
               id="Description"
-              className="textarea textarea-accent  w-[75vw] h-10"
+              className="textarea textarea-accent  w-[75vw] h-10 font-light text-black"
               placeholder="Description"
               {...register("description")}
             ></textarea>
@@ -127,7 +127,7 @@ const CreateProduct = () => {
             <p className="text-sm font-medium mb-3">Price</p>
             <textarea
               id="Price"
-              className="textarea textarea-accent  w-[75vw] h-10"
+              className="textarea textarea-accent  w-[75vw] h-10 font-light text-black"
               placeholder="Price"
               {...register("price")}
             ></textarea>
@@ -139,7 +139,7 @@ const CreateProduct = () => {
             <p className="text-sm font-medium mb-3">PhoneNumber</p>
             <textarea
               id="quantity"
-              className="textarea textarea-accent   w-[75vw] h-10 "
+              className="textarea textarea-accent   w-[75vw] h-10 font-light text-black "
               placeholder="quantity"
               {...register("quantity")}
             ></textarea>

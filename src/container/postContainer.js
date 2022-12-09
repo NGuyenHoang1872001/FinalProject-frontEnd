@@ -187,7 +187,7 @@ const PostContainer = () => {
                         <li>
                           <label
                             htmlFor="my-modal-3"
-                            className=""
+                            className="font-light text-black"
                             onClick={() => getPostId(rows._id)}
                           >
                             Delete
@@ -196,7 +196,7 @@ const PostContainer = () => {
                         <li>
                           <label
                             htmlFor="my-modal-7"
-                            className=""
+                            className="font-light text-black"
                             onClick={() => getPostId(rows._id)}
                           >
                             Report
@@ -211,6 +211,7 @@ const PostContainer = () => {
                             {" "}
                             <li>
                               <label
+                                className="font-light text-black"
                                 htmlFor="my-modal-4"
                                 onClick={() => editPost(rows._id)}
                               >
@@ -220,7 +221,7 @@ const PostContainer = () => {
                             <li>
                               <label
                                 htmlFor="my-modal-3"
-                                className=""
+                                className="font-light text-black"
                                 onClick={() => getPostId(rows._id)}
                               >
                                 Delete
@@ -233,7 +234,7 @@ const PostContainer = () => {
                             <li>
                               <label
                                 htmlFor="my-modal-7"
-                                className=""
+                                className="font-light text-black"
                                 onClick={() => getPostId(rows._id)}
                               >
                                 Report
@@ -252,18 +253,18 @@ const PostContainer = () => {
 
               <div className="flex flex-row justify-around mb-4 p-2 ">
                 {rows.liked.includes(authLogin) ? (
-                  <div>
+                  <div className="bg-white">
                     <button
-                      className="border rounded-xl h-[50px] w-[30vw] m-[2px]  text-blue-600/100 "
+                      className="  border rounded-xl h-[50px] w-[30vw] m-[2px]  text-blue-600/100 "
                       onClick={() => unLikePost(rows._id)}
                     >
                       <FaHeart className="ml-[47%] text-2xl" />
                     </button>
                   </div>
                 ) : (
-                  <div>
+                  <div className="bg-white border rounded-xl h-[50px] w-[25vw] m-[2px] text-center">
                     <button
-                      className="border rounded-xl h-[50px] w-[30vw] m-[2px]  text-blue-600/100 "
+                      className=" mt-3  text-blue-600/100 "
                       onClick={() => likePost(rows._id)}
                     >
                       <FaHeartBroken className="ml-[47%] text-2xl"></FaHeartBroken>
@@ -332,7 +333,7 @@ const PostContainer = () => {
       <div>
         <input type="checkbox" id="my-modal-3" className="modal-toggle" />
         <div className="modal">
-          <div className="modal-box relative">
+          <div className="modal-box relative font-light text-black">
             <label
               htmlFor="my-modal-3"
               className="btn btn-sm btn-circle absolute right-2 top-2"

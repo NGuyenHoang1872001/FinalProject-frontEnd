@@ -54,7 +54,7 @@ const OwnerUserTable = () => {
       <div class="overflow-x-auto">
         <table class="table table-zebra w-[75vw]">
           <thead>
-            <tr>
+            <tr className="font-bold text-black">
               <th>
                 Name{" "}
                 <button onClick={() => onSortChange(currentSort, "firtName")}>
@@ -147,7 +147,7 @@ const OwnerUserTable = () => {
           <tbody>
             {userOwner &&
               userOwner.map((rows) => (
-                <tr>
+                <tr className="font-light text-black">
                   <td>
                     {rows.ownerId.firstName}
                     {""}

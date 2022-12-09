@@ -99,13 +99,13 @@ const UpdateProduct = () => {
       <form onSubmit={handleSubmit(updateProduct)}>
         <div className="flex flex-col  gap-8">
           <div className="text-center">
-            <p className="text-3xl font-bold">Updte Product</p>
+            <p className="text-3xl font-bold">Update Product</p>
           </div>
           <div className="flex flex-col">
-            <p className="text-sm font-medium mb-3">Name</p>
+            <p className="text-sm font-medium mb-3  text-black">Name</p>
             <textarea
               id="NameInput"
-              className="textarea textarea-accent  w-[75vw] h-10"
+              className="textarea textarea-accent  w-[75vw] h-10 font-light text-black"
               defaultValue={payload.name}
               {...register("name")}
             ></textarea>
@@ -114,10 +114,10 @@ const UpdateProduct = () => {
             </span>
           </div>
           <div className="flex flex-col">
-            <p className="text-sm font-medium mb-3">Description</p>
+            <p className="text-sm font-medium mb-3  text-black">Description</p>
             <textarea
               id="Description"
-              className="textarea textarea-accent  w-[75vw] h-10"
+              className="textarea textarea-accent  w-[75vw] h-10 font-light text-black"
               defaultValue={payload.description}
               {...register("description")}
             ></textarea>
@@ -126,10 +126,10 @@ const UpdateProduct = () => {
             </span>
           </div>
           <div className="flex flex-col">
-            <p className="text-sm font-medium mb-3">Quantity</p>
+            <p className="text-sm font-medium mb-3 ">Quantity</p>
             <textarea
               id="quantity"
-              className="textarea textarea-accent  w-[75vw] h-10"
+              className="textarea textarea-accent  w-[75vw] h-10 font-light text-black"
               defaultValue={payload.quantity}
               {...register("quantity")}
             ></textarea>
@@ -138,10 +138,10 @@ const UpdateProduct = () => {
             </span>
           </div>
           <div className="flex flex-col">
-            <p className="text-sm font-medium mb-3">Price</p>
+            <p className="text-sm font-medium mb-3 ">Price</p>
             <textarea
               id="Price"
-              className="textarea textarea-accent  w-[75vw] h-10 "
+              className="textarea textarea-accent  w-[75vw] h-10 font-light text-black "
               defaultValue={payload.price}
               {...register("price")}
             ></textarea>

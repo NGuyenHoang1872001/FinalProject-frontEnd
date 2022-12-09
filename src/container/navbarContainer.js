@@ -8,6 +8,8 @@ import { handleSearchUser } from "../API/UserAPI";
 import { async } from "@firebase/util";
 import { AiOutlineSearch } from "react-icons/ai";
 import App from "../App";
+import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 const schemaValidation = yup.object().shape({
   searchInput: yup.string(),
 });
@@ -26,6 +28,7 @@ const Navbar = () => {
     dispatch(setLoggedInUser(""));
     navigate("/login");
   };
+
   const handleSearch = async (data) => {
     try {
       const query = data.searchInput;
@@ -40,7 +43,7 @@ const Navbar = () => {
   };
 
   return (
-    <div className="flex flex-row justify-between p-4 border-2 m-3 items-center text-[#4dc39a]">
+    <div className="flex flex-row justify-between p-4 border-2 m-3 items-center text-[#4dc39a] ">
       <div>
         <form onSubmit={handleSubmit(handleSearch)}>
           <div className="flex flex-row gap-3">
@@ -60,7 +63,7 @@ const Navbar = () => {
         </form>
       </div>
       <div className="">
-        <h4 className="font-extralight text-5xl mr-[160px]">Easy Meal</h4>
+        <h4 className="font-bold text-5xl mr-[160px]">Easy Meal</h4>
       </div>
       <div className="dropdown dropdown-end">
         <label tabIndex={0}>
@@ -75,7 +78,12 @@ const Navbar = () => {
           class="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52"
         >
           <li>
-            <a>View Profile</a>
+            <a>
+              <Link to={"/updateUser"} className="font-bold">
+                {" "}
+                Edit Account
+              </Link>
+            </a>
           </li>
           <li>
             <button className="text-red" onClick={() => handleLogOut()}>

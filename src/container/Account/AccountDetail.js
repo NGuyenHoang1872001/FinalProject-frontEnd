@@ -190,6 +190,7 @@ const AccountDetail = () => {
                         <div>
                           <li>
                             <label
+                              className="font-light text-black"
                               htmlFor="my-modal-4"
                               onClick={() => editPost(postData._id)}
                             >
@@ -199,7 +200,7 @@ const AccountDetail = () => {
                           <li>
                             <label
                               htmlFor="my-modal-3"
-                              className=""
+                              className="font-light text-black"
                               onClick={() => getPostId(postData._id)}
                             >
                               Delete
@@ -216,18 +217,18 @@ const AccountDetail = () => {
                 <div>{postData.comment}</div>
                 <div className="flex flex-row justify-around mb-4 p-2 ">
                   {postData.liked.includes(authLogin) ? (
-                    <div>
+                    <div className="bg-white border rounded-xl h-[50px] w-[25vw] m-[2px] text-center">
                       <button
-                        className="border rounded-xl h-[50px] w-[30vw] m-[2px]  text-blue-600/100 "
+                        className="mt-3 text-blue-600/100 "
                         onClick={() => unLikePost(postData._id)}
                       >
                         <FaHeart className="ml-[47%] text-2xl" />
                       </button>
                     </div>
                   ) : (
-                    <div>
+                    <div className="bg-white border rounded-xl h-[50px] w-[25vw] m-[2px] text-center">
                       <button
-                        className="border rounded-xl h-[50px] w-[30vw] m-[2px]  text-blue-600/100 "
+                        className="mt-3  text-blue-600/100 "
                         onClick={() => likePost(postData._id)}
                       >
                         <FaHeartBroken className="ml-[47%] text-2xl"></FaHeartBroken>
@@ -272,7 +273,7 @@ const AccountDetail = () => {
       <div>
         <input type="checkbox" id="my-modal-3" className="modal-toggle" />
         <div className="modal">
-          <div className="modal-box relative">
+          <div className="modal-box relative font-light text-black">
             <label
               htmlFor="my-modal-3"
               className="btn btn-sm btn-circle absolute right-2 top-2"
