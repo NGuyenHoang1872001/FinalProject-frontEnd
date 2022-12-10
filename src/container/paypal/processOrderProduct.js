@@ -26,7 +26,10 @@ const ViewProcess = () => {
             </ul>
           </div>
           <div>
-            <button onClick={navigateToHome} class="btn glass">
+            <button
+              onClick={navigateToHome}
+              class="btn glass font-normal text-black"
+            >
               Back to Home
             </button>
           </div>
